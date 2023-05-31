@@ -4,125 +4,130 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="path/to/favicon.ico" type="image/x-icon">
   <title>Coffee Information & Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    body {
-      padding-top: 70px; 
-  }
-  .navbar {
-      position: absolute;
-      height: 70px;
-      top: 0;
-      width: 100%;     
-      z-index: 1000; /* Đảm bảo thanh menu hiển thị trên phần trên của banner */
-      background-color: white!important;
-      box-shadow: none;
+      .navbar {
+          position: absolute;
+          height: 70px;
+          top: 0;
+          width: 100%;     
+          z-index: 1000; /* Đảm bảo thanh menu hiển thị trên phần trên của banner */
+          background-color: white!important;
+          box-shadow: none;
+      }
+
+      .navbar-brand img {
+          width: 200px; /* Kích thước mới cho logo */
+          height: auto; /* Đảm bảo tỷ lệ hình ảnh không bị méo */
+      }
+      .navbar .navbar-nav .nav-link {
+          color: #64321e; /* Màu chữ của các liên kết trong thanh menu */
+          font-size: 20px;
+          font-family: 'Baloo 2', cursive;
+          
+      }
+      .navbar-nav .nav-item .nav-link:hover {
+          transform: scale(1.1); /* Phóng to chữ lên 110% */
+          color: #64321e; /* Giữ nguyên màu */
+      }
+
+      .navbar-brand {
+          font-weight: bold;
+      }
+      .navbar-nav .nav-item {
+          margin-right: 10px;
+      }
+      .carousel-item {
+          height: 700px;
+      }
+      .carousel-caption {
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 10px;
+          color: #fff;
+      }
+      .carousel-caption h2 {
+          font-size: 36px;
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+      .carousel-caption p {
+          font-size: 18px;
+      }
+      .banner-container {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+      }
+      .highlight-container {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Hiển thị 3 sự kiện trên mỗi dòng */
+        grid-gap: 20px; /* Khoảng cách giữa các sự kiện */
+    }
+
+    .highlight-event {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
   }
 
-  .navbar-brand img {
-      width: 200px; /* Kích thước mới cho logo */
-      height: auto; /* Đảm bảo tỷ lệ hình ảnh không bị méo */
-  }
-  .navbar .navbar-nav .nav-link {
-      color: #64321e; /* Màu chữ của các liên kết trong thanh menu */
-      font-size: 20px;
-      font-family: 'Baloo 2', cursive;
-  }
-  .navbar-nav .nav-item .nav-link:hover {
-      transform: scale(1.1); /* Phóng to chữ lên 110% */
-      color: #64321e; /* Giữ nguyên màu */
-  }
-  .banner {
-    height: auto; /* Điều chỉnh chiều cao của banner theo ý muốn */
-      background-image: url("path/to/banner-image.jpg"); /* Đường dẫn tới hình ảnh banner */
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      width: 100%; /* Đảm bảo banner rộng full màn hình */
-  }
-
-
-  .navbar-brand {
-      font-weight: bold;
-  }
-  .navbar-nav .nav-item {
-      margin-right: 10px;
-  }
-  .carousel-item {
-      height: 700px;
-  }
-  .carousel-caption {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      color: #fff;
-  }
-  .carousel-caption h2 {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 10px;
-  }
-  .carousel-caption p {
-      font-size: 18px;
-  }
-  .banner-container {
-      position: relative;
+  .highlight-event img {
       width: 100%;
-      overflow: hidden;
+      height: auto;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease-in-out;
+      border-radius: 4%;
   }
-.highlight-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Hiển thị 3 sự kiện trên mỗi dòng */
-  grid-gap: 20px; /* Khoảng cách giữa các sự kiện */
+  .highlight-event:hover img {
+      transform: scale(1.1);
+  }
+  .highlight-event h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+  }
+  .highlight-event p {
+      font-size: 14px;
+      margin-bottom: 5px;
+  }
+  .highlight-title {
+      text-align: center;
+      color: #64321e;
+      font-size: 40px;
+      margin-bottom: 30px;
+      margin-top: 30px;
+      font-family: 'Baloo 2', cursive;
+      text-decoration: underline;
+  }
+  .btn-view-more {
+    width: 200px;
+    position: absolute;
+    background-color: #64321e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 20px auto;
+    display: block;
 }
-
-.highlight-event {
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
-.highlight-event img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  transition: transform 0.3s ease-in-out;
-  border-radius: 4%;
-}
-.highlight-event:hover img {
+.btn-view-more:hover {
   transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
-
-.highlight-event h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+.button-container {
+    margin-left: 155%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Điều chỉnh chiều cao tùy ý */
 }
-
-.highlight-event p {
-  font-size: 14px;
-  margin-bottom: 5px;
 }
-.highlight-title {
-  text-align: center;
-  color: #64321e;
-  font-size: 40px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  font-family: 'Baloo 2', cursive;
-  text-decoration: underline;
-}
-
-  
-}
-
-
-
 </style>
 </head>
 <body>
@@ -190,64 +195,66 @@
 
 <h2 class="highlight-title">SPECIAL EVENTS</h2>
 <div class="container">
-<div class="highlight-container">
+    <div class="highlight-container">
 
-  <div class="highlight-event">
-    <img src="img/eventbanner2.jpg" alt="Event 1">
-    <h3>Event 1</h3>
-    <p>Price: $10</p>
-    <p>Date: September 1, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner1.jpg" alt="Event 2">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner3.jpg" alt="Event 3">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner2.jpg" alt="Event 1">
-    <h3>Event 1</h3>
-    <p>Price: $10</p>
-    <p>Date: September 1, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner1.jpg" alt="Event 2">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner3.jpg" alt="Event 3">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner2.jpg" alt="Event 1">
-    <h3>Event 1</h3>
-    <p>Price: $10</p>
-    <p>Date: September 1, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner1.jpg" alt="Event 2">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  <div class="highlight-event">
-    <img src="img/eventbanner3.jpg" alt="Event 3">
-    <h3>Event 2</h3>
-    <p>Price: $15</p>
-    <p>Date: September 5, 2023</p>
-  </div>
-  </div>
-  <!-- Thêm các div highlight-event khác tương tự cho các sự kiện khác -->
+      <div class="highlight-event">
+        <img src="img/eventbanner2.jpg" alt="Event 1">
+        <h3>Event 1</h3>
+        <p>Price: $10</p>
+        <p>Date: September 1, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner1.jpg" alt="Event 2">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner3.jpg" alt="Event 3">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner2.jpg" alt="Event 1">
+        <h3>Event 1</h3>
+        <p>Price: $10</p>
+        <p>Date: September 1, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner1.jpg" alt="Event 2">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner3.jpg" alt="Event 3">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner2.jpg" alt="Event 1">
+        <h3>Event 1</h3>
+        <p>Price: $10</p>
+        <p>Date: September 1, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner1.jpg" alt="Event 2">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="highlight-event">
+        <img src="img/eventbanner3.jpg" alt="Event 3">
+        <h3>Event 2</h3>
+        <p>Price: $15</p>
+        <p>Date: September 5, 2023</p>
+    </div>
+    <div class="button-container">
+        <button class="btn-view-more">See More</button></div>
+    </div>
+    <!-- Thêm các div highlight-event khác tương tự cho các sự kiện khác -->
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
