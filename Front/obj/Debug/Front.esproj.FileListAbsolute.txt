@@ -1,0 +1,2 @@
+C:\Users\Seth\source\repos\Coffee-information-and-service\reactapp\obj\Debug\Front.esproj.SuggestedBindingRedirects.cache
+C:\Users\Seth\source\repos\Coffee-information-and-service\reactapp\obj\Debug\Front.esproj.CoreCompileInputs.cache
