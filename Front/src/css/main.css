@@ -1,4 +1,182 @@
+﻿body {
+    padding-top: 70px;
+}
 
-body {
-  padding-top: 70px; 
+.coffee-shops {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #FFF7E6;
+    padding-top: 20px;
+}
+
+.coffee-shop {
+    display: inline-block;
+    width: 300px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+
+    .coffee-shop img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .coffee-shop h3 {
+        margin-top: 10px;
+        font-size: 20px;
+        font-family: 'Baloo 2', cursive;
+    }
+
+    .coffee-shop p {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .coffee-shop:hover .caption {
+        opacity: 1;
+    }
+
+    .coffee-shop .caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .coffee-shop:hover img {
+        transform: scale(1.1);
+    }
+
+    .coffee-shop::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .coffee-shop:hover::before {
+        opacity: 1;
+    }
+
+.btn-view-more {
+    width: 200px;
+    position: absolute;
+    background-color: #64321e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 20px auto;
+    display: block;
+}
+
+    .btn-view-more:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+.button-container {
+    font-family: 'Baloo 2', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Điều chỉnh chiều cao tùy ý */
+}
+
+.highlight-event img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 4%;
+}
+
+.highlight-event:hover img {
+    transform: scale(1.1);
+}
+
+.highlight-event h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.highlight-event p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.highlight-title {
+    text-align: center;
+    color: #64321e;
+    font-size: 40px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-family: 'Baloo 2', cursive;
+    text-decoration: underline;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: #fff;
+}
+
+    .carousel-caption h2 {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .carousel-caption p {
+        font-size: 18px;
+    }
+
+.banner-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.highlight-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Hiển thị 3 sự kiện trên mỗi dòng */
+    grid-gap: 20px; /* Khoảng cách giữa các sự kiện */
+}
+
+.highlight-event {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.navbar-brand img {
+    width: 200px; /* Kích thước mới cho logo */
+    height: auto; /* Đảm bảo tỷ lệ hình ảnh không bị méo */
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.carousel-item {
+    height: 700px;
 }
