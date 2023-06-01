@@ -64,6 +64,40 @@ namespace Library.DAL
             return 2;
         }
 
+        public void AddForgetCode(int accountId, string code)
+        {
+            Account? checkExist = _context.Accounts.FirstOrDefault(account => account.AccountId == accountId);
+
+            if (checkExist != null)
+            {
+                checkExist.ForgetCode = code;
+                UpdateAccount(checkExist);
+            }
+        }
+
+        public bool CheckForgetCode(int accountId, string code)
+        {
+            Account? checkExist = _context.Accounts.FirstOrDefault(account => account.AccountId == accountId);
+
+            if (checkExist != null && !string.IsNullOrEmpty(checkExist.ForgetCode) && checkExist.ForgetCode.Equals(code))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RemoveForgetCode(int accountId)
+        {
+            Account? checkExist = _context.Accounts.FirstOrDefault(account => account.AccountId == accountId);
+
+            if (checkExist != null)
+            {
+                checkExist.ForgetCode = "";
+                UpdateAccount(checkExist);
+            }
+        }
+
         public void InsertAccount(Account account)
         {
             _context.Accounts.Add(account);
@@ -72,6 +106,16 @@ namespace Library.DAL
         public void UpdateAccount(Account account)
         {
             _context.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void UpdateAccountPassword(int id, string password)
+        {
+            Account? toUpdate = _context.Accounts.FirstOrDefault(account => account.AccountId == id);
+            if (toUpdate != null)
+            {
+                toUpdate.Password = password;
+                _context.Entry(toUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
         }
 
         public void DeleteAccount(int id)

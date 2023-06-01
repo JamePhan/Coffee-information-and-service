@@ -12,15 +12,17 @@ namespace Back.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
+        private readonly IConfiguration _configuration;
         private readonly IAccountRepository _account;
         private readonly ICustomerRepository _customer;
         private readonly IUserRepository _user;
 
-        public AccountController(CoffeehouseSystemContext context)
+        public AccountController(CoffeehouseSystemContext context, IConfiguration configuration)
         {
             _account = new AccountRepository(context);
             _customer = new CustomerRepository(context);
             _user = new UserRepository(context);
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -100,8 +102,9 @@ namespace Back.Controllers
         [HttpPost]
         public IActionResult Forget(EmailEncapsulation mail)
         {
-            Customer tempCustomer = null;
-            User tempUser = null;
+            Customer tempCustomer;
+            User tempUser;
+            int? accountId = null;
 
             tempCustomer = _customer.GetCustomerByEmail(mail.Email);
 
@@ -109,28 +112,65 @@ namespace Back.Controllers
 
             if (tempCustomer != null || tempUser != null)
             {
+                if (tempCustomer != null && tempUser != null) return BadRequest("User somehow has 2 different profiles.");
+
+                if (tempCustomer != null) accountId = tempCustomer.AccountId;
+                if (tempUser != null) accountId = tempUser.AccountId;
+                if (accountId == null) return NotFound("Could not find the given account.");
+
                 //Generate verification code
+                string verificationCode = StringUtils.GenerateRandomString(10);
+                _account.AddForgetCode((int)accountId, verificationCode);
+                _account.Save();
 
                 //Send mail
-                MimeMessage email = new();
-                email.From.Add(MailboxAddress.Parse("coffeehousesystem@gmail.com"));
-                email.To.Add(MailboxAddress.Parse(mail.Email));
-                email.Subject = "Testing";
-                email.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
+                EmailUtils email = new(_configuration);
+                EmailDetails details = new()
                 {
-                    Text = "Email sent from api successfully!"
+                    Subject = "Forget Password",
+                    Body = $"Your verification code is: {verificationCode} \nPlease don't share it with anyone else.",
                 };
+                email.SendEmail(mail, details);
 
-                using SmtpClient smtp = new();
-                smtp.Connect("smtp.gmail.com", 587, false);
-                smtp.Authenticate("coffeehousesystem@gmail.com", "bwuoloxifjlacvzx");
-                smtp.Send(email);
-                smtp.Disconnect(true);
-
-                return Ok();
+                return Ok(accountId);
             }
 
-            return NotFound();
+            return NotFound("Could not find the given account.");
+        }
+
+        [HttpPost]
+        public IActionResult Verify(ForgetVerification verification)
+        {
+            if (string.IsNullOrEmpty(verification.VerificationCode)) return BadRequest("Empty verification code.");
+
+            bool correctCode = _account.CheckForgetCode(verification.AccountId, verification.VerificationCode);
+
+            if (correctCode)
+            {
+                _account.RemoveForgetCode(verification.AccountId);
+                return Ok(verification.AccountId);
+            }
+
+            return BadRequest("Wrong verification code");
+        }
+
+        [HttpPatch]
+        public IActionResult ResetPassword(ResetPassword reset)
+        {
+            if (string.IsNullOrEmpty(reset.Password)) return BadRequest("Password field is required!");
+
+            try
+            {
+                _account.UpdateAccountPassword(reset.AccountId, reset.Password);
+                _account.Save();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return BadRequest();
         }
     }
 }
