@@ -13,9 +13,17 @@ namespace Library.DAL
 
         int Login(Login login);
 
+        void AddForgetCode(int accountId, string code);
+
+        bool CheckForgetCode(int accountId, string code);
+
+        void RemoveForgetCode(int accountId);
+
         void InsertAccount(Account account);
 
         void UpdateAccount(Account account);
+
+        void UpdateAccountPassword(int id, string password);
 
         void DeleteAccount(int id);
 

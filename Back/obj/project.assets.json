@@ -4460,8 +4460,8 @@
     },
     "Library/1.0.0": {
       "type": "project",
-      "path": "../CoffeehouseLibrary/Library.csproj",
-      "msbuildProject": "../CoffeehouseLibrary/Library.csproj"
+      "path": "../Library/Library.csproj",
+      "msbuildProject": "../Library/Library.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4472,6 +4472,7 @@
       "MailKit >= 4.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.5",
+      "Microsoft.Extensions.Configuration.Json >= 7.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -4504,6 +4505,9 @@
           "projectReferences": {
             "C:\\Users\\Seth\\source\\repos\\Coffee-information-and-service\\CoffeehouseLibrary\\Library.csproj": {
               "projectPath": "C:\\Users\\Seth\\source\\repos\\Coffee-information-and-service\\CoffeehouseLibrary\\Library.csproj"
+            },
+            "C:\\Users\\Seth\\source\\repos\\Coffee-information-and-service\\Library\\Library.csproj": {
+              "projectPath": "C:\\Users\\Seth\\source\\repos\\Coffee-information-and-service\\Library\\Library.csproj"
             }
           }
         }
@@ -4539,6 +4543,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[7.0.5, )"
+          },
+          "Microsoft.Extensions.Configuration.Json": {
+            "target": "Package",
+            "version": "[7.0.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.Models;
 
@@ -51,6 +50,9 @@ public partial class CoffeehouseSystemContext : DbContext
             entity.Property(e => e.AccountId)
                 .ValueGeneratedNever()
                 .HasColumnName("account_id");
+            entity.Property(e => e.ForgetCode)
+                .HasMaxLength(10)
+                .HasColumnName("forget_code");
             entity.Property(e => e.IsBanned).HasColumnName("is_banned");
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
