@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /.vs/Coffee-information-and-service/DesignTimeBuild/.dtbcache.v2
+/.vs/Coffee-information-and-service/v17/.suo
