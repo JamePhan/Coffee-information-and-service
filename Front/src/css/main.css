@@ -180,3 +180,29 @@
 .carousel-item {
     height: 700px;
 }
+.footer {
+  background-color: #000000D9;
+  color: #ffffff;
+  padding: 30px 0;
+}
+
+.footer h4 {
+  color: #ffffff;
+}
+
+.footer p {
+  color: #ffffff;
+}
+
+.footer .fb-page {
+  margin-top: 20px;
+}
+
+.footer #map {
+  height: 200px;
+  margin-top: 20px;
+}
+
+.footer p.text-center {
+  margin-top: 20px;
+}

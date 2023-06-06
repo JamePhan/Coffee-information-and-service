@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .navbar {
@@ -228,8 +229,53 @@
         </div>
     </div>
     </div>
+
+    <footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <h4>Thông giới thiệu</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in mi auctor, pretium libero nec, consectetur elit.</p>
+      </div>
+      <div class="col-lg-4">
+        <h4>Fanpage</h4>
+        <div class="fb-page" data-href="https://www.facebook.com/SU2023fPT/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/SU2023fPT/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/SU2023fPT/">Your Fanpage</a>
+          </blockquote>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <h4>Address</h4>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <p class="text-center">&copy; 2023 Coffee Information & Services. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <!-- Include Google Maps API and initialize the map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazGXQ1xADLpReF6i_UitXppeSn8RsbJw&callback=initMap" async defer></script>
+<script>
+  function initMap() {
+    // Initialize your Google Map here
+    var mapOptions = {
+      center: { lat: 21.013271072229312, lng: 105.52706058711438 }, // Example coordinates (New York City)
+      zoom: 12
+    };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  }
+</script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=219975220852072&autoLogAppEvents=1" nonce="random-nonce"></script>
+
+
 </body>
 </html>
