@@ -62,8 +62,8 @@
                     </li>
                     <li class="nav-item">
                       <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" style="border-color: #64321E;">Search</button>
                     </form>
                 </li>
             </ul>
@@ -328,7 +328,7 @@
   function initMap() {
     // Initialize your Google Map here
     var mapOptions = {
-      center: { lat: 21.013271072229312, lng: 105.52706058711438 }, // Example coordinates (New York City)
+      center: { lat: 21.013271072229312, lng: 105.52706058711438 }, 
       zoom: 12
   };
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);

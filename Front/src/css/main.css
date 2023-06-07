@@ -281,3 +281,8 @@
      border-radius: 10px; /* Đặt giá trị cong viền */
     overflow: hidden; /* Ẩn phần ngoài của hình ảnh bị cắt */
   }
+  .search-input {
+    
+    border-color: #343a40 !important; /* Màu viền của ô tìm kiếm */
+    color: #64321E !important; /* Màu chữ trong ô tìm kiếm */
+  }
