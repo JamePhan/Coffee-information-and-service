@@ -17,7 +17,7 @@ namespace Library.DAL
 
         public List<BannerInfo> GetBanners(int count)
         {
-            List<Banner> banners = new();
+            List<Banner> banners;
             if (count > 0)
             {
                 banners = _context.Banners.Take(count).ToList();

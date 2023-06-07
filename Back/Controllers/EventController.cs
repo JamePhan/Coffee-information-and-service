@@ -17,10 +17,21 @@ namespace Back.Controllers
             _event = new EventRepository(context, mapper);
         }
 
-        [HttpGet]
-        public IActionResult List()
+        [HttpGet("{count}")]
+        public IActionResult List(int count)
         {
-            List<EventInfo> events = _event.GetEvents();
+            List<EventInfo> events = _event.GetEvents(count);
+            if (events.Count > 0)
+            {
+                return Ok(events);
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{count}")]
+        public IActionResult Lastest(int count)
+        {
+            List<EventInfo> events = _event.GetLastest(count);
             if (events.Count > 0)
             {
                 return Ok(events);

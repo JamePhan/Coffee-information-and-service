@@ -4,6 +4,8 @@ namespace Library.DAL
 {
     public interface IEventRepository
     {
-        List<EventInfo> GetEvents();
+        List<EventInfo> GetEvents(int count);
+
+        List<EventInfo> GetLastest(int count);
     }
 }

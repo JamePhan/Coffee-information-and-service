@@ -15,9 +15,33 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
-        public List<EventInfo> GetEvents()
+        public List<EventInfo> GetEvents(int count)
         {
-            List<Event> events = _context.Events.ToList();
+            List<Event> events;
+
+            if (count > 0)
+            {
+                events = _context.Events.Take(count).ToList();
+            }
+            else
+            {
+                events = _context.Events.ToList();
+            }
+
+            return _mapper.Map<List<Event>, List<EventInfo>>(events);
+        }
+
+        public List<EventInfo> GetLastest(int count)
+        {
+            List<Event> events;
+            if (count > 0)
+            {
+                events = _context.Events.OrderByDescending(events => events.Date).Take(count).ToList();
+            }
+            else
+            {
+                events = _context.Events.OrderByDescending(events => events.Date).ToList();
+            }
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
     }
