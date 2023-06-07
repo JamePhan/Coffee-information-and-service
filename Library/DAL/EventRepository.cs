@@ -1,24 +1,24 @@
-﻿using Library.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Library.DTO;
+using Library.Models;
 
 namespace Library.DAL
 {
     public class EventRepository : IEventRepository
     {
         private CoffeehouseSystemContext _context;
+        private IMapper _mapper;
 
-        public EventRepository(CoffeehouseSystemContext context)
+        public EventRepository(CoffeehouseSystemContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public List<Event> GetEvents()
+        public List<EventInfo> GetEvents()
         {
-            return _context.Events.ToList();
+            List<Event> events = _context.Events.ToList();
+            return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
     }
 }

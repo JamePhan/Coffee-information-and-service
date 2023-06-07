@@ -1,14 +1,9 @@
-﻿using Library.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Library.DTO;
 
 namespace Library.DAL
 {
     public interface IEventRepository
     {
-        List<Event> GetEvents();
+        List<EventInfo> GetEvents();
     }
 }
