@@ -259,8 +259,11 @@
   }
 
   .news-item {
+    position: relative;
+    overflow: hidden;
     text-align: center;
     margin-bottom: 40px;
+    transition: transform 0.3s ease;
   }
 
   .news-title {
@@ -285,4 +288,16 @@
     
     border-color: #343a40 !important; /* Màu viền của ô tìm kiếm */
     color: #64321E !important; /* Màu chữ trong ô tìm kiếm */
+  }
+
+
+.news-item:hover {
+    transform: scale(1.1); /* Tỷ lệ phóng to khi di chuột vào */
+  }
+
+  .news-title,
+  .news-description,
+  .btn {
+    position: relative;
+    z-index: 1;
   }
