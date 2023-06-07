@@ -9,7 +9,7 @@ namespace Library
         public MapperProfile()
         {
             CreateMap<Event, EventInfo>();
-            CreateMap<EventInfo, Event>();
+            CreateMap<Banner, BannerInfo>();
         }
     }
 }
