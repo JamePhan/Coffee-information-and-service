@@ -194,9 +194,7 @@
   color: #ffffff;
 }
 
-.footer .fb-page {
-  margin-top: 20px;
-}
+
 
 .footer #map {
   height: 200px;
@@ -206,3 +204,80 @@
 .footer p.text-center {
   margin-top: 20px;
 }
+
+
+  .footer .fb-page {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .footer .fb-page iframe {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+
+  .footer .fb-page .fb-xfbml-parse-ignore a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+.about-section {
+    padding: 80px 0;
+  }
+
+  .about-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .about-section p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .about-section .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+   .about-section .video-fluid {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+  .news-section {
+    padding: 80px 0;
+  }
+
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .news-item {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .news-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .news-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+   .news-image {
+   width: 300px;
+    height: 300px !important; /* Đặt kích thước cố định cho chiều cao của hình ảnh */
+    object-fit: cover;
+     border-radius: 10px; /* Đặt giá trị cong viền */
+    overflow: hidden; /* Ẩn phần ngoài của hình ảnh bị cắt */
+  }

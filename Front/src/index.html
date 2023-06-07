@@ -22,11 +22,11 @@
             box-shadow: none;
         }
 
-            .navbar .navbar-nav .nav-link {
-                color: #64321e; /* Màu chữ của các liên kết trong thanh menu */
-                font-size: 20px;
-                font-family: 'Baloo 2', cursive;
-            }
+        .navbar .navbar-nav .nav-link {
+            color: #64321e; /* Màu chữ của các liên kết trong thanh menu */
+            font-size: 20px;
+            font-family: 'Baloo 2', cursive;
+        }
 
         .navbar-nav .nav-item .nav-link:hover {
             transform: scale(1.1); /* Phóng to chữ lên 110% */
@@ -60,205 +60,269 @@
                     <li class="nav-item">
                         <a class="nav-link" href="register.html">Register</a>
                     </li>
-                </ul>
-            </div>
+                    <li class="nav-item">
+                      <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="banner-container">
-        <div class="banner">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="img/eventbanner4.jpg" class="d-block w-100" alt="Banner 1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/eventbanner2.jpg" class="d-block w-100" alt="Banner 2">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/eventbanner3.jpg" class="d-block w-100" alt="Banner 3">
-                    </div>
+<div class="banner-container">
+    <div class="banner">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/eventbanner4.jpg" class="d-block w-100" alt="Banner 1">
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <div class="carousel-item">
+                    <img src="img/eventbanner2.jpg" class="d-block w-100" alt="Banner 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/eventbanner3.jpg" class="d-block w-100" alt="Banner 3">
+                </div>
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
+</div>
+<section>
+    <div class="about-section" style="background-color: #fff7e1;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-center justify-content-center">
+           <video src="img/about3.mp4" autoplay loop muted class="video-fluid"></video>
+       </div>
 
-    <h2 class="highlight-title">SPECIAL EVENTS</h2>
-    <div class="container">
-        <div class="highlight-container">
+       <div class="col-md-6">
+        <h2>About Us</h2>
+        <p>At Event Tickets Center, we believe that buying tickets should be a simple, intuitive, and streamlined process. That’s why we created a user-friendly platform to browse millions of tickets to thousands of national and local events. You can find concert tickets, sports tickets, theater tickets, and more by searching a variety of categories like team, performer, or location. We also make sure you score the best seats in the house by providing interactive seating charts.
 
-            <div class="highlight-event">
-                <img src="img/eventbanner2.jpg" alt="Event 1">
-                <h3>Event 1</h3>
-                <p>Price: $10</p>
-                <p>Date: September 1, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner1.jpg" alt="Event 2">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner3.jpg" alt="Event 3">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner2.jpg" alt="Event 1">
-                <h3>Event 1</h3>
-                <p>Price: $10</p>
-                <p>Date: September 1, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner1.jpg" alt="Event 2">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner3.jpg" alt="Event 3">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner2.jpg" alt="Event 1">
-                <h3>Event 1</h3>
-                <p>Price: $10</p>
-                <p>Date: September 1, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner1.jpg" alt="Event 2">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-            <div class="highlight-event">
-                <img src="img/eventbanner3.jpg" alt="Event 3">
-                <h3>Event 2</h3>
-                <p>Price: $15</p>
-                <p>Date: September 5, 2023</p>
-            </div>
-        </div>
-        <div class="button-container">
-            <button class="btn-view-more">See More</button>
-        </div>
-        <!-- Thêm các div highlight-event khác tương tự cho các sự kiện khác -->
+        </p>
+        <p>Whether you are a sports fan, a theater buff, or a music lover, Event Tickets Center has tickets to all your favorite venues, concert halls, theaters, tours, comedy clubs, stadiums, and arenas. No matter what you’re into, if it requires a ticket to get in, ETC has you covered. You can browse trending events to find the hottest upcoming activities, or search by location to see what’s happening around your area. So, when you need to see your favorite band on tour, watch your local team play, or take the family out for a seasonal event coming to your city or town, check out Event Tickets Center to make sure you get the seat you want.
+
+        </p>
+        <button class="btn btn-danger">See More</button>
     </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<h2 class="highlight-title">SPECIAL EVENTS</h2>
+<div class="container">
+    <div class="highlight-container">
 
-    <div class="coffee-shops">
-        <h2 class="highlight-title">POPULAR COFFEE BRANDS</h2>
-        <div class="coffee-shop">
-            <img src="img/logoshop/cong.png" alt="Coffee Shop 1">
-            <h3>Shop 1</h3>
-            <p>Address: 123 Main Street</p>
-            <p>Opening Hours: 8:00 AM - 6:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner2.jpg" alt="Event 1">
+            <h3>Event 1</h3>
+            <p>Price: $10</p>
+            <p>Date: September 1, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner1.jpg" alt="Event 2">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner3.jpg" alt="Event 3">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/house.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner2.jpg" alt="Event 1">
+            <h3>Event 1</h3>
+            <p>Price: $10</p>
+            <p>Date: September 1, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/kafa.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner1.jpg" alt="Event 2">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner3.jpg" alt="Event 3">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/starbucks.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner2.jpg" alt="Event 1">
+            <h3>Event 1</h3>
+            <p>Price: $10</p>
+            <p>Date: September 1, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/starbucks.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+        <div class="highlight-event">
+            <img src="img/eventbanner1.jpg" alt="Event 2">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/cong.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
-        </div>
-        <div class="coffee-shop">
-            <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
-            <h3>Shop 2</h3>
-            <p>Address: 456 Elm Street</p>
-            <p>Opening Hours: 7:00 AM - 7:00 PM</p>
-        </div>
-        <!-- Thêm thông tin về các cửa hàng coffee shop khác -->
-        <div class="button-container">
-            <button class="btn-view-more">See More</button>
+        <div class="highlight-event">
+            <img src="img/eventbanner3.jpg" alt="Event 3">
+            <h3>Event 2</h3>
+            <p>Price: $15</p>
+            <p>Date: September 5, 2023</p>
         </div>
     </div>
+    <div class="button-container">
+        <button class="btn-view-more">See More</button>
     </div>
+    <!-- Thêm các div highlight-event khác tương tự cho các sự kiện khác -->
+</div>
 
-    <footer class="footer">
+<div class="coffee-shops">
+    <h2 class="highlight-title">POPULAR COFFEE BRANDS</h2>
+    <div class="coffee-shop">
+        <img src="img/logoshop/cong.png" alt="Coffee Shop 1">
+        <h3>Shop 1</h3>
+        <p>Address: 123 Main Street</p>
+        <p>Opening Hours: 8:00 AM - 6:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/house.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/kafa.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/starbucks.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/starbucks.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/cong.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <div class="coffee-shop">
+        <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
+        <h3>Shop 2</h3>
+        <p>Address: 456 Elm Street</p>
+        <p>Opening Hours: 7:00 AM - 7:00 PM</p>
+    </div>
+    <!-- Thêm thông tin về các cửa hàng coffee shop khác -->
+    <div class="button-container">
+        <button class="btn-view-more">See More</button>
+    </div>
+</div>
+</div>
+<section class="news-section">
+  <div class="container">
+    <h2 class="highlight-title">News</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="news-item">
+          <img src="img/new3.jpg" alt="News Image" class="img-fluid news-image">
+          <h3 class="news-title">News Title</h3>
+          <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+          <a href="#" class="btn btn-danger">Read More</a>
+      </div>
+  </div>
+  <div class="col-md-4">
+    <div class="news-item">
+      <img src="img/new2.jpg" alt="News Image" class="img-fluid news-image">
+      <h3 class="news-title">News Title</h3>
+      <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+      <a href="#" class="btn btn-danger">Read More</a>
+  </div>
+</div>
+<div class="col-md-4">
+    <div class="news-item">
+      <img src="img/new1.png" alt="News Image" class="img-fluid news-image ">
+      <h3 class="news-title">News Title</h3>
+      <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+      <a href="#" class="btn btn-danger">Read More</a>
+  </div>
+
+</div>
+
+</div>
+<div class="button-container">
+        <button class="btn-view-more">See More</button>
+    </div>
+</div>
+</section>
+
+<footer class="footer">
   <div class="container">
     <div class="row">
-      <div class="col-lg-4">
-        <h4>Thông giới thiệu</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in mi auctor, pretium libero nec, consectetur elit.</p>
-      </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4" style="padding: 0px 50px;">
+        <h4>About Us</h4>
+        <p style="text-align: justify;">At Event Tickets Center, we believe that buying tickets should be a simple, intuitive, and streamlined process. That’s why we created a user-friendly platform to browse millions of tickets to thousands of national and local events. </p>
+    </div>
+    <div class="col-lg-4">
         <h4>Fanpage</h4>
         <div class="fb-page" data-href="https://www.facebook.com/SU2023fPT/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
           <blockquote cite="https://www.facebook.com/SU2023fPT/" class="fb-xfbml-parse-ignore">
             <a href="https://www.facebook.com/SU2023fPT/">Your Fanpage</a>
-          </blockquote>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <h4>Address</h4>
-        <div id="map"></div>
-      </div>
+        </blockquote>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <p class="text-center">&copy; 2023 Coffee Information & Services. All rights reserved.</p>
-      </div>
-    </div>
-  </div>
+</div>
+<div class="col-lg-4">
+    <h4>Address</h4>
+    <div id="map"></div>
+</div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <p class="text-center">&copy; 2023 Coffee Information & Services. All rights reserved.</p>
+</div>
+</div>
+</div>
 </footer>
 
-    <!-- Include Google Maps API and initialize the map -->
+<!-- Include Google Maps API and initialize the map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazGXQ1xADLpReF6i_UitXppeSn8RsbJw&callback=initMap" async defer></script>
 <script>
   function initMap() {
@@ -266,15 +330,15 @@
     var mapOptions = {
       center: { lat: 21.013271072229312, lng: 105.52706058711438 }, // Example coordinates (New York City)
       zoom: 12
-    };
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  }
+  };
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
 </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=219975220852072&autoLogAppEvents=1" nonce="random-nonce"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=219975220852072&autoLogAppEvents=1" nonce="random-nonce"></script>
 
 
 </body>
