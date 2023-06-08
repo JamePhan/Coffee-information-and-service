@@ -4,10 +4,11 @@ using Library.Models;
 
 namespace Library.DAL
 {
-    public class EventRepository : IEventRepository
+    public class EventRepository : IEventRepository, IDisposable
     {
         private CoffeehouseSystemContext _context;
         private IMapper _mapper;
+        private bool _disposed = false;
 
         public EventRepository(CoffeehouseSystemContext context, IMapper mapper)
         {
@@ -43,6 +44,21 @@ namespace Library.DAL
                 events = _context.Events.OrderByDescending(events => events.Date).ToList();
             }
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _context.Dispose();
+            }
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -4,10 +4,11 @@ using Library.Models;
 
 namespace Library.DAL
 {
-    public class BannerRepository : IBannerRepository
+    public class BannerRepository : IBannerRepository, IDisposable
     {
         private CoffeehouseSystemContext _context;
         private IMapper _mapper;
+        private bool _disposed = false;
 
         public BannerRepository(CoffeehouseSystemContext context, IMapper mapper)
         {
@@ -27,6 +28,21 @@ namespace Library.DAL
                 banners = _context.Banners.ToList();
             }
             return _mapper.Map<List<Banner>, List<BannerInfo>>(banners);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _context.Dispose();
+            }
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
