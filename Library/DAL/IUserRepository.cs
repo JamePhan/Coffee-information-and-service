@@ -1,4 +1,5 @@
-﻿using Library.Models;
+﻿using Library.DTO;
+using Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,9 @@ namespace Library.DAL
     public interface IUserRepository : IDisposable
     {
         User? GetUserByEmail(string email);
+
+        List<UserInfo> GetUsers(int count);
+
+        List<UserInfo> GetUsers(string name);
     }
 }
