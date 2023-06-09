@@ -1,4 +1,5 @@
-﻿using Library.Models;
+﻿using Library.DTO;
+using Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace Library.DAL
 {
     public interface ICustomerRepository : IDisposable
     {
-        List<Customer> GetCustomers();
+        List<CustomerInfo> GetCustomers(int count);
+
+        List<CustomerInfo> GetCustomersBanned(int count);
 
         Customer? GetCustomer(int id);
 

@@ -11,6 +11,7 @@ namespace Library
             CreateMap<Event, EventInfo>();
             CreateMap<Banner, BannerInfo>();
             CreateMap<User, UserInfo>();
+            CreateMap<Customer, CustomerInfo>();
         }
     }
 }
