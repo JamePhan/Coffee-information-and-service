@@ -1,10 +1,14 @@
-﻿using Library.Models;
+﻿using AutoMapper;
+using Library.DTO;
+using Library.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.DAL
 {
-    public class CustomerRepository : ICustomerRepository, IDisposable
+    public class CustomerRepository : ICustomerRepository
     {
-        private CoffeehouseSystemContext _context;
+        private readonly CoffeehouseSystemContext _context;
+        private IMapper _mapper;
         private bool _disposed = false;
 
         public CustomerRepository(CoffeehouseSystemContext context)
@@ -12,9 +16,46 @@ namespace Library.DAL
             _context = context;
         }
 
-        public List<Customer> GetCustomers()
+        public CustomerRepository(CoffeehouseSystemContext context, IMapper mapper)
         {
-            return _context.Customers.ToList();
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public List<CustomerInfo> GetCustomers(int count)
+        {
+            List<Customer> customers;
+            if (count > 0)
+            {
+                customers = _context.Customers.Take(count).ToList();
+            }
+            else
+            {
+                customers = _context.Customers.ToList();
+            }
+
+            return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
+        }
+
+        public List<CustomerInfo> GetCustomersBanned(int count)
+        {
+            List<Customer> customers;
+            if (count > 0)
+            {
+                customers = _context.Customers
+                    .Include(customer => customer.Account)
+                    .Where(customer => customer.Account.IsBanned == true)
+                    .Take(count).ToList();
+            }
+            else
+            {
+                customers = _context.Customers
+                    .Include(customer => customer.Account)
+                    .Where(customer => customer.Account.IsBanned == true)
+                    .ToList();
+            }
+
+            return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 
         public Customer? GetCustomer(int id)

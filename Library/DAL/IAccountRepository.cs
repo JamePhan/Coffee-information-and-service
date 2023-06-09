@@ -19,6 +19,8 @@ namespace Library.DAL
 
         void RemoveForgetCode(int accountId);
 
+        void UpdateBanStatus(int accountId);
+
         void InsertAccount(Account account);
 
         void UpdateAccount(Account account);

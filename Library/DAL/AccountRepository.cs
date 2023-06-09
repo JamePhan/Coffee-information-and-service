@@ -1,5 +1,6 @@
 ﻿using Library.DTO;
 using Library.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Library.DAL
 {
@@ -73,6 +74,10 @@ namespace Library.DAL
                 checkExist.ForgetCode = code;
                 UpdateAccount(checkExist);
             }
+            else
+            {
+                throw new Exception("No such account found!");
+            }
         }
 
         public bool CheckForgetCode(int accountId, string code)
@@ -96,6 +101,24 @@ namespace Library.DAL
                 checkExist.ForgetCode = "";
                 UpdateAccount(checkExist);
             }
+            else
+            {
+                throw new Exception("No such account found!");
+            }
+        }
+
+        public void UpdateBanStatus(int accountId)
+        {
+            Account? checkExist = _context.Accounts.FirstOrDefault(account => account.AccountId == accountId);
+            if (checkExist != null)
+            {
+                checkExist.IsBanned = !checkExist.IsBanned;
+                UpdateAccount(checkExist);
+            }
+            else
+            {
+                throw new Exception("No such account found!");
+            }
         }
 
         public void InsertAccount(Account account)
@@ -115,6 +138,10 @@ namespace Library.DAL
             {
                 toUpdate.Password = password;
                 _context.Entry(toUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else
+            {
+                throw new Exception("No such account found!");
             }
         }
 

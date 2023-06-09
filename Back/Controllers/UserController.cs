@@ -39,5 +39,16 @@ namespace Back.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet("{count}")]
+        public IActionResult Banned(int count)
+        {
+            List<UserInfo> users = _user.GetUsersBanned(count);
+            if (users.Count > 0)
+            {
+                return Ok(users);
+            }
+            return NotFound();
+        }
     }
 }

@@ -172,5 +172,22 @@ namespace Back.Controllers
 
             return BadRequest();
         }
+
+        [HttpPatch("{id}")]
+        public IActionResult UpdateBan(int id)
+        {
+            try
+            {
+                _account.UpdateBanStatus(id);
+                _account.Save();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return BadRequest();
+        }
     }
 }
