@@ -15,5 +15,7 @@ namespace Library.DAL
         List<UserInfo> GetUsers(int count);
 
         List<UserInfo> GetUsers(string name);
+
+        List<UserInfo> GetUsersBanned(int count);
     }
 }
