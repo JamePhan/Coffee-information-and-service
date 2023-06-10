@@ -29,6 +29,17 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpGet("{name}")]
+        public IActionResult Search(string name)
+        {
+            List<CustomerInfo> customers = _customer.GetCustomers(name);
+            if (customers.Count > 0)
+            {
+                return Ok(customers);
+            }
+            return NotFound();
+        }
+
         [HttpGet("{count}")]
         public IActionResult Banned(int count)
         {

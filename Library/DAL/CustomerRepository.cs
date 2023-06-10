@@ -37,6 +37,12 @@ namespace Library.DAL
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 
+        public List<CustomerInfo> GetCustomers(string name)
+        {
+            List<Customer> customers = _context.Customers.Where(customer => customer.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+            return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
+        }
+
         public List<CustomerInfo> GetCustomersBanned(int count)
         {
             List<Customer> customers;
