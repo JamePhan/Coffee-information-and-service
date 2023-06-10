@@ -12,6 +12,8 @@ namespace Library.DAL
     {
         List<CustomerInfo> GetCustomers(int count);
 
+        List<CustomerInfo> GetCustomers(string name);
+
         List<CustomerInfo> GetCustomersBanned(int count);
 
         Customer? GetCustomer(int id);
