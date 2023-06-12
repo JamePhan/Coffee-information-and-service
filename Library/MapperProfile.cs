@@ -12,6 +12,7 @@ namespace Library
             CreateMap<Banner, BannerInfo>();
             CreateMap<User, UserInfo>();
             CreateMap<Customer, CustomerInfo>();
+            CreateMap<Following, FollowInfo>();
         }
     }
 }
