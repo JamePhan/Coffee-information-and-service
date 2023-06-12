@@ -28,5 +28,20 @@ namespace Back.Controllers
             }
             return NotFound();
         }
+
+        [HttpPut]
+        public IActionResult Follow(FollowInfo follow)
+        {
+            try
+            {
+                _follow.AddFollow(follow);
+                _follow.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Library
             CreateMap<User, UserInfo>();
             CreateMap<Customer, CustomerInfo>();
             CreateMap<Following, FollowInfo>();
+            CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
         }
     }
 }

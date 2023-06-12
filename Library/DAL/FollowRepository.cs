@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.DTO;
 using Library.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,26 @@ namespace Library.DAL
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public void AddFollow(FollowInfo follow)
+        {
+            Following? checkExist = _context.Followings.FirstOrDefault(following => following.CustomerId == follow.CustomerId && following.UserId == follow.UserId);
+            if (checkExist != null)
+            {
+                try
+                {
+                    _context.Followings.Add(_mapper.Map<FollowInfo, Following>(follow));
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Already followed!");
+            }
         }
 
         public List<FollowInfo> GetFollowingUsers(int customerId)

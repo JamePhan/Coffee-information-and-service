@@ -9,6 +9,10 @@ namespace Library.DAL
 {
     public interface IFollowRepository : IDisposable
     {
+        void AddFollow(FollowInfo follow);
+
         List<FollowInfo> GetFollowingUsers(int customerId);
+
+        void Save();
     }
 }
