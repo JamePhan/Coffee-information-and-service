@@ -8,6 +8,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f8f9fa;
         }
 
         .container-fluid {
@@ -72,6 +73,51 @@
             margin-bottom: 0;
             font-size: 18px;
         }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container th,
+        .table-container td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .table-container th {
+            background-color: #f1f1f1;
+            text-align: left;
+        }
+
+        .table-container tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +162,20 @@
                 <div id="chart"></div>
                 <div id="user-list" style="display: none;">
                     <h2 id="user-list-title">User List</h2>
-                    <ul id="user-list-content"></ul>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Created Date</th>
+                                    <th>Function</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-list-content"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -161,22 +220,68 @@
             // Hiển thị danh sách người dùng
             const userListContent = document.getElementById("user-list-content");
             userListContent.innerHTML = "";
-            userList.forEach(user => {
-                const listItem = document.createElement("li");
-                listItem.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-details">
-                            <h4>${user.name}</h4>
-                            <p>UID: ${user.id}</p>
-                            <p>Email: ${user.email}</p>
-                            <p>Ngày tạo: ${user.createdDate}</p>
-                        </div>
-                        <div class="user-stats">
-                            <p>Số lượng event: ${user.eventCount}</p>
-                        </div>
-                    </div>
-                `;
-                userListContent.appendChild(listItem);
+            userList.forEach((user, index) => {
+                const row = document.createElement("tr");
+
+                const sttCell = document.createElement("td");
+                sttCell.textContent = index + 1;
+                row.appendChild(sttCell);
+
+                const nameCell = document.createElement("td");
+                nameCell.textContent = user.name;
+                row.appendChild(nameCell);
+
+                const emailCell = document.createElement("td");
+                emailCell.textContent = user.email;
+                row.appendChild(emailCell);
+
+                const createdDateCell = document.createElement("td");
+                createdDateCell.textContent = user.createdDate;
+                row.appendChild(createdDateCell);
+
+                const functionCell = document.createElement("td");
+
+                if (listType === "request") {
+                    const acceptButton = document.createElement("button");
+                    acceptButton.textContent = "Accept";
+                    // Gán sự kiện onclick cho nút accept
+                    acceptButton.onclick = function () {
+                        // Thực hiện hành động accept
+                        acceptRequest(user.id);
+                    };
+                    functionCell.appendChild(acceptButton);
+
+                    const declineButton = document.createElement("button");
+                    declineButton.textContent = "Decline";
+                    // Gán sự kiện onclick cho nút decline
+                    declineButton.onclick = function () {
+                        // Thực hiện hành động decline
+                        declineRequest(user.id);
+                    };
+                    functionCell.appendChild(declineButton);
+                } else {
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    // Gán sự kiện onclick cho nút sửa
+                    editButton.onclick = function () {
+                        // Thực hiện hành động sửa
+                        editUser(user.id);
+                    };
+                    functionCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    // Gán sự kiện onclick cho nút xóa
+                    deleteButton.onclick = function () {
+                        // Thực hiện hành động xóa
+                        deleteUser(user.id);
+                    };
+                    functionCell.appendChild(deleteButton);
+                }
+
+                row.appendChild(functionCell);
+
+                userListContent.appendChild(row);
             });
 
             // Cập nhật tiêu đề
@@ -195,7 +300,27 @@
             document.getElementById("section-title").innerText = "List Events";
         }
 
-        // Mặc định hiển thị Dashboard
+        function editUser(userId) {
+            // Hành động sửa người dùng với userId cụ thể
+            console.log("Edit user with ID:", userId);
+        }
+
+        function deleteUser(userId) {
+            // Hành động xóa người dùng với userId cụ thể
+            console.log("Delete user with ID:", userId);
+        }
+
+        function acceptRequest(userId) {
+            // Hành động accept request của người dùng với userId cụ thể
+            console.log("Accept request from user with ID:", userId);
+        }
+
+        function declineRequest(userId) {
+            // Hành động decline request của người dùng với userId cụ thể
+            console.log("Decline request from user with ID:", userId);
+        }
+
+        // Gọi hàm showDashboard khi trang web được tải
         showDashboard();
     </script>
 </body>
