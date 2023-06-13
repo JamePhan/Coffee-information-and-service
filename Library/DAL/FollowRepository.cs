@@ -25,7 +25,7 @@ namespace Library.DAL
         public void AddFollow(FollowInfo follow)
         {
             Following? checkExist = _context.Followings.FirstOrDefault(following => following.CustomerId == follow.CustomerId && following.UserId == follow.UserId);
-            if (checkExist != null)
+            if (checkExist == null)
             {
                 try
                 {
