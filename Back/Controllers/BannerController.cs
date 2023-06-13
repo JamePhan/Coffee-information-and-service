@@ -28,5 +28,50 @@ namespace Back.Controllers
             }
             return NotFound();
         }
+
+        [HttpPut]
+        public IActionResult Add(BannerInfo banner)
+        {
+            try
+            {
+                _banner.AddBanner(banner);
+                _banner.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
+        public IActionResult Update(BannerInfo banner)
+        {
+            try
+            {
+                _banner.UpdateBanner(banner);
+                _banner.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _banner.RemoveBanner(id);
+                _banner.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -9,6 +9,14 @@ namespace Library.DAL
 {
     public interface IBannerRepository
     {
+        void AddBanner(BannerInfo banner);
+
+        void UpdateBanner(BannerInfo banner);
+
+        void RemoveBanner(int bannerId);
+
         List<BannerInfo> GetBanners(int count);
+
+        void Save();
     }
 }

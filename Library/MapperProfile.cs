@@ -10,6 +10,7 @@ namespace Library
         {
             CreateMap<Event, EventInfo>();
             CreateMap<Banner, BannerInfo>();
+            CreateMap<BannerInfo, Banner>().ForSourceMember(src => src.BannerId, opt => opt.DoNotValidate());
             CreateMap<User, UserInfo>();
             CreateMap<Customer, CustomerInfo>();
             CreateMap<Following, FollowInfo>();
