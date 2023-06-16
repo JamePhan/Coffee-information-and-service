@@ -29,6 +29,21 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpPut]
+        public IActionResult Add(ServiceInfo service)
+        {
+            try
+            {
+                _service.AddService(service);
+                _service.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _service.Dispose();
