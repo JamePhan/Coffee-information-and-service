@@ -4,10 +4,10 @@ using Library.Models;
 
 namespace Library.DAL
 {
-    public class EventRepository : IEventRepository, IDisposable
+    public class EventRepository : IEventRepository
     {
-        private CoffeehouseSystemContext _context;
-        private IMapper _mapper;
+        private readonly CoffeehouseSystemContext _context;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
         public EventRepository(CoffeehouseSystemContext context, IMapper mapper)
