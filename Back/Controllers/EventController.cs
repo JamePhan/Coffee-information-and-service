@@ -8,7 +8,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class EventController : ControllerBase
+    public class EventController : Controller
     {
         private readonly IEventRepository _event;
 
@@ -37,6 +37,12 @@ namespace Back.Controllers
                 return Ok(events);
             }
             return NotFound();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _event.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

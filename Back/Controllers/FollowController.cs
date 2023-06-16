@@ -9,7 +9,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class FollowController : ControllerBase
+    public class FollowController : Controller
     {
         private readonly IFollowRepository _follow;
 
@@ -42,6 +42,12 @@ namespace Back.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _follow.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

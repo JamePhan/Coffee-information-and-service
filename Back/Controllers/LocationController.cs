@@ -9,7 +9,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class LocationController : ControllerBase
+    public class LocationController : Controller
     {
         private readonly ILocationRepository _location;
 
@@ -57,6 +57,12 @@ namespace Back.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _location.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

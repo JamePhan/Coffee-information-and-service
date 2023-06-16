@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.DAL
 {
-    public interface IBannerRepository
+    public interface IBannerRepository : IDisposable
     {
         void AddBanner(BannerInfo banner);
 
