@@ -2,7 +2,7 @@
 
 namespace Library.DAL
 {
-    public interface IEventRepository
+    public interface IEventRepository : IDisposable
     {
         List<EventInfo> GetEvents(int count);
 

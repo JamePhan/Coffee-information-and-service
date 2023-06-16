@@ -9,7 +9,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BannerController : ControllerBase
+    public class BannerController : Controller
     {
         private readonly IBannerRepository _banner;
 
@@ -72,6 +72,12 @@ namespace Back.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _banner.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

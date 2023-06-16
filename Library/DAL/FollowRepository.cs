@@ -12,8 +12,8 @@ namespace Library.DAL
 {
     public class FollowRepository : IFollowRepository
     {
-        private CoffeehouseSystemContext _context;
-        private IMapper _mapper;
+        private readonly CoffeehouseSystemContext _context;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
         public FollowRepository(CoffeehouseSystemContext context, IMapper mapper)

@@ -9,7 +9,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class CustomerController : ControllerBase
+    public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customer;
 
@@ -49,6 +49,12 @@ namespace Back.Controllers
                 return Ok(customers);
             }
             return NotFound();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _customer.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

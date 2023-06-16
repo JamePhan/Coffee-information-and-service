@@ -4,9 +4,9 @@ using Microsoft.Data.SqlClient;
 
 namespace Library.DAL
 {
-    public class AccountRepository : IAccountRepository, IDisposable
+    public class AccountRepository : IAccountRepository
     {
-        private CoffeehouseSystemContext _context;
+        private readonly CoffeehouseSystemContext _context;
         private bool _disposed = false;
 
         public AccountRepository(CoffeehouseSystemContext context)

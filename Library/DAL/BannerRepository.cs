@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Library.DAL
 {
-    public class BannerRepository : IBannerRepository, IDisposable
+    public class BannerRepository : IBannerRepository
     {
         private CoffeehouseSystemContext _context;
         private IMapper _mapper;
