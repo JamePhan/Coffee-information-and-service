@@ -44,6 +44,21 @@ namespace Back.Controllers
             }
         }
 
+        [HttpPatch]
+        public IActionResult Update(ServiceInfo service)
+        {
+            try
+            {
+                _service.UpdateService(service);
+                _service.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _service.Dispose();
