@@ -59,6 +59,21 @@ namespace Back.Controllers
             }
         }
 
+        [HttpDelete("{serviceId}")]
+        public IActionResult Delete(int serviceId)
+        {
+            try
+            {
+                _service.RemoveService(serviceId);
+                _service.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _service.Dispose();
