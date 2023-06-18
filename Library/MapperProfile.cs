@@ -15,6 +15,10 @@ namespace Library
             CreateMap<Customer, CustomerInfo>();
             CreateMap<Following, FollowInfo>();
             CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
+            CreateMap<Location, LocationInfo>();
+            CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
+            CreateMap<Service, ServiceInfo>();
+            CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
         }
     }
 }

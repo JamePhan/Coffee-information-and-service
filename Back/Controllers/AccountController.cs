@@ -189,5 +189,13 @@ namespace Back.Controllers
 
             return BadRequest();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _account.Dispose();
+            _customer.Dispose();
+            _user.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Library.DAL
 {
-    public class UserRepository : IUserRepository, IDisposable
+    public class UserRepository : IUserRepository
     {
-        private CoffeehouseSystemContext _context;
-        private IMapper _mapper;
+        private readonly CoffeehouseSystemContext _context;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
         public UserRepository(CoffeehouseSystemContext context)

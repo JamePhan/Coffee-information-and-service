@@ -9,7 +9,7 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly IUserRepository _user;
 
@@ -49,6 +49,12 @@ namespace Back.Controllers
                 return Ok(users);
             }
             return NotFound();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _user.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

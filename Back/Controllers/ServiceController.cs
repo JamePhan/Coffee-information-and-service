@@ -9,33 +9,33 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BannerController : Controller
+    public class ServiceController : Controller
     {
-        private readonly IBannerRepository _banner;
+        private readonly IServiceRepository _service;
 
-        public BannerController(CoffeehouseSystemContext context, IMapper mapper)
+        public ServiceController(CoffeehouseSystemContext context, IMapper mapper)
         {
-            _banner = new BannerRepository(context, mapper);
+            _service = new ServiceRepository(context, mapper);
         }
 
         [HttpGet("{count}")]
         public IActionResult List(int count)
         {
-            List<BannerInfo> banners = _banner.GetBanners(count);
-            if (banners.Count > 0)
+            List<ServiceInfo> services = _service.GetServices(count);
+            if (services.Count > 0)
             {
-                return Ok(banners);
+                return Ok(services);
             }
             return NotFound();
         }
 
         [HttpPut]
-        public IActionResult Add(BannerInfo banner)
+        public IActionResult Add(ServiceInfo service)
         {
             try
             {
-                _banner.AddBanner(banner);
-                _banner.Save();
+                _service.AddService(service);
+                _service.Save();
                 return Ok();
             }
             catch (Exception)
@@ -45,12 +45,12 @@ namespace Back.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Update(BannerInfo banner)
+        public IActionResult Update(ServiceInfo service)
         {
             try
             {
-                _banner.UpdateBanner(banner);
-                _banner.Save();
+                _service.UpdateService(service);
+                _service.Save();
                 return Ok();
             }
             catch (Exception)
@@ -59,13 +59,13 @@ namespace Back.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{serviceId}")]
+        public IActionResult Delete(int serviceId)
         {
             try
             {
-                _banner.RemoveBanner(id);
-                _banner.Save();
+                _service.RemoveService(serviceId);
+                _service.Save();
                 return Ok();
             }
             catch (Exception)
@@ -76,7 +76,7 @@ namespace Back.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _banner.Dispose();
+            _service.Dispose();
             base.Dispose(disposing);
         }
     }

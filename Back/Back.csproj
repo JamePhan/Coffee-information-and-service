@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoffeehouseLibrary\Library.csproj" />
     <ProjectReference Include="..\Library\Library.csproj" />
   </ItemGroup>
 
