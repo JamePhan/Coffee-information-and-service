@@ -8,6 +8,12 @@ namespace Library.DAL
 
         List<ScheduleInfo> GetSchedulesCustomer(int customerId);
 
+        void BookSchedule(ScheduleInfo schedule);
+
+        void UpdateSchedule(ScheduleInfo schedule);
+
+        void DeleteSchedule(int scheduleId);
+
         void Save();
     }
 }

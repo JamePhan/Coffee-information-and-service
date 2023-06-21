@@ -38,5 +38,50 @@ namespace Back.Controllers
             }
             return NotFound();
         }
+
+        [HttpPut]
+        public IActionResult Book(ScheduleInfo schedule)
+        {
+            try
+            {
+                _schedule.BookSchedule(schedule);
+                _schedule.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
+        public IActionResult Update(ScheduleInfo schedule)
+        {
+            try
+            {
+                _schedule.UpdateSchedule(schedule);
+                _schedule.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int scheduleId)
+        {
+            try
+            {
+                _schedule.DeleteSchedule(scheduleId);
+                _schedule.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
