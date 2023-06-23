@@ -48,6 +48,12 @@ namespace Library.DAL
             return _mapper.Map<List<Following>, List<FollowInfo>>(followings);
         }
 
+        public List<FollowInfo> GetFollowingCustomers(int userId)
+        {
+            List<Following> followings = _context.Followings.Where(follow => follow.UserId == userId).ToList();
+            return _mapper.Map<List<Following>, List<FollowInfo>>(followings);
+        }
+
         public void Save()
         {
             _context.SaveChanges();
