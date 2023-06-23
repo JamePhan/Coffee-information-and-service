@@ -9,6 +9,7 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddCors();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,8 +22,6 @@ internal class Program
             );
 
         builder.Services.AddAutoMapper(typeof(MapperProfile));
-
-        builder.Services.AddCors();
 
         var app = builder.Build();
 

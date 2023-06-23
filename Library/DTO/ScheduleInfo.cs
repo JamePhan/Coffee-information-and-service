@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.DTO
+﻿namespace Library.DTO
 {
     public class ScheduleInfo
     {
@@ -12,7 +6,13 @@ namespace Library.DTO
 
         public int? EventId { get; set; }
 
+        public DateTime? Date { get; set; }
+
+        public string? ImageUrl { get; set; }
+
         public int? CustomerId { get; set; }
+
+        public string? Name { get; set; }
 
         public int? TicketCount { get; set; }
     }

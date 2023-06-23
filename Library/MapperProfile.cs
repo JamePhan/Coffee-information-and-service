@@ -20,7 +20,7 @@ namespace Library
             CreateMap<Service, ServiceInfo>();
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
             CreateMap<Schedule, ScheduleInfo>();
-            CreateMap<Event, NewsInfo>();
+            CreateMap<ScheduleInfo, Schedule>().ForSourceMember(src => src.ScheduleId, opt => opt.DoNotValidate());
         }
     }
 }

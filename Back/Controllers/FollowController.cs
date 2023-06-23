@@ -19,12 +19,23 @@ namespace Back.Controllers
         }
 
         [HttpGet("{customerId}")]
-        public IActionResult List(int customerId)
+        public IActionResult CustomerList(int customerId)
         {
             List<FollowInfo> following = _follow.GetFollowingUsers(customerId);
             if (following.Count > 0)
             {
                 return Ok(following);
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{userId}")]
+        public IActionResult UserList(int userId)
+        {
+            List<FollowInfo> followings = _follow.GetFollowingUsers(userId);
+            if (followings.Count > 0)
+            {
+                return Ok(followings);
             }
             return NotFound();
         }
