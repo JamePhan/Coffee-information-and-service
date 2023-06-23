@@ -13,6 +13,8 @@ namespace Library.DAL
 
         List<FollowInfo> GetFollowingUsers(int customerId);
 
+        List<FollowInfo> GetFollowingCustomers(int userId);
+
         void Save();
     }
 }
