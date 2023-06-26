@@ -1,3 +1,4 @@
+using Back.Utilities;
 using Library;
 using Library.Models;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,8 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseMiddleware<AntiXSSMiddleWare>();
 
         app.UseCors();
 
