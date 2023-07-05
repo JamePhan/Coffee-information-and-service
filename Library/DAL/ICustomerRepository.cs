@@ -24,7 +24,7 @@ namespace Library.DAL
 
         void InsertCustomer(Customer customer);
 
-        void UpdateCustomer(Customer customer);
+        void UpdateCustomer(CustomerInfo customer);
 
         void DeleteCustomer(int id);
 

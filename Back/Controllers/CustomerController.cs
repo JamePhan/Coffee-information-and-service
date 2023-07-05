@@ -40,6 +40,21 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpPatch]
+        public IActionResult Update(CustomerInfo customer)
+        {
+            try
+            {
+                _customer.UpdateCustomer(customer);
+                _customer.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("{count}")]
         public IActionResult Banned(int count)
         {

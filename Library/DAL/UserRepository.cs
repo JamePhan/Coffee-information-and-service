@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.DTO;
 using Library.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,32 @@ namespace Library.DAL
             }
 
             return _mapper.Map<List<User>, List<UserInfo>>(users);
+        }
+
+        public void UpdateUser(UserInfo user)
+        {
+            User? checkExist = _context.Users.FirstOrDefault(u => u.UserId.Equals(user.UserId));
+            if (checkExist != null)
+            {
+                try
+                {
+                    checkExist = _mapper.Map<UserInfo, User>(user);
+                    _context.Entry(checkExist).State = EntityState.Modified;
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("User doesn't exist!");
+            }
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
 
         protected virtual void Dispose(bool disposing)
