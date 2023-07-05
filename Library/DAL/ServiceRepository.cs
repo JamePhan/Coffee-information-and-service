@@ -22,6 +22,19 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
+        public ServiceInfo? GetService(int id)
+        {
+            Service? service = _context.Services.FirstOrDefault(service => service.ServiceId.Equals(id));
+            if (service != null)
+            {
+                return _mapper.Map<Service, ServiceInfo>(service);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public List<ServiceInfo> GetServices(int count)
         {
             List<Service> services;

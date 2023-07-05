@@ -9,6 +9,8 @@ namespace Library.DAL
 {
     public interface IServiceRepository : IDisposable
     {
+        ServiceInfo? GetService(int id);
+
         List<ServiceInfo> GetServices(int count);
 
         void AddService(ServiceInfo service);
