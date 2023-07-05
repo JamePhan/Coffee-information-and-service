@@ -13,6 +13,7 @@ namespace Library
             CreateMap<BannerInfo, Banner>().ForSourceMember(src => src.BannerId, opt => opt.DoNotValidate());
             CreateMap<User, UserInfo>();
             CreateMap<Customer, CustomerInfo>();
+            CreateMap<CustomerInfo, Customer>().ForSourceMember(src => src.CustomerId, opt => opt.DoNotValidate());
             CreateMap<Following, FollowInfo>();
             CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
             CreateMap<Location, LocationInfo>();

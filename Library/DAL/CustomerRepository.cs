@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.DTO;
 using Library.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.DAL
@@ -84,9 +85,25 @@ namespace Library.DAL
             _context.Customers.Add(customer);
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateCustomer(CustomerInfo customer)
         {
-            _context.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            Customer? checkExist = _context.Customers.SingleOrDefault(cust => cust.CustomerId.Equals(customer.CustomerId));
+            if (checkExist != null)
+            {
+                try
+                {
+                    checkExist = _mapper.Map<CustomerInfo, Customer>(customer);
+                    _context.Entry(checkExist).State = EntityState.Modified;
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Customer doesn't exist!");
+            }
         }
 
         public void DeleteCustomer(int id)
