@@ -18,6 +18,20 @@ namespace Back.Controllers
             _service = new ServiceRepository(context, mapper);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            ServiceInfo? service = _service.GetService(id);
+            if (service != null)
+            {
+                return Ok(service);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet("{count}")]
         public IActionResult List(int count)
         {
