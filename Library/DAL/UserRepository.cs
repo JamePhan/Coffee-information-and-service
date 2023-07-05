@@ -33,6 +33,11 @@ namespace Library.DAL
             return _context.Users.FirstOrDefault(u => u.Email.Equals(email));
         }
 
+        public User? GetUserByAccountId(int accountId)
+        {
+            return _context.Users.FirstOrDefault(u => u.AccountId.Equals(accountId));
+        }
+
         public List<UserInfo> GetUsers(int count)
         {
             List<User> users;

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Back.Utilities;
 using Library.DAL;
-using MimeKit;
-using MailKit.Net.Smtp;
-using Library.Models;
 using Library.DTO;
-using Back.Utilities;
+using Library.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Back.Controllers
 {
@@ -14,12 +17,14 @@ namespace Back.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IAccountRepository _account;
+        private readonly IAdminRepository _admin;
         private readonly ICustomerRepository _customer;
         private readonly IUserRepository _user;
 
         public AccountController(CoffeehouseSystemContext context, IConfiguration configuration)
         {
             _account = new AccountRepository(context);
+            _admin = new AdminRepository(context);
             _customer = new CustomerRepository(context);
             _user = new UserRepository(context);
             _configuration = configuration;
@@ -34,7 +39,31 @@ namespace Back.Controllers
                 AccountStatus? accountStatus = _account.GetAccountStatus(login);
                 if (accountStatus != null)
                 {
-                    return Ok(accountStatus);
+                    if (accountStatus.IsBanned == false)
+                    {
+                        Admin? isAdmin = _admin.GetAdminByAccountId(accountStatus.AccountId);
+                        User? isUser = _user.GetUserByAccountId(accountStatus.AccountId);
+                        Customer? isCustomer = _customer.GetCustomerByAccountId(accountStatus.AccountId);
+
+                        string role = "";
+
+                        // Prioritize higher privilege role
+
+                        if (isCustomer != null) role = "Customer";
+                        if (isUser != null) role = "User";
+                        if (isAdmin != null) role = "Admin";
+
+                        var token = GenerateJwtToken(role);
+                        return Ok(new
+                        {
+                            Id = accountStatus.AccountId,
+                            Token = token
+                        });
+                    }
+                    else
+                    {
+                        return Unauthorized("Account is banned!");
+                    }
                 }
                 else
                 {
@@ -173,6 +202,7 @@ namespace Back.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public IActionResult UpdateBan(int id)
         {
@@ -188,6 +218,25 @@ namespace Back.Controllers
             }
 
             return BadRequest();
+        }
+
+        private string GenerateJwtToken(string role)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role, role)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddDays(7), // Set token expiration time
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         protected override void Dispose(bool disposing)
