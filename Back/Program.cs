@@ -1,7 +1,11 @@
 using Back.Utilities;
 using Library;
 using Library.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 internal class Program
 {
@@ -22,6 +26,26 @@ internal class Program
                 )
             );
 
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+            .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                RoleClaimType = ClaimTypes.Role,
+            };
+        });
+
         builder.Services.AddAutoMapper(typeof(MapperProfile));
 
         var app = builder.Build();
@@ -38,6 +62,8 @@ internal class Program
         app.UseMiddleware<AntiXSSMiddleWare>();
 
         app.UseCors();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

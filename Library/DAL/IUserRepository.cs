@@ -12,6 +12,8 @@ namespace Library.DAL
     {
         User? GetUserByEmail(string email);
 
+        User? GetUserByAccountId(int accountId);
+
         List<UserInfo> GetUsers(int count);
 
         List<UserInfo> GetUsers(string name);
