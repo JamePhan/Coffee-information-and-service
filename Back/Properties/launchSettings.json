@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CoffeehouseSystemBackend": {
+    "Backend": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

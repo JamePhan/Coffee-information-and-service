@@ -9,6 +9,7 @@ namespace Library
         public MapperProfile()
         {
             CreateMap<Event, EventInfo>();
+            CreateMap<EventInfo, Event>().ForSourceMember(src => src.EventId, opt => opt.DoNotValidate());
             CreateMap<Banner, BannerInfo>();
             CreateMap<BannerInfo, Banner>().ForSourceMember(src => src.BannerId, opt => opt.DoNotValidate());
             CreateMap<User, UserInfo>();

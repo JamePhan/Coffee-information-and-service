@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace Back.Controllers
             _banner = new BannerRepository(context, mapper);
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("{count}")]
         public IActionResult List(int count)
         {
@@ -29,6 +31,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Add(BannerInfo banner)
         {
@@ -44,6 +47,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(BannerInfo banner)
         {
@@ -59,6 +63,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
