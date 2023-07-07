@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Back.Controllers
@@ -37,6 +38,22 @@ namespace Back.Controllers
                 return Ok(events);
             }
             return NotFound();
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPut]
+        public IActionResult Add(EventInfo eventInfo)
+        {
+            try
+            {
+                _event.AddEvent(eventInfo);
+                _event.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.DTO;
 using Library.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Library.DAL
 {
@@ -44,6 +45,23 @@ namespace Library.DAL
                 events = _context.Events.OrderByDescending(events => events.Date).ToList();
             }
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
+        }
+
+        public void AddEvent(EventInfo eventInfo)
+        {
+            try
+            {
+                _context.Events.Add(_mapper.Map<EventInfo, Event>(eventInfo));
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
 
         protected virtual void Dispose(bool disposing)

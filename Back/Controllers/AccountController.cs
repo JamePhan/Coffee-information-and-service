@@ -224,7 +224,9 @@ namespace Back.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, role)
+                new Claim(ClaimTypes.Role, role),
+                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Aud, _configuration["Jwt:Audience"]),
+                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iss, _configuration["Jwt:Issuer"])
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

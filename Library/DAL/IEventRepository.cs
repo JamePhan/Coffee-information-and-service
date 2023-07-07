@@ -7,5 +7,9 @@ namespace Library.DAL
         List<EventInfo> GetEvents(int count);
 
         List<EventInfo> GetLastest(int count);
+
+        void AddEvent(EventInfo eventInfo);
+
+        void Save();
     }
 }
