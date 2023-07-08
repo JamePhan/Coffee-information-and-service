@@ -47,6 +47,19 @@ namespace Library.DAL
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
+        public EventInfo? GetEvent(int id)
+        {
+            Event? eve = _context.Events.FirstOrDefault(ev => ev.EventId.Equals(id));
+            if (eve != null)
+            {
+                return _mapper.Map<Event, EventInfo>(eve);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void AddEvent(EventInfo eventInfo)
         {
             try

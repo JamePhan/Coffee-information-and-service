@@ -19,6 +19,7 @@ namespace Back.Controllers
             _customer = new CustomerRepository(context, mapper);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{count}")]
         public IActionResult List(int count)
         {
@@ -41,6 +42,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPatch]
         public IActionResult Update(CustomerInfo customer)
         {
@@ -56,6 +58,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{count}")]
         public IActionResult Banned(int count)
         {

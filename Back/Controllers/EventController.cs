@@ -56,6 +56,20 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            EventInfo? info = _event.GetEvent(id);
+            if (info != null)
+            {
+                return Ok(info);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _event.Dispose();
