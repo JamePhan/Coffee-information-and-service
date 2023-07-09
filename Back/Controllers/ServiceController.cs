@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Add(ServiceInfo service)
         {
@@ -58,6 +60,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(ServiceInfo service)
         {
@@ -73,6 +76,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
         [HttpDelete("{serviceId}")]
         public IActionResult Delete(int serviceId)
         {
