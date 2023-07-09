@@ -9,7 +9,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 sidebar">
-                <h3>Menu</h3>
+
+                <h3>User Dashboard</h3>
+                <div class="user-info">
+        <div class="user-avatar">
+            <img src="img/logoshop/aha.png" alt="User Avatar">
+        </div>
+        <div class="user-id">
+            UserID: <span id="user-id">123456</span>
+        </div>
+    </div>
+
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="showDashboard()">Dashboard</a>
@@ -226,6 +236,16 @@
             document.getElementById("location-list").style.display = "none";
             document.getElementById("service-list").style.display = "none";
             document.getElementById("customer-following-list").style.display = "none";
+// Cập nhật thông tin UserID và avatar
+    const userIdElement = document.getElementById("user-id");
+    const userAvatarElement = document.querySelector(".user-avatar img");
+
+    // Thay đổi thông tin UserID và avatar tại đây
+    const userId = "123456";
+    const userAvatar = "img/logoshop/aha.png";
+
+    userIdElement.textContent = userId;
+    userAvatarElement.src = userAvatar;
 
             // Cập nhật tiêu đề
             document.getElementById("section-title").innerText = "Dashboard";
