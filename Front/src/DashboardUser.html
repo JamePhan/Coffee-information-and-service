@@ -3,143 +3,34 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        .container-fluid {
-            padding: 20px;
-        }
-
-        .sidebar {
-            background-color: #f8f9fa;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .sidebar h3 {
-            margin-bottom: 30px;
-        }
-
-        .sidebar .nav-link {
-            color: #333;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #e9ecef;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        #chart {
-            margin: 30px auto;
-        }
-
-        .data-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .data-card {
-            flex-basis: calc(50% - 20px);
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .data-card h3 {
-            margin-top: 0;
-            font-size: 24px;
-        }
-
-        .data-card p {
-            margin-bottom: 0;
-            font-size: 18px;
-        }
-
-        .table-container {
-            margin-top: 20px;
-        }
-
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table-container th,
-        .table-container td {
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .table-container th {
-            background-color: #f1f1f1;
-            text-align: left;
-        }
-
-        .table-container tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .action-buttons button {
-            margin-right: 5px;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .action-buttons button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="css/DashboardUser.css">
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 sidebar">
-                <h3>Menu</h3>
+                <h3>DashBoard</h3>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showDashboard()">Dashboard</a>
+                        <a class="nav-link" href="#" onclick="viewList('news')">View list news</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showUserList('blacklist')">Black List User</a>
+                        <a class="nav-link" href="#" onclick="viewList('banner')">View list banner</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showUserList('customer')">List Customer</a>
+                        <a class="nav-link" href="#" onclick="viewList('location')">View list location</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showUserList('request')">Request User</a>
+                        <a class="nav-link" href="#" onclick="viewList('event')">View list event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showEventList()">List Events</a>
+                        <a class="nav-link" href="#" onclick="viewList('service')">View list service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="viewList('customer-following')">View list customer following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -160,10 +51,10 @@
                     </div>
                 </div>
                 <div id="chart"></div>
-                <div id="user-list" style="display: none;">
-                    <h2 id="user-list-title">User List</h2>
+                <div id="list-section" style="display: none;">
+                    <h2 id="list-section-title">List</h2>
                     <div class="table-container">
-                        <table class="table">
+                        <table class="table" id="list-table">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -173,175 +64,450 @@
                                     <th>Function</th>
                                 </tr>
                             </thead>
-                            <tbody id="user-list-content"></tbody>
+                            <tbody id="list-table-body"></tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
-        <div id="event-list" style="display: none;">
-    <h2 id="event-list-title">List Events</h2>
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Name Event</th>
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
-                    <th>Customer Create Event</th>
-                    <th>Chức năng</th>
-                </tr>
-            </thead>
-            <tbody id="event-list-content"></tbody>
-        </table>
     </div>
-</div>
-
-    </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Dữ liệu ví dụ
-        const userList = [
-            { id: "1", name: "User 1", email: "user1@example.com", createdDate: "2022-01-01", eventCount: 5 },
-            { id: "2", name: "User 2", email: "user2@example.com", createdDate: "2022-02-01", eventCount: 10 },
-            { id: "3", name: "User 3", email: "user3@example.com", createdDate: "2022-03-01", eventCount: 2 },
+                // Dữ liệu ví dụ
+        const newsList = [
+            { id: "1", title: "News 1", date: "2022-01-01" },
+            { id: "2", title: "News 2", date: "2022-02-01" },
+            { id: "3", title: "News 3", date: "2022-03-01" },
         ];
 
-        function showDashboard() {
-            // Hiển thị phần tử chart và data-section
-            document.getElementById("chart").style.display = "block";
-            document.querySelector(".data-section").style.display = "block";
+        const bannerList = [
+            { id: "1", image: "banner1.jpg", event: "Event 1" },
+            { id: "2", image: "banner2.jpg", event: "Event 2" },
+            { id: "3", image: "banner3.jpg", event: "Event 3" },
+        ];
 
-            // Ẩn phần tử user-list
-            document.getElementById("user-list").style.display = "none";
+        const locationList = [
+            { id: "1", coffeeShop: "Coffee Shop 1", location: "Location 1", plusCode: "PlusCode 1" },
+            { id: "2", coffeeShop: "Coffee Shop 2", location: "Location 2", plusCode: "PlusCode 2" },
+            { id: "3", coffeeShop: "Coffee Shop 3", location: "Location 3", plusCode: "PlusCode 3" },
+        ];
 
-            // Cập nhật tiêu đề
-            document.getElementById("section-title").innerText = "Dashboard";
-        }
+        const eventList = [
+            { id: "1", title: "Event 1", startDate: "2022-01-01", endDate: "2022-01-05", customerCreate: "Customer 1" },
+            { id: "2", title: "Event 2", startDate: "2022-02-01", endDate: "2022-02-05", customerCreate: "Customer 2" },
+            { id: "3", title: "Event 3", startDate: "2022-03-01", endDate: "2022-03-05", customerCreate: "Customer 3" },
+        ];
 
-        function showUserList(listType) {
-            if (listType === "blacklist") {
-                document.getElementById("user-list-title").innerText = "Black List User";
-            } else if (listType === "customer") {
-                document.getElementById("user-list-title").innerText = "List Customer";
-            } else if (listType === "request") {
-                document.getElementById("user-list-title").innerText = "Request User";
-            }
+        const serviceList = [
+            { id: "1", service: "Service 1", coffeeShop: "Coffee Shop 1" },
+            { id: "2", service: "Service 2", coffeeShop: "Coffee Shop 2" },
+            { id: "3", service: "Service 3", coffeeShop: "Coffee Shop 3" },
+        ];
 
-            // Ẩn phần tử chart và data-section
+        const customerFollowingList = [
+            { id: "1", name: "Customer 1", email: "customer1@example.com", createdDate: "2022-01-01" },
+            { id: "2", name: "Customer 2", email: "customer2@example.com", createdDate: "2022-02-01" },
+            { id: "3", name: "Customer 3", email: "customer3@example.com", createdDate: "2022-03-01" },
+        ];
+
+        function viewList(section) {
+            // Xử lý logic hiển thị danh sách cho mỗi section tại đây
+            document.getElementById("section-title").innerText = "View list " + section;
+            document.getElementById("list-section-title").innerText = "List " + section;
+            document.getElementById("list-section").style.display = "block";
             document.getElementById("chart").style.display = "none";
-            document.querySelector(".data-section").style.display = "none";
+            document.getElementById("data-section").style.display = "none";
+            // Hiển thị danh sách tương ứng với section
+            if (section === "news") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
 
-            // Hiển thị phần tử user-list
-            document.getElementById("user-list").style.display = "block";
+                newsList.forEach((news, index) => {
+                    const row = document.createElement("tr");
 
-            // Hiển thị danh sách người dùng
-            const userListContent = document.getElementById("user-list-content");
-            userListContent.innerHTML = "";
-            userList.forEach((user, index) => {
-                const row = document.createElement("tr");
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
 
-                const sttCell = document.createElement("td");
-                sttCell.textContent = index + 1;
-                row.appendChild(sttCell);
+                    const titleCell = document.createElement("td");
+                    titleCell.textContent = news.title;
+                    row.appendChild(titleCell);
 
-                const nameCell = document.createElement("td");
-                nameCell.textContent = user.name;
-                row.appendChild(nameCell);
+                    const dateCell = document.createElement("td");
+                    dateCell.textContent = news.date;
+                    row.appendChild(dateCell);
 
-                const emailCell = document.createElement("td");
-                emailCell.textContent = user.email;
-                row.appendChild(emailCell);
-
-                const createdDateCell = document.createElement("td");
-                createdDateCell.textContent = user.createdDate;
-                row.appendChild(createdDateCell);
-
-                const functionCell = document.createElement("td");
-
-                if (listType === "request") {
-                    const acceptButton = document.createElement("button");
-                    acceptButton.textContent = "Accept";
-                    // Gán sự kiện onclick cho nút accept
-                    acceptButton.onclick = function () {
-                        // Thực hiện hành động accept
-                        acceptRequest(user.id);
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới tin tức
+                        createNews();
                     };
-                    functionCell.appendChild(acceptButton);
+                    featureCell.appendChild(createButton);
 
-                    const declineButton = document.createElement("button");
-                    declineButton.textContent = "Decline";
-                    // Gán sự kiện onclick cho nút decline
-                    declineButton.onclick = function () {
-                        // Thực hiện hành động decline
-                        declineRequest(user.id);
-                    };
-                    functionCell.appendChild(declineButton);
-                } else {
                     const editButton = document.createElement("button");
                     editButton.textContent = "Edit";
-                    // Gán sự kiện onclick cho nút sửa
-                    editButton.onclick = function () {
-                        // Thực hiện hành động sửa
-                        editUser(user.id);
+                    editButton.onclick = function() {
+                        // Thực hiện hành động chỉnh sửa tin tức
+                        editNews(news.id);
                     };
-                    functionCell.appendChild(editButton);
+                    featureCell.appendChild(editButton);
 
                     const deleteButton = document.createElement("button");
                     deleteButton.textContent = "Delete";
-                    // Gán sự kiện onclick cho nút xóa
-                    deleteButton.onclick = function () {
-                        // Thực hiện hành động xóa
-                        deleteUser(user.id);
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa tin tức
+                        deleteNews(news.id);
                     };
-                    functionCell.appendChild(deleteButton);
-                }
+                    featureCell.appendChild(deleteButton);
 
-                row.appendChild(functionCell);
+                    row.appendChild(featureCell);
 
-                userListContent.appendChild(row);
-            });
+                    listTableBody.appendChild(row);
+                });
+            } else if (section === "banner") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
 
-            // Cập nhật tiêu đề
-            document.getElementById("section-title").innerText = "";
+                bannerList.forEach((banner, index) => {
+                    const row = document.createElement("tr");
+
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
+
+                    const imageCell = document.createElement("td");
+                    const image = document.createElement("img");
+                    image.src = banner.image;
+                    imageCell.appendChild(image);
+                    row.appendChild(imageCell);
+
+                    const eventCell = document.createElement("td");
+                    eventCell.textContent = banner.event;
+                    row.appendChild(eventCell);
+
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới banner
+                        createBanner();
+                    };
+                    featureCell.appendChild(createButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa banner
+                        deleteBanner(banner.id);
+                    };
+                    featureCell.appendChild(deleteButton);
+
+                    row.appendChild(featureCell);
+
+                    listTableBody.appendChild(row);
+                });
+            } else if (section === "location") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
+
+                locationList.forEach((location, index) => {
+                    const row = document.createElement("tr");
+
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
+
+                    const coffeeShopCell = document.createElement("td");
+                    coffeeShopCell.textContent = location.coffeeShop;
+                    row.appendChild(coffeeShopCell);
+
+                    const locationCell = document.createElement("td");
+                    locationCell.textContent = location.location;
+                    row.appendChild(locationCell);
+
+                    const plusCodeCell = document.createElement("td");
+                    plusCodeCell.textContent= location.plusCode;
+                    row.appendChild(plusCodeCell);
+
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới địa điểm
+                        createLocation();
+                    };
+                    featureCell.appendChild(createButton);
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.onclick = function() {
+                        // Thực hiện hành động chỉnh sửa địa điểm
+                        editLocation(location.id);
+                    };
+                    featureCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa địa điểm
+                        deleteLocation(location.id);
+                    };
+                    featureCell.appendChild(deleteButton);
+
+                    row.appendChild(featureCell);
+
+                    listTableBody.appendChild(row);
+                });
+            } else if (section === "event") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
+
+                eventList.forEach((event, index) => {
+                    const row = document.createElement("tr");
+
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
+
+                    const titleCell = document.createElement("td");
+                    titleCell.textContent = event.title;
+                    row.appendChild(titleCell);
+
+                    const startDateCell = document.createElement("td");
+                    startDateCell.textContent = event.startDate;
+                    row.appendChild(startDateCell);
+
+                    const endDateCell = document.createElement("td");
+                    endDateCell.textContent = event.endDate;
+                    row.appendChild(endDateCell);
+
+                    const customerCreateCell = document.createElement("td");
+                    customerCreateCell.textContent = event.customerCreate;
+                    row.appendChild(customerCreateCell);
+
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới sự kiện
+                        createEvent();
+                    };
+                    featureCell.appendChild(createButton);
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.onclick = function() {
+                        // Thực hiện hành động chỉnh sửa sự kiện
+                        editEvent(event.id);
+                    };
+                    featureCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa sự kiện
+                        deleteEvent(event.id);
+                    };
+                    featureCell.appendChild(deleteButton);
+
+                    row.appendChild(featureCell);
+
+                    listTableBody.appendChild(row);
+                });
+            } else if (section === "service") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
+
+                serviceList.forEach((service, index) => {
+                    const row = document.createElement("tr");
+
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
+
+                    const serviceCell = document.createElement("td");
+                    serviceCell.textContent = service.service;
+                    row.appendChild(serviceCell);
+
+                    const coffeeShopCell = document.createElement("td");
+                    coffeeShopCell.textContent = service.coffeeShop;
+                    row.appendChild(coffeeShopCell);
+
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới dịch vụ
+                        createService();
+                    };
+                    featureCell.appendChild(createButton);
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.onclick = function() {
+                        // Thực hiện hành động chỉnh sửa dịch vụ
+                        editService(service.id);
+                    };
+                    featureCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa dịch vụ
+                        deleteService(service.id);
+                    };
+                    featureCell.appendChild(deleteButton);
+
+                    row.appendChild(featureCell);
+
+                    listTableBody.appendChild(row);
+                });
+            } else if (section === "customer-following") {
+                const listTableBody = document.getElementById("list-table-body");
+                listTableBody.innerHTML = "";
+
+                customerFollowingList.forEach((customer, index) => {
+                    const row = document.createElement("tr");
+
+                    const sttCell = document.createElement("td");
+                    sttCell.textContent = index + 1;
+                    row.appendChild(sttCell);
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = customer.name;
+                    row.appendChild(nameCell);
+
+                    const emailCell = document.createElement("td");
+                    emailCell.textContent = customer.email;
+                    row.appendChild(emailCell);
+
+                    const createdDateCell = document.createElement("td");
+                    createdDateCell.textContent = customer.createdDate;
+                    row.appendChild(createdDateCell);
+
+                    const featureCell = document.createElement("td");
+                    const createButton = document.createElement("button");
+                    createButton.textContent = "Create";
+                    createButton.onclick = function() {
+                        // Thực hiện hành động tạo mới khách hàng
+                        createCustomer();
+                    };
+                    featureCell.appendChild(createButton);
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.onclick = function() {
+                        // Thực hiện hành động chỉnh sửa khách hàng
+                        editCustomer(customer.id);
+                    };
+                    featureCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = function() {
+                        // Thực hiện hành động xóa khách hàng
+                        deleteCustomer(customer.id);
+                    };
+                    featureCell.appendChild(deleteButton);
+
+                    row.appendChild(featureCell);
+
+                    listTableBody.appendChild(row);
+                });
+            }
         }
 
-        function showEventList() {
-            // Ẩn phần tử chart và data-section
-            document.getElementById("chart").style.display = "none";
-            document.querySelector(".data-section").style.display = "none";
-
-            // Ẩn phần tử user-list
-            document.getElementById("user-list").style.display = "none";
-
-            // Cập nhật tiêu đề
-            document.getElementById("section-title").innerText = "List Events";
+        function createNews() {
+            // Thực hiện hành động tạo mới tin tức
+            console.log("Create news");
         }
 
-        function editUser(userId) {
-            // Hành động sửa người dùng với userId cụ thể
-            console.log("Edit user with ID:", userId);
+        function editNews(newsId) {
+            // Thực hiện hành động chỉnh sửa tin tức với newsId cụ thể
+            console.log("Edit news with ID: " + newsId);
         }
 
-        function deleteUser(userId) {
-            // Hành động xóa người dùng với userId cụ thể
-            console.log("Delete user with ID:", userId);
+        function deleteNews(newsId) {
+            // Thực hiện hành động xóa tin tức với newsId cụ thể
+            console.log("Delete news with ID: " + newsId);
         }
 
-        function acceptRequest(userId) {
-            // Hành động accept request của người dùng với userId cụ thể
-            console.log("Accept request from user with ID:", userId);
+        function createBanner() {
+            // Thực hiện hành động tạo mới banner
+            console.log("Create banner");
         }
 
-        function declineRequest(userId) {
-            // Hành động decline request của người dùng với userId cụ thể
-            console.log("Decline request from user with ID:", userId);
+        function deleteBanner(bannerId) {
+            // Thực hiện hành động xóa banner với bannerId cụ thể
+            console.log("Delete banner with ID: " + bannerId);
         }
 
-        // Gọi hàm showDashboard khi trang web được tải
-        showDashboard();
+        function createLocation() {
+            // Thực hiện hành động tạo mới địa điểm
+            console.log("Create location");
+        }
+
+        function editLocation(locationId) {
+            // Thực hiện hành động chỉnh sửa địa điểm với locationId cụ thể
+            console.log("Edit location with ID: " + locationId);
+        }
+
+        function deleteLocation(locationId) {
+            // Thực hiện hành động xóa địa điểm với locationId cụ thể
+            console.log("Delete location with ID: " + locationId);
+        }
+
+        function createEvent() {
+            // Thực hiện hành động tạo mới sự kiện
+            console.log("Create event");
+        }
+
+        function editEvent(eventId) {
+            // Thực hiện hành động chỉnh sửa sự kiện với eventId cụ thể
+            console.log("Edit event with ID: " + eventId);
+        }
+
+        function deleteEvent(eventId) {
+            // Thực hiện hành động xóa sự kiện với eventId cụ thể
+            console.log("Delete event with ID: " + eventId);
+        }
+
+        function createService() {
+            // Thực hiện hành động tạo mới dịch vụ
+            console.log("Create service");
+        }
+
+        function editService(serviceId) {
+            // Thực hiện hành động chỉnh sửa dịch vụ với serviceId cụ thể
+            console.log("Edit service with ID: " + serviceId);
+        }
+
+        function deleteService(serviceId) {
+            // Thực hiện hành động xóa dịch vụ với serviceId cụ thể
+            console.log("Delete service with ID: " + serviceId);
+        }
+
+        function createCustomer() {
+            // Thực hiện hành động tạo mới khách hàng
+            console.log("Create customer");
+        }
+
+        function editCustomer(customerId) {
+            // Thực hiện hành động chỉnh sửa khách hàng với customerId cụ thể
+            console.log("Edit customer with ID: " + customerId);
+        }
+
+        function deleteCustomer(customerId) {
+            // Thực hiện hành động xóa khách hàng với customerId cụ thể
+            console.log("Delete customer with ID: " + customerId);
+        }
+
+        function logout() {
+            // Thực hiện hành động đăng xuất
+            console.log("Logout");
+        }
     </script>
 </body>
 </html>
