@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace Back.Controllers
             _follow = new FollowRepository(context, mapper);
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpGet("{customerId}")]
         public IActionResult CustomerList(int customerId)
         {
@@ -29,6 +31,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("{userId}")]
         public IActionResult UserList(int userId)
         {
@@ -40,6 +43,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut]
         public IActionResult Follow(FollowInfo follow)
         {
