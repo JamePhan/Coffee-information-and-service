@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(UserInfo user)
         {
@@ -55,6 +57,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{count}")]
         public IActionResult Banned(int count)
         {
