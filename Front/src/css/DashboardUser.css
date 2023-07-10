@@ -133,3 +133,24 @@ body {
     font-weight: bold;
     margin-bottom: 50px;
 }
+
+  .add-button {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        /* Các thuộc tính khác */
+    }
+
+    .add-button:hover {
+        background-color: #ff0000;
+        color: #ffffff;
+        /* Các thuộc tính khác khi hover */
+    }
+
+    .add-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* Các thuộc tính khác */
+    }
+
+   

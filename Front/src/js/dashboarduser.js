@@ -196,14 +196,7 @@
 
             const functionCell = document.createElement("td");
 
-            const createButton = document.createElement("button");
-            createButton.textContent = "Create";
-        // Gán sự kiện onclick cho nút create
-            createButton.onclick = function () {
-            // Thực hiện hành động create
-                createEvent();
-            };
-            functionCell.appendChild(createButton);
+            
 
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
@@ -267,14 +260,7 @@
 
             const functionCell = document.createElement("td");
 
-            const createButton = document.createElement("button");
-            createButton.textContent = "Create";
-                // Gán sự kiện onclick cho nút create
-            createButton.onclick = function () {
-                    // Thực hiện hành động create
-                createNews();
-            };
-            functionCell.appendChild(createButton);
+            
 
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
@@ -337,14 +323,7 @@
 
             const functionCell = document.createElement("td");
 
-            const createButton = document.createElement("button");
-            createButton.textContent = "Create";
-                // Gán sự kiện onclick cho nút create
-            createButton.onclick = function () {
-                    // Thực hiện hành động create
-                createBanner();
-            };
-            functionCell.appendChild(createButton);
+            
 
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
@@ -402,14 +381,7 @@
 
             const functionCell = document.createElement("td");
 
-            const createButton = document.createElement("button");
-            createButton.textContent = "Create";
-                // Gán sự kiện onclick cho nút create
-            createButton.onclick = function () {
-                    // Thực hiện hành động create
-                createLocation();
-            };
-            functionCell.appendChild(createButton);
+            
 
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
@@ -472,14 +444,7 @@
 
             const functionCell = document.createElement("td");
 
-            const createButton = document.createElement("button");
-            createButton.textContent = "Create";
-                // Gán sự kiện onclick cho nút create
-            createButton.onclick = function () {
-                    // Thực hiện hành động create
-                createService();
-            };
-            functionCell.appendChild(createButton);
+           
 
             const editButton = document.createElement("button");
             editButton.textContent = "Edit";
@@ -557,3 +522,70 @@
             // Ví dụ: Chuyển hướng đến trang đăng nhập
         window.location.href = "login.html";
     }
+
+function addEvent() {
+  // Hiển thị form thêm sự kiện hoặc modal
+  // Ví dụ: Sử dụng Bootstrap Modal
+  const modalContent = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Event</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Form thêm sự kiện -->
+          <form>
+            <div class="form-group">
+              <label for="event-title">Title:</label>
+              <input type="text" class="form-control" id="event-title" required>
+            </div>
+            <div class="form-group">
+              <label for="event-date">Date:</label>
+              <input type="date" class="form-control" id="event-date" required>
+            </div>
+            <!-- Các trường dữ liệu khác -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveEvent()">Save</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Tạo phần tử modal và thêm nội dung vào
+  const modalElement = document.createElement("div");
+  modalElement.classList.add("modal", "fade");
+  modalElement.innerHTML = modalContent;
+
+  // Thêm modal vào trang
+  document.body.appendChild(modalElement);
+
+  // Hiển thị modal
+  $(modalElement).modal("show");
+}
+
+function saveEvent() {
+  // Xử lý logic lưu sự kiện từ các trường nhập liệu trong form
+  const eventTitle = document.getElementById("event-title").value;
+  const eventDate = document.getElementById("event-date").value;
+
+  // Thực hiện lưu sự kiện
+  // Ví dụ: Thêm sự kiện vào danh sách eventList
+  const newEvent = {
+    id: String(eventList.length + 1),
+    title: eventTitle,
+    date: eventDate,
+    banner: "", // Thêm dữ liệu banner nếu cần
+  };
+  eventList.push(newEvent);
+
+  // Đóng modal
+  $(".modal").modal("hide");
+
+  // Hiển thị lại danh sách sự kiện sau khi thêm mới
+  showEventList();
+}
+
