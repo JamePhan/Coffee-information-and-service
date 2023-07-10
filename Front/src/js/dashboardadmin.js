@@ -8,9 +8,9 @@
         ];  
 
      const newsList = [
-        { id: "1", title: "News 1", date: "2022-01-01" },
-        { id: "2", title: "News 2", date: "2022-02-01" },
-        { id: "3", title: "News 3", date: "2022-03-01" },
+        { id: "1", title: "News 1", email: "thotq@fpt.edu.vn", date: "2022-01-01" },
+        { id: "2", title: "News 2", email: "thotq@fpt.edu.vn",date: "2022-02-01" },
+        { id: "3", title: "News 3", email: "thotq@fpt.edu.vn",date: "2022-03-01" },
         ];
 
      const bannerList = [
@@ -222,11 +222,11 @@
         });
 
     // Cập nhật tiêu đề
-        document.getElementById("section-title").innerText = "List Events";
+        document.getElementById("section-title").innerText = "List Users";
     }
 
 
-    function showNewsList() {
+    function showListRequests() {
             // Ẩn phần tử chart và data-section
         document.getElementById("chart").style.display = "none";
         document.querySelector(".data-section").style.display = "none";
@@ -254,6 +254,10 @@
             titleCell.textContent = news.title;
             row.appendChild(titleCell);
 
+            const emailCell = document.createElement("td");
+            emailCell.textContent = news.email;
+            row.appendChild(emailCell);
+
             const dateCell = document.createElement("td");
             dateCell.textContent = news.date;
             row.appendChild(dateCell);
@@ -263,7 +267,7 @@
             
 
             const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
+            editButton.textContent = "Accept";
                 // Gán sự kiện onclick cho nút edit
             editButton.onclick = function () {
                     // Thực hiện hành động edit
@@ -272,7 +276,7 @@
             functionCell.appendChild(editButton);
 
             const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
+            deleteButton.textContent = "Decline";
                 // Gán sự kiện onclick cho nút delete
             deleteButton.onclick = function () {
                     // Thực hiện hành động delete
@@ -286,7 +290,7 @@
         });
 
             // Cập nhật tiêu đề
-        document.getElementById("section-title").innerText = "View List News";
+        document.getElementById("section-title").innerText = "List Request";
     }
 
     function showBannerList() {
@@ -407,114 +411,12 @@
         });
 
             // Cập nhật tiêu đề
-        document.getElementById("section-title").innerText = "View List Locations";
+        document.getElementById("section-title").innerText = "Ban Account";
     }
 
-    function showServiceList() {
-            // Ẩn phần tử chart và data-section
-        document.getElementById("chart").style.display = "none";
-        document.querySelector(".data-section").style.display = "none";
 
-            // Ẩn phần tử user-list, event-list, news-list, banner-list, location-list, customer-following-list và hiển thị service-list
-        document.getElementById("user-list").style.display = "none";
-        document.getElementById("event-list").style.display = "none";
-        document.getElementById("news-list").style.display = "none";
-        document.getElementById("banner-list").style.display = "none";
-        document.getElementById("location-list").style.display = "none";
-        document.getElementById("customer-following-list").style.display = "none";
-        document.getElementById("service-list").style.display = "block";
 
-            // Hiển thị danh sách service
-        const serviceListContent = document.getElementById("service-list-content");
-        serviceListContent.innerHTML = "";
-        serviceList.forEach((service, index) => {
-            const row = document.createElement("tr");
 
-            const sttCell = document.createElement("td");
-            sttCell.textContent = index + 1;
-            row.appendChild(sttCell);
-
-            const serviceCell = document.createElement("td");
-            serviceCell.textContent = service.service;
-            row.appendChild(serviceCell);
-
-            const coffeeShopCell = document.createElement("td");
-            coffeeShopCell.textContent = service.coffeeShop;
-            row.appendChild(coffeeShopCell);
-
-            const functionCell = document.createElement("td");
-
-           
-
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-                // Gán sự kiện onclick cho nút edit
-            editButton.onclick = function () {
-                    // Thực hiện hành động edit
-                editService(service.id);
-            };
-            functionCell.appendChild(editButton);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-                // Gán sự kiện onclick cho nút delete
-            deleteButton.onclick = function () {
-                    // Thực hiện hành động delete
-                deleteService(service.id);
-            };
-            functionCell.appendChild(deleteButton);
-
-            row.appendChild(functionCell);
-
-            serviceListContent.appendChild(row);
-        });
-
-            // Cập nhật tiêu đề
-        document.getElementById("section-title").innerText = "View List Services";
-    }
-
-    function showCustomerFollowingList() {
-            // Ẩn phần tử chart và data-section
-        document.getElementById("chart").style.display = "none";
-        document.querySelector(".data-section").style.display = "none";
-
-            // Ẩn phần tử user-list, event-list, news-list, banner-list, location-list, service-list và hiển thị customer-following-list
-        document.getElementById("user-list").style.display = "none";
-        document.getElementById("event-list").style.display = "none";
-        document.getElementById("news-list").style.display = "none";
-        document.getElementById("banner-list").style.display = "none";
-        document.getElementById("location-list").style.display = "none";
-        document.getElementById("service-list").style.display = "none";
-        document.getElementById("customer-following-list").style.display = "block";
-
-            // Hiển thị danh sách customer following
-        const customerFollowingListContent = document.getElementById("customer-following-list-content");
-        customerFollowingListContent.innerHTML = "";
-        customerFollowingList.forEach((customer, index) => {
-            const row = document.createElement("tr");
-
-            const sttCell = document.createElement("td");
-            sttCell.textContent = index + 1;
-            row.appendChild(sttCell);
-
-            const userNameCell = document.createElement("td");
-            userNameCell.textContent = customer.userName;
-            row.appendChild(userNameCell);
-
-            const emailCell = document.createElement("td");
-            emailCell.textContent = customer.email;
-            row.appendChild(emailCell);
-
-            const coffeeShopCell = document.createElement("td");
-            coffeeShopCell.textContent = customer.coffeeShop;
-            row.appendChild(coffeeShopCell);
-
-            customerFollowingListContent.appendChild(row);
-        });
-
-            // Cập nhật tiêu đề
-        document.getElementById("section-title").innerText = "View List Customer Following";
-    }
 
     function logout() {
             // Thực hiện các hành động cần thiết khi logout
