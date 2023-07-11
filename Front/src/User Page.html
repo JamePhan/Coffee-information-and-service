@@ -8,31 +8,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-    .navbar {
-        position: absolute;
-        height: 70px;
-        top: 0;
-        width: 100%;
-        z-index: 1000; /* Đảm bảo thanh menu hiển thị trên phần trên của banner */
-        background-color: white !important;
-        box-shadow: none;
-    }
-css
-Copy code
-.navbar .navbar-nav .nav-link {
-    color: #64321e; /* Màu chữ của các liên kết trong thanh menu */
-    font-size: 15px;
-    font-family: 'Baloo 2', cursive;
-}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazGXQ1xADLpReF6i_UitXppeSn8RsbJw&callback=initMap" async defer></script>
 
-.navbar-nav .nav-item .nav-link:hover {
-    transform: scale(1.1); /* Phóng to chữ lên 110% */
-    color: #64321e; /* Giữ nguyên màu */
-}
-</style>
+    <link rel="stylesheet" href="css/main2.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            position: absolute;
+            height: 70px;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Đảm bảo thanh menu hiển thị trên phần trên của banner */
+            background-color: white !important;
+            box-shadow: none;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #64321e !important; /* Màu chữ của các liên kết trong thanh menu */
+            font-size: 18px;
+            font-family: 'Baloo 2', cursive;
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            transform: scale(1.1); /* Phóng to chữ lên 110% */
+            color: #64321e; /* Giữ nguyên màu */
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -101,62 +103,171 @@ Copy code
     </div>
 </div>
 <section>
-    <h2 class="highlight-title">Your Followed Coffee Shops</h2>
-    <div class="container">
-        <div class="coffee-shops">
-            <div class="coffee-shop">
-                <img src="img/logoshop/cong.png" alt="Coffee Shop 1">
-                <h3>Shop 1</h3>
-                <p>Address: 123 Main Street</p>
-                <p>Opening Hours: 8:00 AM - 6:00 PM</p>
-            </div>
-            <div class="coffee-shop">
-                <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
-                <h3>Shop 2</h3>
-                <p>Address: 456 Elm Street</p>
-                <p>Opening Hours: 7:00 AM - 7:00 PM</p>
-            </div>
-            <!-- Add more coffee shops based on user's followed list -->
-        </div>
-    </div>
-</section>
-<section>
-    <h2 class="highlight-title">News</h2>
+    <h2 class="highlight-title">Featured Events</h2>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <div class="news-item">
-                    <img src="img/new3.jpg" alt="News Image" class="img-fluid news-image">
-                    <h3 class="news-title">News Title</h3>
-                    <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
-                    <a href="#" class="btn btn-danger">Read More</a>
+            <div class="col-lg-6">
+                <div class="event-item event-big">
+                    <img src="img/event1.jpg" alt="Event Image" class="img-fluid event-image">
+                    <h3 class="event-title">Event Title</h3>
+                    <p class="event-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+                    <a href="#" class="btn btn-primary">Buy Tickets</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="news-item">
-                    <img src="img/new2.jpg" alt="News Image" class="img-fluid news-image">
-                    <h3 class="news-title">News Title</h3>
-                    <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitaesem imperdiet, ac feugiat neque vestibulum.</p>
-                    <a href="#" class="btn btn-danger">Read More</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="news-item">
-                    <img src="img/new1.png" alt="News Image" class="img-fluid news-image ">
-                    <h3 class="news-title">News Title</h3>
-                    <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
-                    <a href="#" class="btn btn-danger">Read More</a>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="event-item event-small">
+                            <img src="img/event1.jpg" alt="Event Image" class="img-fluid event-image">
+                            <h4 class="event-title">Event 1</h4>
+                            <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="event-item event-small">
+                            <img src="img/event1.jpg" alt="Event Image" class="img-fluid event-image">
+                            <h4 class="event-title">Event 2</h4>
+                            <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="event-item event-small">
+                            <img src="img/event1.jpg" alt="Event Image" class="img-fluid event-image">
+                            <h4 class="event-title">Event 3</h4>
+                            <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="event-item event-small">
+                            <img src="img/event1.jpg" alt="Event Image" class="img-fluid event-image">
+                            <h4 class="event-title">Event 4</h4>
+                            <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </section>
 <section>
-    <h2 class="highlight-title">Map of Nearby Coffee Shops</h2>
-    <div id="map"></div>
+    <h2 class="highlight-title">Your Followed Coffee Shops</h2>
+    <div class="coffee-shops">
+        <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 1">
+            <h3>Shop 1</h3>
+            <p>Address: 123 Main Street</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 2">
+            <h3>Shop 2</h3>
+            <p>Address: 456 Elm Street</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <!-- Additional coffee shops -->
+        <div class="coffee-shop">
+            <img src="img/logoshop/kafa.png" alt="Coffee Shop 3">
+            <h3>Shop 3</h3>
+            <p>Address: 789 Oak Street</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 4">
+            <h3>Shop 4</h3>
+            <p>Address: 159 Maple Avenue</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 5">
+            <h3>Shop 5</h3>
+            <p>Address: 753 Birch Boulevard</p>
+
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/kafa.png" alt="Coffee Shop 6">
+            <h3>Shop 6</h3>
+            <p>Address: 321 Pine Parkway</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 7">
+            <h3>Shop 7</h3>
+            <p>Address: 654 Cedar Court</p>
+
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 8">
+            <h3>Shop 8</h3>
+            <p>Address: 987 Walnut Way</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 8">
+            <h3>Shop 8</h3>
+            <p>Address: 987 Walnut Way</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+        <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 8">
+            <h3>Shop 8</h3>
+            <p>Address: 987 Walnut Way</p>
+            
+            <button class="btn btn-primary">Follow</button>
+        </div>
+    </div>
+</section>
+
+<!-- Continue with the news section -->
+
+<section class="news-section">
+  <div class="container">
+    <h2 class="highlight-title">News</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="news-item">
+          <img src="img/new3.jpg" alt="News Image" class="img-fluid news-image">
+          <h3 class="news-title">News Title</h3>
+          <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+          <a href="#" class="btn btn-danger">Read More</a>
+      </div>
+  </div>
+  <div class="col-md-4">
+    <div class="news-item">
+      <img src="img/new2.jpg" alt="News Image" class="img-fluid news-image">
+      <h3 class="news-title">News Title</h3>
+      <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+      <a href="#" class="btn btn-danger">Read More</a>
+  </div>
+</div>
+<div class="col-md-4">
+    <div class="news-item">
+      <img src="img/new1.png" alt="News Image" class="img-fluid news-image ">
+      <h3 class="news-title">News Title</h3>
+      <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl vitae sem imperdiet, ac feugiat neque vestibulum.</p>
+      <a href="#" class="btn btn-danger">Read More</a>
+  </div>
+
+</div>
+
+</div>
+
+</div>
 </section>
 <section>
-    <div id="map-footer" style="width: 100%; height: 400px;"></div>
+    <h2 class="highlight-title">Nearby Coffee Shops</h2>
+</section>
+<section>
+    <div id="map" style="width: 100%; height: 400px;"></div>
 </section>
 <footer class="footer">
   <div class="container">
@@ -174,9 +285,28 @@ Copy code
     </div>
 </div>
 <div class="col-lg-4">
-    <h4>Address</h4>
-    <div id="map-footer"></div>
+    <h4>Contact</h4>
+    <div class="social-icons">
+        <div class="social-row">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            
+
+        </div>
+        <div class="social-row">
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-snapchat-ghost"></i></a>
+            
+        </div>
+        <div class="social-row">
+
+            <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            
+        </div>
+    </div>
 </div>
+
 </div>
 <div class="row">
   <div class="col-lg-12">
@@ -186,27 +316,18 @@ Copy code
 </div>
 </footer>
 <!-- Include Google Maps API and initialize the map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazGXQ1xADLpReF6i_UitXppeSn8RsbJw&callback=initMap" async defer></script>
+
 <script>
   function initMap() {
-    // Initialize your Google Map here for the coffee shop location
     var mapOptions = {
       center: { lat: 21.013271072229312, lng: 105.52706058711438 }, 
       zoom: 12
-  };
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  // Add markers for nearby coffee shops
-// Initialize your Google Map here for the footer map
-var mapOptionsFooter = {
-center: { lat: 21.013271072229312, lng: 105.52706058711438 },
-zoom: 12
-};
-var mapFooter = new google.maps.Map(document.getElementById("map-footer"), mapOptionsFooter);
-// Add markers for coffee shops in the footer map
-}
+    };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
