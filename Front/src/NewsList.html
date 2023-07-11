@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <title>New Lists</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazGXQ1xADLpReF6i_UitXppeSn8RsbJw&callback=initMap" async defer></script>
+
+    <link rel="stylesheet" href="css/main2.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            position: absolute;
+            height: 70px;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Đảm bảo thanh menu hiển thị trên phần trên của banner */
+            background-color: white !important;
+            box-shadow: none;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #64321e !important; /* Màu chữ của các liên kết trong thanh menu */
+            font-size: 18px;
+            font-family: 'Baloo 2', cursive;
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            transform: scale(1.1); /* Phóng to chữ lên 110% */
+            color: #64321e; /* Giữ nguyên màu */
+        }
+
+.news-image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.news-image img {
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-link:hover {
+   transform: scale(1.2);
+}
+
+.page-link.active {
+  background-color: #0056b3;
+}
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo2.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                      <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" style="border-color: #64321E;">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--End of header-->
+
+<section class="news-section">
+    <div class="container">
+        <h2 class="section-title">Latest News</h2>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new3.jpg" alt="News 1">
+                    </div>
+                    <p class="news-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis, urna ac condimentum congue, lacus libero varius justo, sed malesuada sapien neque ut massa.</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new2.jpg" alt="News 2">
+                    </div>
+                    <p class="news-content">Sed aliquam tellus eu arcu elementum, ut dignissim orci facilisis. Pellentesque et malesuada dui, a gravida purus. Donec euismod eu justo non eleifend.</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new3.jpg" alt="News 3">
+                    </div>
+                    <p class="news-content">Integer nec lorem mattis, tempus nulla id, hendrerit eros. Quisque vehicula enim ac semper fermentum. Cras a eros vel neque eleifend consectetur.</p>
+                </div>
+            </div>
+              <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new2.jpg" alt="News 4">
+                    </div>
+                    <p class="news-content">Vivamus ultricies odio eget dui dictum, auctor tincidunt mi posuere. Nam rhoncus fringilla velit ac euismod. Nullam sit amet rutrum libero.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new3.jpg" alt="News 4">
+                    </div>
+                    <p class="news-content">Vivamus ultricies odio eget dui dictum, auctor tincidunt mi posuere. Nam rhoncus fringilla velit ac euismod. Nullam sit amet rutrum libero.</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new2.jpg" alt="News 5">
+                    </div>
+                    <p class="news-content">Duis dictum metus vitae risus lobortis, eget vulputate mauris aliquet. Suspendisse semper dui et augue pellentesque, et commodo ex rhoncus.</p>
+                </div>
+            </div>
+                 <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new3.jpg" alt="News 5">
+                    </div>
+                    <p class="news-content">Duis dictum metus vitae risus lobortis, eget vulputate mauris aliquet. Suspendisse semper dui et augue pellentesque, et commodo ex rhoncus.</p>
+                </div>
+            </div>
+                 <div class="col-lg-3">
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="img/new2.jpg" alt="News 5">
+                    </div>
+                    <p class="news-content">Duis dictum metus vitae risus lobortis, eget vulputate mauris aliquet. Suspendisse semper dui et augue pellentesque, et commodo ex rhoncus.</p>
+                </div>
+            </div>
+            <!-- Add more rows here if needed -->
+        </div>
+        <div class="pagination">
+            <button class="page-link" onclick="showPage(1)">1</button>
+            <button class="page-link" onclick="showPage(2)">2</button>
+            <button class="page-link" onclick="showPage(3)">3</button>
+            <!-- Thêm các nút trang khác nếu cần -->
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- Continue with the news Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4" style="padding: 0px 50px;">
+        <h4>About Us</h4>
+        <p style="text-align: justify;">At Event Tickets Center, we believe that buying tickets should be a simple, intuitive, and streamlined process. That’s why we created a user-friendly platform to browse millions of tickets to thousands of national and local events. </p>
+    </div>
+    <div class="col-lg-4">
+        <h4>Fanpage</h4>
+        <div class="fb-page" data-href="https://www.facebook.com/SU2023fPT/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/SU2023fPT/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/SU2023fPT/">Your Fanpage</a>
+        </blockquote>
+    </div>
+</div>
+<div class="col-lg-4">
+    <h4>Contact</h4>
+    <div class="social-icons">
+        <div class="social-row">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            
+
+        </div>
+        <div class="social-row">
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-snapchat-ghost"></i></a>
+            
+        </div>
+        <div class="social-row">
+
+            <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <p class="text-center">&copy; 2023 Coffee Information & Services. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<!-- Include Google Maps API and initialize the map -->
+
+<script>
+  function initMap() {
+    var mapOptions = {
+      center: { lat: 21.013271072229312, lng: 105.52706058711438 }, 
+      zoom: 12
+    };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=219975220852072&autoLogAppEvents=1" nonce="random-nonce"></script>
+</body>
+</html>
