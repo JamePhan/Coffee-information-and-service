@@ -28,6 +28,8 @@ namespace Library.DAL
 
         void DeleteCustomer(int id);
 
+        void DeleteCustomerByAccountId(int id);
+
         void Save();
     }
 }

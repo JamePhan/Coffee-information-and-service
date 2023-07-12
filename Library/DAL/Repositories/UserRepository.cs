@@ -80,6 +80,19 @@ namespace Library.DAL
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
+        public void AddUser(UserInfo user)
+        {
+            User newUser = _mapper.Map<UserInfo, User>(user);
+            try
+            {
+                _context.Users.Add(newUser);
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public void UpdateUser(UserInfo user)
         {
             User? checkExist = _context.Users.FirstOrDefault(u => u.UserId.Equals(user.UserId));
