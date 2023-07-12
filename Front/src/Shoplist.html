@@ -37,9 +37,42 @@
 
 
 
-      
+        .coffee-shop {
+      margin-bottom: 20px;
+    }
+
+    .coffee-shop img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .coffee-shop .shop-name {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .coffee-shop .address {
+      color: #888;
+    }
+
+    .coffee-shop .follow-btn {
+      margin-top: 10px;
+    }
 
     </style>
+    <script>
+  function toggleFollow(btn) {
+    if (btn.innerHTML === "Follow") {
+      btn.innerHTML = "Following";
+      btn.classList.remove("btn-primary");
+      btn.classList.add("btn-success");
+    } else {
+      btn.innerHTML = "Follow";
+      btn.classList.remove("btn-success");
+      btn.classList.add("btn-primary");
+    }
+  }
+</script>
 </head>
 <body>
 
@@ -81,7 +114,116 @@
     </nav>
     <!--End of header-->
 
+<section id="coffee-shop-list">
+    <div class="container">
+        <h2 class="highlight-title">Coffee Shop List</h2>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 1">
+            <h3 class="shop-name">Coffee Shop 1</h3>
+            <p class="address">123 Main St, City</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
+            <h3 class="shop-name">Coffee Shop 2</h3>
+            <p class="address">456 Park Ave, Town</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+         <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/kafa.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
 
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 1">
+            <h3 class="shop-name">Coffee Shop 1</h3>
+            <p class="address">123 Main St, City</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
+            <h3 class="shop-name">Coffee Shop 2</h3>
+            <p class="address">456 Park Ave, Town</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+         <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/kafa.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/bean.png" alt="Coffee Shop 1">
+            <h3 class="shop-name">Coffee Shop 1</h3>
+            <p class="address">123 Main St, City</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/aha.png" alt="Coffee Shop 2">
+            <h3 class="shop-name">Coffee Shop 2</h3>
+            <p class="address">456 Park Ave, Town</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/cong.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+         <div class="col-lg-3">
+          <div class="coffee-shop">
+            <img src="img/logoshop/kafa.png" alt="Coffee Shop 3">
+            <h3 class="shop-name">Coffee Shop 3</h3>
+            <p class="address">789 Street Rd, Village</p>
+            <button class="btn btn-primary follow-btn" onclick="toggleFollow(this)">Follow</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
 
     <!-- Continue with the news Footer -->
