@@ -115,6 +115,26 @@ namespace Library.DAL
             }
         }
 
+        public void DeleteCustomerByAccountId(int id)
+        {
+            Customer? toDelete = _context.Customers.SingleOrDefault(customer => customer.AccountId.Equals(id));
+            if (toDelete != null)
+            {
+                try
+                {
+                    _context.Customers.Remove(toDelete);
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Customer doesnt't exist!");
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();

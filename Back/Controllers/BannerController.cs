@@ -19,7 +19,6 @@ namespace Back.Controllers
             _banner = new BannerRepository(context, mapper);
         }
 
-        [Authorize(Roles = "User")]
         [HttpGet("{count}")]
         public IActionResult List(int count)
         {
