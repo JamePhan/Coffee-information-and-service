@@ -60,6 +60,32 @@ namespace Back.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete]
+        public IActionResult Accept(int id)
+        {
+            WaitingInfo? waitInfo = _waiting.GetWaiting(id);
+            if (waitInfo == null) { return NotFound("Waiting record doesn't exist!"); }
+
+            try
+            {
+                _user.AddUser(_mapper.Map<WaitingInfo, UserInfo>(waitInfo));
+                _user.Save();
+
+                _customer.DeleteCustomerByAccountId(waitInfo.AccountId.Value);
+                _customer.Save();
+
+                _waiting.RemoveWaiting(id);
+                _waiting.Save();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
         public IActionResult Deny(int id)
         {
             try

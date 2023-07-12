@@ -24,6 +24,19 @@ namespace Library.DAL.Repositories
             return _mapper.Map<List<Waiting>, List<WaitingInfo>>(waits);
         }
 
+        public WaitingInfo? GetWaiting(int id)
+        {
+            Waiting? waiting = _context.Waitings.FirstOrDefault(wait => wait.WaitingId.Equals(id));
+            if (waiting != null)
+            {
+                return _mapper.Map<Waiting, WaitingInfo>(waiting);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void AddWaiting(CustomerInfo customer)
         {
             WaitingInfo newWaitInfo = _mapper.Map<CustomerInfo, WaitingInfo>(customer);

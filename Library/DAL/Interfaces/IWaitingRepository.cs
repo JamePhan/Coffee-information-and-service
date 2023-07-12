@@ -6,6 +6,8 @@ namespace Library.DAL.Interfaces
     {
         List<WaitingInfo> GetWaitings();
 
+        WaitingInfo? GetWaiting(int id);
+
         void AddWaiting(CustomerInfo customer);
 
         void RemoveWaiting(int id);
