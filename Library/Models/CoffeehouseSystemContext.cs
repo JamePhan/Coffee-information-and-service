@@ -31,6 +31,8 @@ public partial class CoffeehouseSystemContext : DbContext
 
     public virtual DbSet<Location> Locations { get; set; }
 
+    public virtual DbSet<News> News { get; set; }
+
     public virtual DbSet<Schedule> Schedules { get; set; }
 
     public virtual DbSet<Service> Services { get; set; }
@@ -43,7 +45,7 @@ public partial class CoffeehouseSystemContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD8C6CADBE");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD04EBC519");
 
             entity.ToTable("Account");
 
@@ -64,7 +66,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA41412C01FC8C");
+            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA414150C95BFD");
 
             entity.ToTable("Admin");
 
@@ -87,12 +89,12 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.Account).WithMany(p => p.Admins)
                 .HasForeignKey(d => d.AccountId)
-                .HasConstraintName("FK__Admin__account_i__37A5467C");
+                .HasConstraintName("FK__Admin__account_i__3A81B327");
         });
 
         modelBuilder.Entity<Banner>(entity =>
         {
-            entity.HasKey(e => e.BannerId).HasName("PK__Banner__10373C34D1E8D91C");
+            entity.HasKey(e => e.BannerId).HasName("PK__Banner__10373C34AC583965");
 
             entity.ToTable("Banner");
 
@@ -106,12 +108,12 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Banners)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Banner__user_id__38996AB5");
+                .HasConstraintName("FK__Banner__user_id__3D5E1FD2");
         });
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB85E1AD53DC");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB851C6DDA69");
 
             entity.ToTable("Customer");
 
@@ -134,12 +136,12 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.Account).WithMany(p => p.Customers)
                 .HasForeignKey(d => d.AccountId)
-                .HasConstraintName("FK__Customer__accoun__398D8EEE");
+                .HasConstraintName("FK__Customer__accoun__403A8C7D");
         });
 
         modelBuilder.Entity<Event>(entity =>
         {
-            entity.HasKey(e => e.EventId).HasName("PK__Event__2370F7276A9C5B6E");
+            entity.HasKey(e => e.EventId).HasName("PK__Event__2370F7273104EFF6");
 
             entity.ToTable("Event");
 
@@ -173,7 +175,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Events)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Event__user_id__3A81B327");
+                .HasConstraintName("FK__Event__user_id__4316F928");
         });
 
         modelBuilder.Entity<Following>(entity =>
@@ -188,11 +190,11 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.Customer).WithMany()
                 .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__Following__custo__3B75D760");
+                .HasConstraintName("FK__Following__custo__45F365D3");
 
             entity.HasOne(d => d.User).WithMany()
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Following__user___3C69FB99");
+                .HasConstraintName("FK__Following__user___48CFD27E");
         });
 
         modelBuilder.Entity<Image>(entity =>
@@ -209,7 +211,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.LocationId).HasName("PK__Location__771831EAABD219C2");
+            entity.HasKey(e => e.LocationId).HasName("PK__Location__771831EAAEB3786B");
 
             entity.ToTable("Location");
 
@@ -223,12 +225,26 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Locations)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Location__user_i__3D5E1FD2");
+                .HasConstraintName("FK__Location__user_i__398D8EEE");
+        });
+
+        modelBuilder.Entity<News>(entity =>
+        {
+            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD8176F2EF9");
+
+            entity.Property(e => e.NewsId)
+                .ValueGeneratedNever()
+                .HasColumnName("news_id");
+            entity.Property(e => e.ImageId).HasColumnName("image_id");
+            entity.Property(e => e.Title)
+                .HasColumnType("text")
+                .HasColumnName("title");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
         });
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__C46A8A6FCD2645A0");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__C46A8A6F1751EFB1");
 
             entity.ToTable("Schedule");
 
@@ -241,16 +257,16 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__Schedule__custom__3E52440B");
+                .HasConstraintName("FK__Schedule__custom__4BAC3F29");
 
             entity.HasOne(d => d.Event).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.EventId)
-                .HasConstraintName("FK__Schedule__event___3F466844");
+                .HasConstraintName("FK__Schedule__event___4E88ABD4");
         });
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF159919B4");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF376A0D36");
 
             entity.ToTable("Service");
 
@@ -268,12 +284,12 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Services)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Service__user_id__403A8C7D");
+                .HasConstraintName("FK__Service__user_id__5165187F");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370FC81AF5EC");
+            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370FD2F9687F");
 
             entity.ToTable("User");
 
@@ -296,18 +312,19 @@ public partial class CoffeehouseSystemContext : DbContext
 
             entity.HasOne(d => d.Account).WithMany(p => p.Users)
                 .HasForeignKey(d => d.AccountId)
-                .HasConstraintName("FK__User__account_id__412EB0B6");
+                .HasConstraintName("FK__User__account_id__5441852A");
         });
 
         modelBuilder.Entity<Waiting>(entity =>
         {
-            entity.HasKey(e => e.WaitingId).HasName("PK__Waiting__24A0A3A354AAC9BC");
+            entity.HasKey(e => e.WaitingId).HasName("PK__Waiting__24A0A3A3E5A9D4E7");
 
             entity.ToTable("Waiting");
 
             entity.Property(e => e.WaitingId)
                 .ValueGeneratedNever()
                 .HasColumnName("waiting_id");
+            entity.Property(e => e.AccountId).HasColumnName("account_id");
             entity.Property(e => e.Address)
                 .HasMaxLength(255)
                 .HasColumnName("address");

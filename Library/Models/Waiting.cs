@@ -5,6 +5,8 @@ namespace Library.Models;
 
 public partial class Waiting
 {
+    public int AccountId { get; set; }
+
     public int WaitingId { get; set; }
 
     public string? Address { get; set; }
