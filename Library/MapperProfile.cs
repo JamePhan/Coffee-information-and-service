@@ -33,6 +33,9 @@ namespace Library
             CreateMap<Location, LocationInfo>();
             CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
 
+            CreateMap<News, NewsInfo>();
+            CreateMap<NewsInfo, News>().ForSourceMember(src => src.NewsId, opt => opt.DoNotValidate());
+
             CreateMap<Service, ServiceInfo>();
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
 
