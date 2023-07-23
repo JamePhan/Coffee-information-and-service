@@ -1,30 +1,10 @@
-using Library.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Library.DTO;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using MimeKit;
-using MailKit.Net.Smtp;
-using Library.Models;
-using Back.Utilities;
-using Moq;
-using Back.Controllers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestPlatform.Common;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Configuration;
-using Org.BouncyCastle.Asn1;
-using System.Net.Sockets;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using AutoMapper.Internal;
 using AutoMapper;
+using Back.Controllers;
+using Library.DTO;
+using Library.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace Capstone_UnitTest.Controller
 {
@@ -86,7 +66,7 @@ namespace Capstone_UnitTest.Controller
         {
             var banners = new List<Banner>
             {
-                
+
             };
             var mockDBBanner = new Mock<DbSet<Banner>>();
             mockDBBanner.As<IQueryable<Banner>>().Setup(m => m.Provider).Returns(banners.AsQueryable().Provider);
@@ -97,7 +77,7 @@ namespace Capstone_UnitTest.Controller
 
             var bannerInfos = new List<BannerInfo>
             {
-                
+
             };
             _mockMapper.Setup(m => m.Map<List<Banner>, List<BannerInfo>>(It.IsAny<List<Banner>>())).Returns(bannerInfos);
 
