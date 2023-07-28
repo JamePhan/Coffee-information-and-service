@@ -35,7 +35,7 @@ namespace Back.Controllers
         [HttpGet("{userId}")]
         public IActionResult UserList(int userId)
         {
-            List<FollowInfo> followings = _follow.GetFollowingUsers(userId);
+            List<FollowInfo> followings = _follow.GetFollowingCustomers(userId);
             if (followings.Count > 0)
             {
                 return Ok(followings);
