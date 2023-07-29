@@ -95,7 +95,7 @@ namespace Library.DAL
 
         public void UpdateUser(UserInfo user)
         {
-            User? checkExist = _context.Users.FirstOrDefault(u => u.UserId.Equals(user.UserId));
+            User? checkExist = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(user.UserId));
             if (checkExist != null)
             {
                 try

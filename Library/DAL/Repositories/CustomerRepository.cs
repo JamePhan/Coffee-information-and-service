@@ -87,7 +87,7 @@ namespace Library.DAL
 
         public void UpdateCustomer(CustomerInfo customer)
         {
-            Customer? checkExist = _context.Customers.SingleOrDefault(cust => cust.CustomerId.Equals(customer.CustomerId));
+            Customer? checkExist = _context.Customers.AsNoTracking().SingleOrDefault(cust => cust.CustomerId.Equals(customer.CustomerId));
             if (checkExist != null)
             {
                 try

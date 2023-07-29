@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.DAL
 {
@@ -37,12 +38,12 @@ namespace Library.DAL
 
         public void UpdateNews(NewsInfo news)
         {
-            News? checkExist = _context.News.FirstOrDefault(n => n.NewsId.Equals(news.NewsId));
+            News? checkExist = _context.News.AsNoTracking().FirstOrDefault(n => n.NewsId.Equals(news.NewsId));
             if (checkExist != null)
             {
                 try
                 {
-                    _context.Entry(_mapper.Map<NewsInfo, News>(news)).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.Entry(_mapper.Map<NewsInfo, News>(news)).State = EntityState.Modified;
                 }
                 catch (SqlException ex)
                 {
