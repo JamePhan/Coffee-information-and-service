@@ -40,7 +40,7 @@ namespace Library.DAL
 
         public List<CustomerInfo> GetCustomers(string name)
         {
-            List<Customer> customers = _context.Customers.Where(customer => customer.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+            List<Customer> customers = _context.Customers.Where(customer => customer.Name.ToLower().Contains(name.ToLower())).ToList();
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 

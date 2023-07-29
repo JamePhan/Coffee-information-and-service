@@ -55,7 +55,7 @@ namespace Library.DAL
 
         public List<UserInfo> GetUsers(string name)
         {
-            List<User> users = _context.Users.Where(u => u.CoffeeShopName.Contains(name.Trim(), StringComparison.OrdinalIgnoreCase)).ToList();
+            List<User> users = _context.Users.Where(u => u.CoffeeShopName.ToLower().Contains(name.ToLower())).ToList();
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
