@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Library.DAL
@@ -32,12 +33,12 @@ namespace Library.DAL
 
         public void UpdateBanner(BannerInfo banner)
         {
-            Banner? checkExist = _context.Banners.FirstOrDefault(bnn => bnn.BannerId == banner.BannerId);
+            Banner? checkExist = _context.Banners.AsNoTracking().FirstOrDefault(bnn => bnn.BannerId == banner.BannerId);
             if (checkExist != null)
             {
                 try
                 {
-                    _context.Entry(_mapper.Map<BannerInfo, Banner>(banner)).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.Entry(_mapper.Map<BannerInfo, Banner>(banner)).State = EntityState.Modified;
                 }
                 catch (SqlException ex)
                 {

@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,13 +65,13 @@ namespace Library.DAL
 
         public void UpdateService(ServiceInfo service)
         {
-            Service? checkExist = _context.Services.FirstOrDefault(serv => serv.ServiceId.Equals(service.ServiceId));
+            Service? checkExist = _context.Services.AsNoTracking().FirstOrDefault(serv => serv.ServiceId.Equals(service.ServiceId));
             if (checkExist != null)
             {
                 try
                 {
                     checkExist = _mapper.Map<ServiceInfo, Service>(service);
-                    _context.Entry(checkExist).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.Entry(checkExist).State = EntityState.Modified;
                 }
                 catch (SqlException ex)
                 {

@@ -57,7 +57,7 @@ namespace Library.DAL
 
         public void UpdateSchedule(ScheduleInfo scheduleinfo)
         {
-            Schedule? checkExist = _context.Schedules.FirstOrDefault(schedule => schedule.ScheduleId.Equals(scheduleinfo.ScheduleId));
+            Schedule? checkExist = _context.Schedules.AsNoTracking().FirstOrDefault(schedule => schedule.ScheduleId.Equals(scheduleinfo.ScheduleId));
             if (checkExist != null)
             {
                 _context.Entry(_mapper.Map<ScheduleInfo, Schedule>(scheduleinfo)).State = EntityState.Modified;
