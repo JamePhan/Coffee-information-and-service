@@ -58,6 +58,7 @@ namespace Back.Controllers
             }
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPatch]
         public IActionResult Update(ScheduleInfo schedule)
         {
@@ -67,9 +68,9 @@ namespace Back.Controllers
                 _schedule.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -82,9 +83,9 @@ namespace Back.Controllers
                 _schedule.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -62,12 +62,21 @@ namespace Library.DAL
             }
         }
 
-        public void UpdateSchedule(ScheduleInfo scheduleinfo)
+        public void UpdateSchedule(ScheduleInfo schedule)
         {
-            Schedule? checkExist = _context.Schedules.AsNoTracking().FirstOrDefault(schedule => schedule.ScheduleId.Equals(scheduleinfo.ScheduleId));
+            Schedule? checkExist = _context.Schedules.AsNoTracking().FirstOrDefault(s => s.ScheduleId.Equals(schedule.ScheduleId));
             if (checkExist != null)
             {
-                _context.Entry(_mapper.Map<ScheduleInfo, Schedule>(scheduleinfo)).State = EntityState.Modified;
+                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.EventId)) ?? throw new Exception("Can't find event to book!");
+                eventToBook.SeatCount += checkExist.TicketCount;
+
+                if (eventToBook.SeatCount < schedule.TicketCount) throw new Exception("Event doesn't have enough seat!");
+
+                eventToBook.SeatCount -= schedule.TicketCount;
+
+                _context.Entry(eventToBook).State = EntityState.Modified;
+                checkExist = _mapper.Map<ScheduleInfo, Schedule>(schedule);
+                _context.Entry(checkExist).State = EntityState.Modified;
             }
             else
             {
@@ -77,9 +86,12 @@ namespace Library.DAL
 
         public void DeleteSchedule(int scheduleId)
         {
-            Schedule? checkExist = _context.Schedules.FirstOrDefault(schedule => schedule.ScheduleId.Equals(scheduleId));
+            Schedule? checkExist = _context.Schedules.FirstOrDefault(s => s.ScheduleId.Equals(scheduleId));
             if (checkExist != null)
             {
+                Event? ev = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(checkExist.EventId)) ?? throw new Exception("Can't find event!");
+                ev.SeatCount += checkExist.TicketCount;
+                _context.Entry(ev).State = EntityState.Modified;
                 _context.Schedules.Remove(checkExist);
             }
             else
