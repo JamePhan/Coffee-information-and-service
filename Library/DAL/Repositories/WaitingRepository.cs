@@ -37,13 +37,14 @@ namespace Library.DAL.Repositories
             }
         }
 
-        public void AddWaiting(CustomerInfo customer)
+        public void AddWaiting(int id)
         {
-            WaitingInfo newWaitInfo = _mapper.Map<CustomerInfo, WaitingInfo>(customer);
-            Waiting newWait = _mapper.Map<WaitingInfo, Waiting>(newWaitInfo);
+            Customer? checkExist = _context.Customers.FirstOrDefault(cust => cust.CustomerId.Equals(id)) ?? throw new Exception("Customer doesn't exist!");
+
             try
             {
-                _context.Waitings.Add(newWait);
+                Waiting toAdd = _mapper.Map<Customer, Waiting>(checkExist);
+                _context.Waitings.Add(toAdd);
             }
             catch (SqlException ex)
             {

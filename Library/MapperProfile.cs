@@ -26,6 +26,7 @@ namespace Library
                 .ForSourceMember(src => src.CustomerId, opt => opt.DoNotValidate())
                 .ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.Name));
             CreateMap<WaitingInfo, UserInfo>().ForSourceMember(src => src.WaitingId, opt => opt.DoNotValidate());
+            CreateMap<Customer, Waiting>().ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.Name));
 
             CreateMap<Following, FollowInfo>();
             CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
