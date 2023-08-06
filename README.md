@@ -7,5 +7,5 @@
 5. Run "docker build -t back ." to build new back end docker image.
 6. Run "docker-compose up" to create and start containers.
 7. Run SSMS with "localhost,1433" as server name. Password is provided within appsettings.json file.
-8. Execute the proviced sql script.
+8. Execute the proviced sql scripts within "Resource" folder (DBSchema first, then DBData).
 9. Access APIs via localhost:5000/{api-link-here}.
