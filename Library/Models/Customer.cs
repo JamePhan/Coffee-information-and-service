@@ -19,5 +19,9 @@ public partial class Customer
 
     public virtual Account? Account { get; set; }
 
+    public virtual ICollection<Following> Followings { get; set; } = new List<Following>();
+
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+    public virtual ICollection<Waiting> Waitings { get; set; } = new List<Waiting>();
 }

@@ -5,7 +5,7 @@ namespace Library.Models;
 
 public partial class Waiting
 {
-    public int AccountId { get; set; }
+    public int? CustomerId { get; set; }
 
     public int WaitingId { get; set; }
 
@@ -16,4 +16,6 @@ public partial class Waiting
     public string? Phone { get; set; }
 
     public string? CoffeeShopName { get; set; }
+
+    public virtual Customer? Customer { get; set; }
 }
