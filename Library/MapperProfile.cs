@@ -8,7 +8,7 @@ namespace Library
     {
         public MapperProfile()
         {
-            CreateMap<Event, EventInfo>();
+            CreateMap<Event, EventInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<EventInfo, Event>().ForSourceMember(src => src.EventId, opt => opt.DoNotValidate());
 
             CreateMap<Banner, BannerInfo>();
