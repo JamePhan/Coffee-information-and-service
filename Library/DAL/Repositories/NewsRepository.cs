@@ -24,6 +24,16 @@ namespace Library.DAL
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
         }
 
+        public NewsInfo? GetNews(int id)
+        {
+            News? news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(n => n.NewsId.Equals(id));
+            if (news != null)
+            {
+                return _mapper.Map<News, NewsInfo>(news);
+            }
+            return null;
+        }
+
         public void CreateNews(NewsInfo news)
         {
             try
