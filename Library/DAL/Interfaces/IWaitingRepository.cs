@@ -8,7 +8,7 @@ namespace Library.DAL.Interfaces
 
         WaitingInfo? GetWaiting(int id);
 
-        void AddWaiting(CustomerInfo customer);
+        void AddWaiting(int id);
 
         void RemoveWaiting(int id);
 

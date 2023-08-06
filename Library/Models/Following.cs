@@ -5,7 +5,7 @@ namespace Library.Models;
 
 public partial class Following
 {
-    public int? FollowingId { get; set; }
+    public int FollowingId { get; set; }
 
     public int? UserId { get; set; }
 

@@ -13,7 +13,7 @@ public partial class Event
 
     public DateTime? Date { get; set; }
 
-    public string? ImageUrl { get; set; }
+    public int? GroupImageId { get; set; }
 
     public string? Description { get; set; }
 
@@ -26,6 +26,8 @@ public partial class Event
     public decimal? Price { get; set; }
 
     public int? UserId { get; set; }
+
+    public virtual GroupImage? GroupImage { get; set; }
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 

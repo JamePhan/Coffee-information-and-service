@@ -23,7 +23,11 @@ public partial class User
 
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
+    public virtual ICollection<Following> Followings { get; set; } = new List<Following>();
+
     public virtual ICollection<Location> Locations { get; set; } = new List<Location>();
+
+    public virtual ICollection<News> News { get; set; } = new List<News>();
 
     public virtual ICollection<Service> Services { get; set; } = new List<Service>();
 }

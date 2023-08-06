@@ -35,26 +35,18 @@ namespace Back.Controllers
         }
 
         [Authorize(Roles = "Customer")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Request(int customerId)
         {
-            Customer? customer = _customer.GetCustomer(customerId);
-            if (customer != null)
+            try
             {
-                try
-                {
-                    _waiting.AddWaiting(_mapper.Map<Customer, CustomerInfo>(customer));
-                    _waiting.Save();
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+                _waiting.AddWaiting(customerId);
+                _waiting.Save();
+                return Ok();
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("User doesn't exist!");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -67,10 +59,15 @@ namespace Back.Controllers
 
             try
             {
-                _user.AddUser(_mapper.Map<WaitingInfo, UserInfo>(waitInfo));
+                int accountId = _customer.GetCustomer(waitInfo.CustomerId.Value).AccountId.Value;
+
+                UserInfo uinfo = _mapper.Map<WaitingInfo, UserInfo>(waitInfo);
+                uinfo.AccountId = accountId;
+
+                _user.AddUser(uinfo);
                 _user.Save();
 
-                _customer.DeleteCustomerByAccountId(waitInfo.AccountId.Value);
+                _customer.DeleteCustomer(waitInfo.CustomerId.Value);
                 _customer.Save();
 
                 _waiting.RemoveWaiting(id);

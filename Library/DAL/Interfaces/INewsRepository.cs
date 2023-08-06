@@ -11,6 +11,8 @@ namespace Library.DAL
     {
         List<NewsInfo> GetNews();
 
+        NewsInfo? GetNews(int id);
+
         void CreateNews(NewsInfo news);
 
         void UpdateNews(NewsInfo news);
