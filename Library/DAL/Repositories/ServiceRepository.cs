@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace Library.DAL
 
         public ServiceInfo? GetService(int id)
         {
-            Service? service = _context.Services.FirstOrDefault(service => service.ServiceId.Equals(id));
+            Service? service = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(service => service.ServiceId.Equals(id));
             if (service != null)
             {
                 return _mapper.Map<Service, ServiceInfo>(service);
@@ -41,11 +42,11 @@ namespace Library.DAL
             List<Service> services;
             if (count > 0)
             {
-                services = _context.Services.Take(count).ToList();
+                services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
             }
             else
             {
-                services = _context.Services.ToList();
+                services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
             }
 
             return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
@@ -55,7 +56,18 @@ namespace Library.DAL
         {
             try
             {
-                _context.Services.Add(_mapper.Map<ServiceInfo, Service>(service));
+                _context.Images.Add(new Image { Image1 = service.ImageUrl });
+                _context.SaveChanges();
+                int imageId = _context.Images.OrderBy(image => image.ImageId).LastOrDefault().ImageId;
+
+                _context.GroupImages.Add(new GroupImage { ImageId = imageId });
+                _context.SaveChanges();
+                int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
+
+                Service toAdd = _mapper.Map<ServiceInfo, Service>(service);
+                toAdd.GroupImageId = groupId;
+
+                _context.Services.Add(toAdd);
             }
             catch (SqlException ex)
             {
@@ -70,8 +82,18 @@ namespace Library.DAL
             {
                 try
                 {
-                    checkExist = _mapper.Map<ServiceInfo, Service>(service);
-                    _context.Entry(checkExist).State = EntityState.Modified;
+                    GroupImage? serviceGroupImage = _context.GroupImages.AsNoTracking().FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
+
+                    if (serviceGroupImage != null)
+                    {
+                        Image? serviceImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(serviceGroupImage.ImageId));
+                        if (serviceImage != null) serviceImage.Image1 = service.ImageUrl;
+                    }
+
+                    Service toUpdate = _mapper.Map<ServiceInfo, Service>(service);
+                    toUpdate.GroupImageId = serviceGroupImage.GroupImageId;
+
+                    _context.Entry(toUpdate).State = EntityState.Modified;
                 }
                 catch (SqlException ex)
                 {
@@ -91,7 +113,17 @@ namespace Library.DAL
             {
                 try
                 {
-                    _context.Services.Remove(checkExist);
+                    GroupImage? serviceGroupImage = _context.GroupImages.FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
+                    if (serviceGroupImage != null)
+                    {
+                        Image? serviceImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(serviceGroupImage.ImageId));
+                        if (serviceImage != null)
+                        {
+                            _context.Services.Remove(checkExist);
+                            _context.GroupImages.Remove(serviceGroupImage);
+                            _context.Images.Remove(serviceImage);
+                        }
+                    }
                 }
                 catch (SqlException ex)
                 {

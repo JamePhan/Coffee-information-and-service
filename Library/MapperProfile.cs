@@ -36,7 +36,7 @@ namespace Library
             CreateMap<News, NewsInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<NewsInfo, News>().ForSourceMember(src => src.NewsId, opt => opt.DoNotValidate());
 
-            CreateMap<Service, ServiceInfo>();
+            CreateMap<Service, ServiceInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
 
             CreateMap<Schedule, ScheduleInfo>();

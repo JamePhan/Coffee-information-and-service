@@ -16,6 +16,6 @@ namespace Library.DTO
 
         public int? UserId { get; set; }
 
-        public int? ImageId { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
