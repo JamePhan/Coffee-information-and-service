@@ -47,6 +47,13 @@ namespace Library.DAL
         {
             try
             {
+                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.EventId)) ?? throw new Exception("Can't find event to book!");
+
+                if (eventToBook.SeatCount < schedule.TicketCount) throw new Exception("Event doesn't have enough seat!");
+
+                eventToBook.SeatCount -= schedule.TicketCount;
+
+                _context.Entry(eventToBook).State = EntityState.Modified;
                 _context.Schedules.Add(_mapper.Map<ScheduleInfo, Schedule>(schedule));
             }
             catch (SqlException ex)

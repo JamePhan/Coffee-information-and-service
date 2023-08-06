@@ -2,6 +2,7 @@
 using Library.DAL;
 using Library.DTO;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Back.Controllers
@@ -17,6 +18,7 @@ namespace Back.Controllers
             _schedule = new ScheduleRepository(context, mapper);
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpGet("{customerId}")]
         public IActionResult Customer(int customerId)
         {
@@ -28,6 +30,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("{userId}")]
         public IActionResult User(int userId)
         {
@@ -39,6 +42,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut]
         public IActionResult Book(ScheduleInfo schedule)
         {
@@ -48,9 +52,9 @@ namespace Back.Controllers
                 _schedule.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
