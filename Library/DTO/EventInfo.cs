@@ -11,7 +11,7 @@ namespace Library.DTO
     {
         public int EventId { get; set; }
         public string Name { get; set; }
-        public int? LocationId { get; set; }
+        public int? Location { get; set; }
         public DateTime? Date { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
