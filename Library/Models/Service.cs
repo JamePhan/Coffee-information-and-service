@@ -13,7 +13,9 @@ public partial class Service
 
     public int? UserId { get; set; }
 
-    public int? ImageId { get; set; }
+    public int? GroupImageId { get; set; }
+
+    public virtual GroupImage? GroupImage { get; set; }
 
     public virtual User? User { get; set; }
 }

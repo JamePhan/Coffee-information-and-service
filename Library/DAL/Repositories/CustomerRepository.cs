@@ -111,6 +111,10 @@ namespace Library.DAL
             Customer? toDelete = GetCustomer(id);
             if (toDelete != null)
             {
+                List<Following> followDelete = _context.Followings.Where(follow => follow.CustomerId.Equals(id)).ToList();
+                List<Schedule> scheduleDelete = _context.Schedules.Where(schedule => schedule.CustomerId.Equals(id)).ToList();
+                _context.Followings.RemoveRange(followDelete);
+                _context.Schedules.RemoveRange(scheduleDelete);
                 _context.Customers.Remove(toDelete);
             }
         }

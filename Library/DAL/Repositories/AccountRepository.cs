@@ -39,6 +39,7 @@ namespace Library.DAL
                 {
                     AccountId = account.AccountId,
                     IsBanned = account.IsBanned,
+                    AccountImage = account.AccountImage
                 };
             }
             return null;

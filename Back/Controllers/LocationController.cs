@@ -40,9 +40,9 @@ namespace Back.Controllers
                 _location.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 

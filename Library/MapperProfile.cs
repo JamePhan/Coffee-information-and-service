@@ -8,7 +8,7 @@ namespace Library
     {
         public MapperProfile()
         {
-            CreateMap<Event, EventInfo>();
+            CreateMap<Event, EventInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<EventInfo, Event>().ForSourceMember(src => src.EventId, opt => opt.DoNotValidate());
 
             CreateMap<Banner, BannerInfo>();
@@ -26,6 +26,7 @@ namespace Library
                 .ForSourceMember(src => src.CustomerId, opt => opt.DoNotValidate())
                 .ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.Name));
             CreateMap<WaitingInfo, UserInfo>().ForSourceMember(src => src.WaitingId, opt => opt.DoNotValidate());
+            CreateMap<Customer, Waiting>().ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.Name));
 
             CreateMap<Following, FollowInfo>();
             CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
@@ -33,10 +34,10 @@ namespace Library
             CreateMap<Location, LocationInfo>();
             CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
 
-            CreateMap<News, NewsInfo>();
+            CreateMap<News, NewsInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<NewsInfo, News>().ForSourceMember(src => src.NewsId, opt => opt.DoNotValidate());
 
-            CreateMap<Service, ServiceInfo>();
+            CreateMap<Service, ServiceInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
 
             CreateMap<Schedule, ScheduleInfo>();

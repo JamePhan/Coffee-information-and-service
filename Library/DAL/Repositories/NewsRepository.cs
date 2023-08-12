@@ -20,15 +20,38 @@ namespace Library.DAL
 
         public List<NewsInfo> GetNews()
         {
-            List<News> news = _context.News.ToList();
+            List<News> news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
+        }
+
+        public NewsInfo? GetNews(int id)
+        {
+            News? news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(n => n.NewsId.Equals(id));
+            if (news != null)
+            {
+                return _mapper.Map<News, NewsInfo>(news);
+            }
+            return null;
         }
 
         public void CreateNews(NewsInfo news)
         {
             try
             {
-                _context.News.Add(_mapper.Map<NewsInfo, News>(news));
+                _context.Images.Add(new Image { Image1 = news.ImageUrl });
+                _context.SaveChanges();
+
+                int imageId = _context.Images.OrderBy(image => image.ImageId).LastOrDefault().ImageId;
+
+                _context.GroupImages.Add(new GroupImage { ImageId = imageId });
+                _context.SaveChanges();
+
+                int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
+
+                News toAdd = _mapper.Map<NewsInfo, News>(news);
+                toAdd.GroupImageId = groupId;
+
+                _context.News.Add(toAdd);
             }
             catch (SqlException ex)
             {
@@ -43,7 +66,18 @@ namespace Library.DAL
             {
                 try
                 {
-                    _context.Entry(_mapper.Map<NewsInfo, News>(news)).State = EntityState.Modified;
+                    GroupImage? newsGroupImage = _context.GroupImages.AsNoTracking().FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
+
+                    if (newsGroupImage != null)
+                    {
+                        Image? newsImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(newsGroupImage.ImageId));
+                        if (newsImage != null) newsImage.Image1 = news.ImageUrl;
+                    }
+
+                    News toUpdate = _mapper.Map<NewsInfo, News>(news);
+                    toUpdate.GroupImageId = newsGroupImage.GroupImageId;
+
+                    _context.Entry(toUpdate).State = EntityState.Modified;
                 }
                 catch (SqlException ex)
                 {
@@ -63,7 +97,17 @@ namespace Library.DAL
             {
                 try
                 {
-                    _context.News.Remove(checkExist);
+                    GroupImage? newsGroupImage = _context.GroupImages.FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
+                    if (newsGroupImage != null)
+                    {
+                        Image? newsImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(newsGroupImage.ImageId));
+                        if (newsImage != null)
+                        {
+                            _context.News.Remove(checkExist);
+                            _context.GroupImages.Remove(newsGroupImage);
+                            _context.Images.Remove(newsImage);
+                        }
+                    }
                 }
                 catch (SqlException ex)
                 {

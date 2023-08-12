@@ -38,8 +38,8 @@ namespace Library.DAL
 
         public void AddLocation(LocationInfo location)
         {
-            Location? checkExist = _context.Locations.FirstOrDefault(local => local.PlusCode.Equals(location.PlusCode, StringComparison.OrdinalIgnoreCase));
-            if (checkExist != null)
+            Location? checkExist = _context.Locations.FirstOrDefault(local => local.PlusCode.ToLower().Equals(location.PlusCode.ToLower()));
+            if (checkExist == null)
             {
                 try
                 {

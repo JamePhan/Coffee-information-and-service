@@ -26,6 +26,17 @@ namespace Back.Controllers
             return Ok(news);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            NewsInfo? news = _news.GetNews(id);
+            if (news != null)
+            {
+                return Ok(news);
+            }
+            return NotFound();
+        }
+
         [Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Create(NewsInfo news)

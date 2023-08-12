@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.DAL
 {
@@ -23,11 +24,11 @@ namespace Library.DAL
 
             if (count > 0)
             {
-                events = _context.Events.Take(count).ToList();
+                events = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
             }
             else
             {
-                events = _context.Events.ToList();
+                events = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
             }
 
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
@@ -38,18 +39,18 @@ namespace Library.DAL
             List<Event> events;
             if (count > 0)
             {
-                events = _context.Events.OrderByDescending(events => events.Date).Take(count).ToList();
+                events = _context.Events.OrderByDescending(events => events.Date).Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
             }
             else
             {
-                events = _context.Events.OrderByDescending(events => events.Date).ToList();
+                events = _context.Events.OrderByDescending(events => events.Date).Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
             }
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
         public EventInfo? GetEvent(int id)
         {
-            Event? eve = _context.Events.FirstOrDefault(ev => ev.EventId.Equals(id));
+            Event? eve = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(ev => ev.EventId.Equals(id));
             if (eve != null)
             {
                 return _mapper.Map<Event, EventInfo>(eve);
@@ -64,7 +65,18 @@ namespace Library.DAL
         {
             try
             {
-                _context.Events.Add(_mapper.Map<EventInfo, Event>(eventInfo));
+                _context.Images.Add(new Image { Image1 = eventInfo.ImageUrl });
+                _context.SaveChanges();
+                int imageId = _context.Images.OrderBy(image => image.ImageId).LastOrDefault().ImageId;
+
+                _context.GroupImages.Add(new GroupImage { ImageId = imageId });
+                _context.SaveChanges();
+                int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
+
+                Event toAdd = _mapper.Map<EventInfo, Event>(eventInfo);
+                toAdd.GroupImageId = groupId;
+
+                _context.Events.Add(toAdd);
             }
             catch (SqlException ex)
             {

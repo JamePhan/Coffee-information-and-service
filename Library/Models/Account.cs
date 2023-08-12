@@ -13,6 +13,8 @@ public partial class Account
 
     public bool? IsBanned { get; set; }
 
+    public string? AccountImage { get; set; }
+
     public string? ForgetCode { get; set; }
 
     public virtual ICollection<Admin> Admins { get; set; } = new List<Admin>();

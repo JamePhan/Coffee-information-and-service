@@ -54,9 +54,9 @@ namespace Back.Controllers
                 _service.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -70,9 +70,9 @@ namespace Back.Controllers
                 _service.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -86,9 +86,9 @@ namespace Back.Controllers
                 _service.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
