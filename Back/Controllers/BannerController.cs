@@ -46,6 +46,17 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            BannerInfo? banner = _banner.DetailBanner(id);
+            if (banner != null)
+            {
+                return Ok(banner);
+            }
+            return NotFound();
+        }
+
         //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Update(BannerInfo banner)
