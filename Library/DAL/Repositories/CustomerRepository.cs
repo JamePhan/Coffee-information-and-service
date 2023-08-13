@@ -72,11 +72,12 @@ namespace Library.DAL
 
         public void UpdateCustomer(CustomerInfo customer, int accountId)
         {
-            Customer? checkExist = _context.Customers.AsNoTracking().SingleOrDefault(cust => cust.CustomerId.Equals(customer.CustomerId));
+            Customer? checkExist = _context.Customers.SingleOrDefault(cust => cust.CustomerId.Equals(customer.CustomerId));
             if (checkExist != null)
             {
                 try
                 {
+                    _context.Entry(checkExist).State = EntityState.Detached;
                     checkExist = _mapper.Map<CustomerInfo, Customer>(customer);
                     checkExist.AccountId = accountId;
                     _context.Entry(checkExist).State = EntityState.Modified;

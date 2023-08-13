@@ -53,9 +53,9 @@ namespace Back.Controllers
                 _customer.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
