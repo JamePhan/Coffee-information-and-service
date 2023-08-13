@@ -37,17 +37,11 @@ namespace Library.DAL
             }
         }
 
-        public List<ServiceInfo> GetServices(int count)
+        public List<ServiceInfo> GetServices()
         {
             List<Service> services;
-            if (count > 0)
-            {
-                services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
-            }
-            else
-            {
-                services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
-            }
+
+            services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
 
             return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
         }

@@ -31,6 +31,11 @@ namespace Library.DAL
             }
         }
 
+        public BannerInfo? DetailBanner(int id)
+        {
+            return _mapper.Map<Banner, BannerInfo>(_context.Banners.FirstOrDefault(bann => bann.BannerId.Equals(id)));
+        }
+
         public void UpdateBanner(BannerInfo banner)
         {
             Banner? checkExist = _context.Banners.AsNoTracking().FirstOrDefault(bnn => bnn.BannerId == banner.BannerId);

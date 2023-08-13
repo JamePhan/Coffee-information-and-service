@@ -33,10 +33,10 @@ namespace Back.Controllers
             }
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<ServiceInfo> services = _service.GetServices(count);
+            List<ServiceInfo> services = _service.GetServices();
             if (services.Count > 0)
             {
                 return Ok(services);

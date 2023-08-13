@@ -23,17 +23,11 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
-        public List<CustomerInfo> GetCustomers(int count)
+        public List<CustomerInfo> GetCustomers()
         {
             List<Customer> customers;
-            if (count > 0)
-            {
-                customers = _context.Customers.Take(count).ToList();
-            }
-            else
-            {
-                customers = _context.Customers.ToList();
-            }
+
+            customers = _context.Customers.ToList();
 
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
@@ -44,23 +38,14 @@ namespace Library.DAL
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 
-        public List<CustomerInfo> GetCustomersBanned(int count)
+        public List<CustomerInfo> GetCustomersBanned()
         {
             List<Customer> customers;
-            if (count > 0)
-            {
-                customers = _context.Customers
-                    .Include(customer => customer.Account)
-                    .Where(customer => customer.Account.IsBanned == true)
-                    .Take(count).ToList();
-            }
-            else
-            {
-                customers = _context.Customers
-                    .Include(customer => customer.Account)
-                    .Where(customer => customer.Account.IsBanned == true)
-                    .ToList();
-            }
+
+            customers = _context.Customers
+                .Include(customer => customer.Account)
+                .Where(customer => customer.Account.IsBanned == true)
+                .ToList();
 
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
