@@ -17,5 +17,7 @@ namespace Library.DTO
         public string? Phone { get; set; }
 
         public string? CoffeeShopName { get; set; }
+
+        public string? Avatar { get; set; }
     }
 }

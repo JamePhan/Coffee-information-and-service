@@ -35,7 +35,7 @@ namespace Back.Controllers
         }
 
         [Authorize(Roles = "Customer")]
-        [HttpPost]
+        [HttpPut]
         public IActionResult Request(int customerId)
         {
             try
@@ -62,7 +62,6 @@ namespace Back.Controllers
                 int accountId = _customer.GetCustomer(waitInfo.CustomerId.Value).AccountId.Value;
 
                 UserInfo uinfo = _mapper.Map<WaitingInfo, UserInfo>(waitInfo);
-                uinfo.AccountId = accountId;
 
                 _user.AddUser(uinfo);
                 _user.Save();

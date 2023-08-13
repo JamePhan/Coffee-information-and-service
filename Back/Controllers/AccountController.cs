@@ -74,7 +74,7 @@ namespace Back.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult Register(Register registerInfo)
         {
             if (_account.GetAccountId(registerInfo.Username) != null)
