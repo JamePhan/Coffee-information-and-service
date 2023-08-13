@@ -130,7 +130,10 @@ namespace Library.DAL
                         locationId = location.LocationId;
                     }
 
+                    _context.Entry(checkExist).State = EntityState.Detached;
+
                     Event toUpdate = _mapper.Map<EventInfo, Event>(eventInfo);
+
                     toUpdate.GroupImageId = eventGroupImage.GroupImageId;
                     toUpdate.LocationId = locationId;
                     toUpdate.UserId = userId;
