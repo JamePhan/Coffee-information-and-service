@@ -18,33 +18,28 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
-        public List<EventInfo> GetEvents(int count)
+        public List<EventInfo> GetEvents()
         {
             List<Event> events;
 
-            if (count > 0)
-            {
-                events = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
-            }
-            else
-            {
-                events = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
-            }
+            events = _context.Events
+                .Include(locale => locale.Location)
+                .Include(group => group.GroupImage)
+                .ThenInclude(image => image.Image).ToList();
 
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
-        public List<EventInfo> GetLastest(int count)
+        public List<EventInfo> GetLastest()
         {
             List<Event> events;
-            if (count > 0)
-            {
-                events = _context.Events.OrderByDescending(events => events.Date).Include(group => group.GroupImage).ThenInclude(image => image.Image).Take(count).ToList();
-            }
-            else
-            {
-                events = _context.Events.OrderByDescending(events => events.Date).Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
-            }
+
+            events = _context.Events
+                .Include(locale => locale.LocationId)
+                .OrderByDescending(events => events.Date)
+                .Include(group => group.GroupImage)
+                .ThenInclude(image => image.Image).ToList();
+
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
@@ -55,10 +50,8 @@ namespace Library.DAL
             {
                 return _mapper.Map<Event, EventInfo>(eve);
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public void AddEvent(EventInfo eventInfo)

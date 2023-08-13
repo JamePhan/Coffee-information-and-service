@@ -4,9 +4,9 @@ namespace Library.DAL
 {
     public interface IEventRepository : IDisposable
     {
-        List<EventInfo> GetEvents(int count);
+        List<EventInfo> GetEvents();
 
-        List<EventInfo> GetLastest(int count);
+        List<EventInfo> GetLastest();
 
         EventInfo? GetEvent(int id);
 

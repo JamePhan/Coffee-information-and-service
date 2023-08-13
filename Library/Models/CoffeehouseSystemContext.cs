@@ -181,6 +181,10 @@ public partial class CoffeehouseSystemContext : DbContext
                 .HasForeignKey(d => d.GroupImageId)
                 .HasConstraintName("FK_Event_GroupImage");
 
+            entity.HasOne(d => d.Location).WithMany(p => p.Events)
+                .HasForeignKey(d => d.LocationId)
+                .HasConstraintName("FK_Event_Location");
+
             entity.HasOne(d => d.User).WithMany(p => p.Events)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_Event_User");

@@ -11,5 +11,7 @@ public partial class Location
 
     public int? UserId { get; set; }
 
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
     public virtual User? User { get; set; }
 }

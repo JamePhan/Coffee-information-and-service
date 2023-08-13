@@ -29,6 +29,8 @@ public partial class Event
 
     public virtual GroupImage? GroupImage { get; set; }
 
+    public virtual Location? Location { get; set; }
+
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 
     public virtual User? User { get; set; }
