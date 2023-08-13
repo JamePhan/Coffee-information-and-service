@@ -48,7 +48,8 @@ namespace Back.Controllers
         {
             try
             {
-                _customer.UpdateCustomer(customer);
+                int accountId = _customer.GetCustomerByEmail(customer.Email).AccountId.Value;
+                _customer.UpdateCustomer(customer, accountId);
                 _customer.Save();
                 return Ok();
             }

@@ -14,15 +14,15 @@ namespace Library.DAL
 
         User? GetUserByAccountId(int accountId);
 
-        List<UserInfo> GetUsers(int count);
+        List<UserInfo> GetUsers();
 
         List<UserInfo> GetUsers(string name);
 
-        List<UserInfo> GetUsersBanned(int count);
+        List<UserInfo> GetUsersBanned();
 
-        void AddUser(UserInfo user);
+        void AddUser(UserInfo user, int AccountId);
 
-        void UpdateUser(UserInfo user);
+        void UpdateUser(UserInfo user, int AccountId);
 
         void Save();
     }

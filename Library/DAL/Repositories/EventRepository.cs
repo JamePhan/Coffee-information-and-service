@@ -66,8 +66,11 @@ namespace Library.DAL
                 _context.SaveChanges();
                 int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
 
+                int locationId = _context.Locations.FirstOrDefault(location => location.PlusCode.Equals(eventInfo.PlusCode)).LocationId;
+
                 Event toAdd = _mapper.Map<EventInfo, Event>(eventInfo);
                 toAdd.GroupImageId = groupId;
+                toAdd.LocationId = locationId;
 
                 _context.Events.Add(toAdd);
             }

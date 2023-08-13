@@ -38,17 +38,11 @@ namespace Library.DAL
             return _context.Users.FirstOrDefault(u => u.AccountId.Equals(accountId));
         }
 
-        public List<UserInfo> GetUsers(int count)
+        public List<UserInfo> GetUsers()
         {
             List<User> users;
-            if (count > 0)
-            {
-                users = _context.Users.Take(count).ToList();
-            }
-            else
-            {
-                users = _context.Users.ToList();
-            }
+
+            users = _context.Users.ToList();
 
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
@@ -59,30 +53,22 @@ namespace Library.DAL
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
-        public List<UserInfo> GetUsersBanned(int count)
+        public List<UserInfo> GetUsersBanned()
         {
             List<User> users;
-            if (count > 0)
-            {
-                users = _context.Users
-                    .Include(user => user.Account)
-                    .Where(user => user.Account.IsBanned == true)
-                    .Take(count).ToList();
-            }
-            else
-            {
-                users = _context.Users
-                    .Include(user => user.Account)
-                    .Where(user => user.Account.IsBanned == true)
-                    .ToList();
-            }
+
+            users = _context.Users
+                .Include(user => user.Account)
+                .Where(user => user.Account.IsBanned == true)
+                .ToList();
 
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
-        public void AddUser(UserInfo user)
+        public void AddUser(UserInfo user, int accountId)
         {
             User newUser = _mapper.Map<UserInfo, User>(user);
+            newUser.AccountId = accountId;
             try
             {
                 _context.Users.Add(newUser);
@@ -93,7 +79,7 @@ namespace Library.DAL
             }
         }
 
-        public void UpdateUser(UserInfo user)
+        public void UpdateUser(UserInfo user, int accountId)
         {
             User? checkExist = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(user.UserId));
             if (checkExist != null)
@@ -101,6 +87,7 @@ namespace Library.DAL
                 try
                 {
                     checkExist = _mapper.Map<UserInfo, User>(user);
+                    checkExist.AccountId = accountId;
                     _context.Entry(checkExist).State = EntityState.Modified;
                 }
                 catch (SqlException ex)

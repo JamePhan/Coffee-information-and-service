@@ -47,7 +47,8 @@ namespace Back.Controllers
         {
             try
             {
-                _user.UpdateUser(user);
+                int accountId = _user.GetUserByEmail(user.Email).AccountId.Value;
+                _user.UpdateUser(user, accountId);
                 _user.Save();
                 return Ok();
             }

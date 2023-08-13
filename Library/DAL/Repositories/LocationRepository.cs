@@ -22,17 +22,12 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
-        public List<LocationInfo> GetLocations(int count)
+        public List<LocationInfo> GetLocations()
         {
             List<Location> locations;
-            if (count > 0)
-            {
-                locations = _context.Locations.Take(count).ToList();
-            }
-            else
-            {
-                locations = _context.Locations.ToList();
-            }
+
+            locations = _context.Locations.ToList();
+
             return _mapper.Map<List<Location>, List<LocationInfo>>(locations);
         }
 

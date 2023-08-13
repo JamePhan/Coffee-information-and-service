@@ -48,8 +48,12 @@ namespace Library.DAL
 
                 int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
 
+                int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(news.CoffeeShopName.ToLower())).UserId;
+
                 News toAdd = _mapper.Map<NewsInfo, News>(news);
                 toAdd.GroupImageId = groupId;
+                toAdd.UserId = userId;
+                toAdd.CreatedDate = DateTime.Now;
 
                 _context.News.Add(toAdd);
             }
@@ -74,8 +78,12 @@ namespace Library.DAL
                         if (newsImage != null) newsImage.Image1 = news.ImageUrl;
                     }
 
+                    int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(news.CoffeeShopName.ToLower())).UserId;
+
                     News toUpdate = _mapper.Map<NewsInfo, News>(news);
                     toUpdate.GroupImageId = newsGroupImage.GroupImageId;
+                    toUpdate.UserId = userId;
+                    toUpdate.CreatedDate = DateTime.Now;
 
                     _context.Entry(toUpdate).State = EntityState.Modified;
                 }

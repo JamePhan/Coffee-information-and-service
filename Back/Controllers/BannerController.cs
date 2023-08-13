@@ -19,10 +19,10 @@ namespace Back.Controllers
             _banner = new BannerRepository(context, mapper);
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<BannerInfo> banners = _banner.GetBanners(count);
+            List<BannerInfo> banners = _banner.GetBanners();
             if (banners.Count > 0)
             {
                 return Ok(banners);

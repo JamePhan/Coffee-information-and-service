@@ -15,7 +15,7 @@ namespace Library.DAL
 
         void RemoveBanner(int bannerId);
 
-        List<BannerInfo> GetBanners(int count);
+        List<BannerInfo> GetBanners();
 
         void Save();
     }

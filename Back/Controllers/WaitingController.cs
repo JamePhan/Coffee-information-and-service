@@ -63,7 +63,7 @@ namespace Back.Controllers
 
                 UserInfo uinfo = _mapper.Map<WaitingInfo, UserInfo>(waitInfo);
 
-                _user.AddUser(uinfo);
+                _user.AddUser(uinfo, accountId);
                 _user.Save();
 
                 _customer.DeleteCustomer(waitInfo.CustomerId.Value);
