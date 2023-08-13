@@ -46,14 +46,48 @@ namespace Back.Controllers
                         Customer? isCustomer = _customer.GetCustomerByAccountId(accountStatus.AccountId);
 
                         string role = "";
+                        string name = "";
+                        string phone = "";
+                        string email = "";
+                        string address = "";
 
                         // Prioritize higher privilege role
 
-                        if (isCustomer != null) role = "Customer";
-                        if (isUser != null) role = "User";
-                        if (isAdmin != null) role = "Admin";
+                        if (isCustomer != null)
+                        {
+                            role = "Customer";
+                            name = isCustomer.Name;
+                            phone = isCustomer.Phone;
+                            email = isCustomer.Email;
+                            address = isCustomer.Address;
+                        }
 
-                        var token = GenerateJwtToken(role);
+                        if (isUser != null)
+                        {
+                            role = "User";
+                            name = isUser.CoffeeShopName;
+                            phone = isUser.Phone;
+                            email = isUser.Email;
+                            address = isUser.Address;
+                        }
+
+                        if (isAdmin != null)
+                        {
+                            role = "Admin";
+                            name = isAdmin.Name;
+                            phone = isAdmin.Phone;
+                            email = isAdmin.Email;
+                            address = isAdmin.Address;
+                        }
+
+                        var token = GenerateJwtToken(new TokenInfo
+                        {
+                            Role = role,
+                            Name = name,
+                            Phone = phone,
+                            Email = email,
+                            Address = address
+                        });
                         return Ok(new
                         {
                             Id = accountStatus.AccountId,
@@ -220,11 +254,15 @@ namespace Back.Controllers
             return BadRequest();
         }
 
-        private string GenerateJwtToken(string role)
+        private string GenerateJwtToken(TokenInfo tokenInfo)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.Role, tokenInfo.Role),
+                new Claim(ClaimTypes.Name, tokenInfo.Name),
+                new Claim(ClaimTypes.MobilePhone, tokenInfo.Phone),
+                new Claim(ClaimTypes.Email, tokenInfo.Email),
+                new Claim(ClaimTypes.StreetAddress, tokenInfo.Address),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Aud, _configuration["Jwt:Audience"]),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iss, _configuration["Jwt:Issuer"])
             };
