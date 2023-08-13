@@ -52,9 +52,6 @@ public partial class CoffeehouseSystemContext : DbContext
             entity.ToTable("Account");
 
             entity.Property(e => e.AccountId).HasColumnName("account_id");
-            entity.Property(e => e.AccountImage)
-                .HasMaxLength(255)
-                .HasColumnName("account_image");
             entity.Property(e => e.ForgetCode)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -128,6 +125,9 @@ public partial class CoffeehouseSystemContext : DbContext
                 .HasMaxLength(150)
                 .IsUnicode(false)
                 .HasColumnName("address");
+            entity.Property(e => e.Avatar)
+                .IsUnicode(false)
+                .HasColumnName("avatar");
             entity.Property(e => e.Email)
                 .HasMaxLength(30)
                 .IsUnicode(false)
@@ -254,6 +254,9 @@ public partial class CoffeehouseSystemContext : DbContext
             entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD8141D9F3A");
 
             entity.Property(e => e.NewsId).HasColumnName("news_id");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("date")
+                .HasColumnName("created_date");
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
@@ -331,6 +334,9 @@ public partial class CoffeehouseSystemContext : DbContext
                 .HasMaxLength(150)
                 .IsUnicode(false)
                 .HasColumnName("address");
+            entity.Property(e => e.Avatar)
+                .IsUnicode(false)
+                .HasColumnName("avatar");
             entity.Property(e => e.CoffeeShopName)
                 .HasMaxLength(50)
                 .IsUnicode(false)

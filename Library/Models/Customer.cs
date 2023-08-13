@@ -17,6 +17,8 @@ public partial class Customer
 
     public int? AccountId { get; set; }
 
+    public string? Avatar { get; set; }
+
     public virtual Account? Account { get; set; }
 
     public virtual ICollection<Following> Followings { get; set; } = new List<Following>();

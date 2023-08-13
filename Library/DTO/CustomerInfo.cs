@@ -17,7 +17,5 @@ namespace Library.DTO
         public string? Address { get; set; }
 
         public string? Email { get; set; }
-
-        public int? AccountId { get; set; }
     }
 }
