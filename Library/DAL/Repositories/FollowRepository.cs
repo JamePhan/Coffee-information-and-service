@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Library.DAL
 
         public void AddFollow(FollowInfo follow)
         {
-            Following? checkExist = _context.Followings.FirstOrDefault(following => following.CustomerId == follow.CustomerId && following.UserId == follow.UserId);
+            Following? checkExist = _context.Followings.FirstOrDefault(following => following.CustomerId == follow.Customer.CustomerId && following.UserId == follow.User.UserId);
             if (checkExist == null)
             {
                 try
@@ -44,13 +45,19 @@ namespace Library.DAL
 
         public List<FollowInfo> GetFollowingUsers(int customerId)
         {
-            List<Following> followings = _context.Followings.Where(follow => follow.CustomerId == customerId).ToList();
+            List<Following> followings = _context.Followings
+                .Include(follow => follow.User)
+                .Include(follow => follow.Customer)
+                .Where(follow => follow.CustomerId == customerId).ToList();
             return _mapper.Map<List<Following>, List<FollowInfo>>(followings);
         }
 
         public List<FollowInfo> GetFollowingCustomers(int userId)
         {
-            List<Following> followings = _context.Followings.Where(follow => follow.UserId == userId).ToList();
+            List<Following> followings = _context.Followings
+                .Include(follow => follow.User)
+                .Include(follow => follow.Customer)
+                .Where(follow => follow.UserId == userId).ToList();
             return _mapper.Map<List<Following>, List<FollowInfo>>(followings);
         }
 

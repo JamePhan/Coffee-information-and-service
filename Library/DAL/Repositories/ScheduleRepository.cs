@@ -27,7 +27,10 @@ namespace Library.DAL
         {
             List<Schedule> schedules = _context.Schedules
                 .Include(schedule => schedule.Event)
-                .ThenInclude(ev => ev.User)
+                    .ThenInclude(ev => ev.User)
+                .Include(schedule => schedule.Event)
+                    .ThenInclude(ev => ev.Location)
+                .Include(schedule => schedule.Customer)
                 .Where(schedule => schedule.Event.User.UserId.Equals(userId))
                 .ToList();
             return _mapper.Map<List<Schedule>, List<ScheduleInfo>>(schedules);
@@ -37,7 +40,10 @@ namespace Library.DAL
         {
             List<Schedule> schedules = _context.Schedules
                 .Include(schedule => schedule.Event)
-                .ThenInclude(ev => ev.User)
+                    .ThenInclude(ev => ev.User)
+                .Include(schedule => schedule.Event)
+                    .ThenInclude(ev => ev.Location)
+                .Include(schedule => schedule.Customer)
                 .Where(schedule => schedule.CustomerId.Equals(customerId))
                 .ToList();
             return _mapper.Map<List<Schedule>, List<ScheduleInfo>>(schedules);
@@ -47,7 +53,7 @@ namespace Library.DAL
         {
             try
             {
-                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.EventId)) ?? throw new Exception("Can't find event to book!");
+                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.Event.EventId)) ?? throw new Exception("Can't find event to book!");
 
                 if (eventToBook.SeatCount < schedule.TicketCount) throw new Exception("Event doesn't have enough seat!");
 
@@ -67,7 +73,7 @@ namespace Library.DAL
             Schedule? checkExist = _context.Schedules.AsNoTracking().FirstOrDefault(s => s.ScheduleId.Equals(schedule.ScheduleId));
             if (checkExist != null)
             {
-                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.EventId)) ?? throw new Exception("Can't find event to book!");
+                Event? eventToBook = _context.Events.AsNoTracking().FirstOrDefault(e => e.EventId.Equals(schedule.Event.EventId)) ?? throw new Exception("Can't find event to book!");
                 eventToBook.SeatCount += checkExist.TicketCount;
 
                 if (eventToBook.SeatCount < schedule.TicketCount) throw new Exception("Event doesn't have enough seat!");

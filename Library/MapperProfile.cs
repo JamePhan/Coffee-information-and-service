@@ -31,8 +31,13 @@ namespace Library
             CreateMap<WaitingInfo, UserInfo>().ForSourceMember(src => src.WaitingId, opt => opt.DoNotValidate());
             CreateMap<Customer, Waiting>().ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.Name));
 
-            CreateMap<Following, FollowInfo>();
-            CreateMap<FollowInfo, Following>().ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate());
+            CreateMap<Following, FollowInfo>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer));
+            CreateMap<FollowInfo, Following>()
+                .ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate())
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId));
 
             CreateMap<Location, LocationInfo>();
             CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
@@ -45,8 +50,13 @@ namespace Library
             CreateMap<Service, ServiceInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
 
-            CreateMap<Schedule, ScheduleInfo>();
-            CreateMap<ScheduleInfo, Schedule>().ForSourceMember(src => src.ScheduleId, opt => opt.DoNotValidate());
+            CreateMap<Schedule, ScheduleInfo>()
+                .ForMember(dest => dest.Event, opt => opt.MapFrom(src => src.Event))
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer));
+            CreateMap<ScheduleInfo, Schedule>()
+                .ForSourceMember(src => src.ScheduleId, opt => opt.DoNotValidate())
+                .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.Event.EventId))
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId));
         }
     }
 }

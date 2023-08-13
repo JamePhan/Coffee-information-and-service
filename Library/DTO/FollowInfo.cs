@@ -11,8 +11,8 @@ namespace Library.DTO
     {
         public int? FollowingId { get; set; }
 
-        public int? UserId { get; set; }
+        public virtual CustomerInfo? Customer { get; set; }
 
-        public int? CustomerId { get; set; }
+        public virtual UserInfo? User { get; set; }
     }
 }
