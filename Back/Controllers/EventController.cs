@@ -59,6 +59,36 @@ namespace Back.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult Update(EventInfo eventInfo)
+        {
+            try
+            {
+                _event.UpdateEvent(eventInfo);
+                _event.Save();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _event.DeleteEvent(id);
+                _event.Save();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _event.Dispose();

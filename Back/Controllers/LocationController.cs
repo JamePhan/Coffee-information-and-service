@@ -10,7 +10,6 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [Authorize(Roles = "User")]
     public class LocationController : Controller
     {
         private readonly ILocationRepository _location;

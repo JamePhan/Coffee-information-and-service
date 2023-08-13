@@ -33,7 +33,7 @@ namespace Library.DAL
 
         public void AddLocation(LocationInfo location)
         {
-            Location? checkExist = _context.Locations.FirstOrDefault(local => local.PlusCode.ToLower().Equals(location.PlusCode.ToLower()));
+            Location? checkExist = _context.Locations.FirstOrDefault(local => local.Address.ToLower().Equals(location.Address.ToLower()));
             if (checkExist == null)
             {
                 try

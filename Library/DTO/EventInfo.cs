@@ -11,7 +11,7 @@ namespace Library.DTO
     {
         public int EventId { get; set; }
         public string Name { get; set; }
-        public string? PlusCode { get; set; }
+        public string? Address { get; set; }
         public DateTime? Date { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
@@ -19,6 +19,6 @@ namespace Library.DTO
         public DateTime? EndTime { get; set; }
         public int? SeatCount { get; set; }
         public decimal? Price { get; set; }
-        public int? UserId { get; set; }
+        public string? CoffeeShopName { get; set; }
     }
 }

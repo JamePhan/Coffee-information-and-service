@@ -47,7 +47,7 @@ public partial class CoffeehouseSystemContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD8C86A252");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD1DDA5097");
 
             entity.ToTable("Account");
 
@@ -69,7 +69,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA41416E27C5C4");
+            entity.HasKey(e => e.AdminId).HasName("PK__Admin__43AA4141EDEB149C");
 
             entity.ToTable("Admin");
 
@@ -98,7 +98,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Banner>(entity =>
         {
-            entity.HasKey(e => e.BannerId).HasName("PK__Banner__10373C34B5105BFD");
+            entity.HasKey(e => e.BannerId).HasName("PK__Banner__10373C34A38BEEDF");
 
             entity.ToTable("Banner");
 
@@ -115,7 +115,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB852ABFD678");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB850CB01850");
 
             entity.ToTable("Customer");
 
@@ -148,7 +148,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Event>(entity =>
         {
-            entity.HasKey(e => e.EventId).HasName("PK__Event__2370F72709E0F1A5");
+            entity.HasKey(e => e.EventId).HasName("PK__Event__2370F727E96E7387");
 
             entity.ToTable("Event");
 
@@ -192,7 +192,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Following>(entity =>
         {
-            entity.HasKey(e => e.FollowingId).HasName("PK__Followin__E8FB488971A07110");
+            entity.HasKey(e => e.FollowingId).HasName("PK__Followin__E8FB4889A55E7282");
 
             entity.ToTable("Following");
 
@@ -211,7 +211,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<GroupImage>(entity =>
         {
-            entity.HasKey(e => e.GroupImageId).HasName("PK__GroupIma__62AFADC7AB49CDCF");
+            entity.HasKey(e => e.GroupImageId).HasName("PK__GroupIma__62AFADC703E1D60A");
 
             entity.ToTable("GroupImage");
 
@@ -225,7 +225,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Image>(entity =>
         {
-            entity.HasKey(e => e.ImageId).HasName("PK__Image__DC9AC955B7884D7C");
+            entity.HasKey(e => e.ImageId).HasName("PK__Image__DC9AC95548552B02");
 
             entity.ToTable("Image");
 
@@ -237,15 +237,12 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.LocationId).HasName("PK__Location__771831EA8FD26BB1");
+            entity.HasKey(e => e.LocationId).HasName("PK__Location__771831EA46AF5A98");
 
             entity.ToTable("Location");
 
             entity.Property(e => e.LocationId).HasColumnName("location_id");
-            entity.Property(e => e.PlusCode)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("plusCode");
+            entity.Property(e => e.Address).HasColumnName("address");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Locations)
@@ -255,7 +252,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<News>(entity =>
         {
-            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD8141D9F3A");
+            entity.HasKey(e => e.NewsId).HasName("PK__News__4C27CCD88491AB97");
 
             entity.Property(e => e.NewsId).HasColumnName("news_id");
             entity.Property(e => e.CreatedDate)
@@ -282,7 +279,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__C46A8A6FE94EB352");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__C46A8A6F55858489");
 
             entity.ToTable("Schedule");
 
@@ -302,7 +299,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF8788870F");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF3148D4F5");
 
             entity.ToTable("Service");
 
@@ -328,7 +325,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370F6CC42A72");
+            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370FAE54FE41");
 
             entity.ToTable("User");
 
@@ -361,7 +358,7 @@ public partial class CoffeehouseSystemContext : DbContext
 
         modelBuilder.Entity<Waiting>(entity =>
         {
-            entity.HasKey(e => e.WaitingId).HasName("PK__Waiting__24A0A3A36F9EE09C");
+            entity.HasKey(e => e.WaitingId).HasName("PK__Waiting__24A0A3A35B8B9057");
 
             entity.ToTable("Waiting");
 

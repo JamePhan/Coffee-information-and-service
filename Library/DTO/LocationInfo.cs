@@ -10,7 +10,7 @@ namespace Library.DTO
     {
         public int LocationId { get; set; }
 
-        public string? PlusCode { get; set; }
+        public string? Address { get; set; }
 
         public int? UserId { get; set; }
     }

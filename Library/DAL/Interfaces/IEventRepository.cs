@@ -10,6 +10,10 @@ namespace Library.DAL
 
         void AddEvent(EventInfo eventInfo);
 
+        void UpdateEvent(EventInfo eventInfo);
+
+        void DeleteEvent(int id);
+
         void Save();
     }
 }

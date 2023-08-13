@@ -10,7 +10,8 @@ namespace Library
         {
             CreateMap<Event, EventInfo>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1))
-                .ForMember(dest => dest.PlusCode, opt => opt.MapFrom(src => src.Location.PlusCode));
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Location.Address))
+                .ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.User.CoffeeShopName));
             CreateMap<EventInfo, Event>().ForSourceMember(src => src.EventId, opt => opt.DoNotValidate());
 
             CreateMap<Banner, BannerInfo>();
