@@ -20,13 +20,13 @@ namespace Library.DAL
 
         public List<NewsInfo> GetNews()
         {
-            List<News> news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
+            List<News> news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).Include(user => user.User).ToList();
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
         }
 
         public NewsInfo? GetNews(int id)
         {
-            News? news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(n => n.NewsId.Equals(id));
+            News? news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).Include(user => user.User).FirstOrDefault(n => n.NewsId.Equals(id));
             if (news != null)
             {
                 return _mapper.Map<News, NewsInfo>(news);
