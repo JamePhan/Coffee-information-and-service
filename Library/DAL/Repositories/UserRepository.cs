@@ -81,13 +81,17 @@ namespace Library.DAL
 
         public void UpdateUser(UserInfo user, int accountId)
         {
-            User? checkExist = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId.Equals(user.UserId));
+            User? checkExist = _context.Users.FirstOrDefault(u => u.UserId.Equals(user.UserId));
             if (checkExist != null)
             {
                 try
                 {
+                    _context.Entry(checkExist).State = EntityState.Detached;
+
                     checkExist = _mapper.Map<UserInfo, User>(user);
+
                     checkExist.AccountId = accountId;
+
                     _context.Entry(checkExist).State = EntityState.Modified;
                 }
                 catch (SqlException ex)

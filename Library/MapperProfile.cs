@@ -37,7 +37,9 @@ namespace Library
             CreateMap<FollowInfo, Following>()
                 .ForSourceMember(src => src.FollowingId, opt => opt.DoNotValidate())
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId));
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId))
+                .ForMember(dest => dest.Customer, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore());
 
             CreateMap<Location, LocationInfo>();
             CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
@@ -47,7 +49,9 @@ namespace Library
                 .ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.User.CoffeeShopName));
             CreateMap<NewsInfo, News>().ForSourceMember(src => src.NewsId, opt => opt.DoNotValidate());
 
-            CreateMap<Service, ServiceInfo>().ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1));
+            CreateMap<Service, ServiceInfo>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1))
+                .ForMember(dest => dest.CoffeeShopName, opt => opt.MapFrom(src => src.User.CoffeeShopName));
             CreateMap<ServiceInfo, Service>().ForSourceMember(src => src.ServiceId, opt => opt.DoNotValidate());
 
             CreateMap<Schedule, ScheduleInfo>()
@@ -56,7 +60,9 @@ namespace Library
             CreateMap<ScheduleInfo, Schedule>()
                 .ForSourceMember(src => src.ScheduleId, opt => opt.DoNotValidate())
                 .ForMember(dest => dest.EventId, opt => opt.MapFrom(src => src.Event.EventId))
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId));
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.CustomerId))
+                .ForMember(dest => dest.Customer, opt => opt.Ignore())
+                .ForMember(dest => dest.Event, opt => opt.Ignore());
         }
     }
 }

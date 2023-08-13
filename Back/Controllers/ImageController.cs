@@ -26,7 +26,7 @@ namespace Back.Controllers
 
             string filename = file.FileName;
 
-            string uniqueName = WebEncoders.Base64UrlEncode(Guid.NewGuid().ToByteArray()) + '_' + filename;
+            string uniqueName = WebEncoders.Base64UrlEncode(Guid.NewGuid().ToByteArray()) + filename;
 
             var imagePath = Path.Combine(_folderPath, uniqueName);
 

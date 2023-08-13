@@ -26,7 +26,10 @@ namespace Library.DAL
 
         public ServiceInfo? GetService(int id)
         {
-            Service? service = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(service => service.ServiceId.Equals(id));
+            Service? service = _context.Services
+                .Include(group => group.GroupImage).ThenInclude(image => image.Image)
+                .Include(serv => serv.User)
+                .FirstOrDefault(service => service.ServiceId.Equals(id));
             if (service != null)
             {
                 return _mapper.Map<Service, ServiceInfo>(service);
@@ -41,7 +44,10 @@ namespace Library.DAL
         {
             List<Service> services;
 
-            services = _context.Services.Include(group => group.GroupImage).ThenInclude(image => image.Image).ToList();
+            services = _context.Services
+                .Include(group => group.GroupImage).ThenInclude(image => image.Image)
+                .Include(serv => serv.User)
+                .ToList();
 
             return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
         }
@@ -58,8 +64,11 @@ namespace Library.DAL
                 _context.SaveChanges();
                 int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
 
+                int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(service.CoffeeShopName.ToLower())).UserId;
+
                 Service toAdd = _mapper.Map<ServiceInfo, Service>(service);
                 toAdd.GroupImageId = groupId;
+                toAdd.UserId = userId;
 
                 _context.Services.Add(toAdd);
             }
@@ -71,7 +80,7 @@ namespace Library.DAL
 
         public void UpdateService(ServiceInfo service)
         {
-            Service? checkExist = _context.Services.AsNoTracking().FirstOrDefault(serv => serv.ServiceId.Equals(service.ServiceId));
+            Service? checkExist = _context.Services.FirstOrDefault(serv => serv.ServiceId.Equals(service.ServiceId));
             if (checkExist != null)
             {
                 try
@@ -84,8 +93,13 @@ namespace Library.DAL
                         if (serviceImage != null) serviceImage.Image1 = service.ImageUrl;
                     }
 
+                    int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(service.CoffeeShopName.ToLower())).UserId;
+
+                    _context.Entry(checkExist).State = EntityState.Detached;
+
                     Service toUpdate = _mapper.Map<ServiceInfo, Service>(service);
                     toUpdate.GroupImageId = serviceGroupImage.GroupImageId;
+                    toUpdate.UserId = userId;
 
                     _context.Entry(toUpdate).State = EntityState.Modified;
                 }
