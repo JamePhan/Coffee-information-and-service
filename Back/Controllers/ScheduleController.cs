@@ -43,7 +43,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "Customer")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Book(ScheduleInfo schedule)
         {
             try
@@ -59,7 +59,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "Customer")]
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update(ScheduleInfo schedule)
         {
             try

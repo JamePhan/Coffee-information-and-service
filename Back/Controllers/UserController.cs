@@ -42,7 +42,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update(UserInfo user)
         {
             try

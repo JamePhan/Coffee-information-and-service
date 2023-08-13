@@ -31,7 +31,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(BannerInfo banner)
         {
             try
@@ -47,7 +47,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update(BannerInfo banner)
         {
             try

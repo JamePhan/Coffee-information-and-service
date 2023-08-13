@@ -45,7 +45,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(ServiceInfo service)
         {
             try
@@ -61,7 +61,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update(ServiceInfo service)
         {
             try

@@ -44,7 +44,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "Customer")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Follow(FollowInfo follow)
         {
             try

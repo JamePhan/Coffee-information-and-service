@@ -31,7 +31,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(LocationInfo location)
         {
             try

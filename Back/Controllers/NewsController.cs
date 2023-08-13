@@ -38,7 +38,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Create(NewsInfo news)
         {
             try
@@ -54,7 +54,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPatch]
+        [HttpPut]
         public IActionResult Update(NewsInfo news)
         {
             try

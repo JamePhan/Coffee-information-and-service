@@ -41,7 +41,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "User")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(EventInfo eventInfo)
         {
             try

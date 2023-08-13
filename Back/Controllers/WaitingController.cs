@@ -35,7 +35,7 @@ namespace Back.Controllers
         }
 
         //[Authorize(Roles = "Customer")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Request(int customerId)
         {
             try
