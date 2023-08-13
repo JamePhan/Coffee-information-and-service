@@ -98,9 +98,9 @@ internal class Program
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
-        app.UseMiddleware<AntiXSSMiddleWare>();
+        app.UseHttpsRedirection();
 
         app.UseCors(myCORSPolicy);
 
