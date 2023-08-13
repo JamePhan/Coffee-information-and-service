@@ -18,7 +18,7 @@ namespace Back.Controllers
             _schedule = new ScheduleRepository(context, mapper);
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpGet("{customerId}")]
         public IActionResult Customer(int customerId)
         {
@@ -30,7 +30,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpGet("{userId}")]
         public IActionResult User(int userId)
         {
@@ -42,7 +42,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPut]
         public IActionResult Book(ScheduleInfo schedule)
         {
@@ -58,7 +58,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPatch]
         public IActionResult Update(ScheduleInfo schedule)
         {

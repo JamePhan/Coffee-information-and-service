@@ -30,7 +30,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Add(BannerInfo banner)
         {
@@ -46,7 +46,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(BannerInfo banner)
         {
@@ -62,7 +62,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

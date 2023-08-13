@@ -37,7 +37,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Create(NewsInfo news)
         {
@@ -53,7 +53,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(NewsInfo news)
         {
@@ -69,7 +69,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

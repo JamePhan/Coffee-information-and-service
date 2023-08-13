@@ -44,7 +44,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Add(ServiceInfo service)
         {
@@ -60,7 +60,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(ServiceInfo service)
         {
@@ -76,7 +76,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpDelete("{serviceId}")]
         public IActionResult Delete(int serviceId)
         {

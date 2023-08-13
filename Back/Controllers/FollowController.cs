@@ -19,7 +19,7 @@ namespace Back.Controllers
             _follow = new FollowRepository(context, mapper);
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpGet("{customerId}")]
         public IActionResult CustomerList(int customerId)
         {
@@ -31,7 +31,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpGet("{userId}")]
         public IActionResult UserList(int userId)
         {
@@ -43,7 +43,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPut]
         public IActionResult Follow(FollowInfo follow)
         {

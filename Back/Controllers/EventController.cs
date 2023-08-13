@@ -18,7 +18,7 @@ namespace Back.Controllers
             _event = new EventRepository(context, mapper);
         }
 
-        [HttpGet()]
+        [HttpGet]
         public IActionResult List()
         {
             List<EventInfo> events = _event.GetEvents();
@@ -40,7 +40,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Add(EventInfo eventInfo)
         {

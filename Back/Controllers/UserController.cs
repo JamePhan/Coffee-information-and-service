@@ -19,10 +19,10 @@ namespace Back.Controllers
             _user = new UserRepository(context, mapper);
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<UserInfo> users = _user.GetUsers(count);
+            List<UserInfo> users = _user.GetUsers();
             if (users.Count > 0)
             {
                 return Ok(users);
@@ -41,7 +41,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPatch]
         public IActionResult Update(UserInfo user)
         {
@@ -58,11 +58,11 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult Banned(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Banned()
         {
-            List<UserInfo> users = _user.GetUsersBanned(count);
+            List<UserInfo> users = _user.GetUsersBanned();
             if (users.Count > 0)
             {
                 return Ok(users);

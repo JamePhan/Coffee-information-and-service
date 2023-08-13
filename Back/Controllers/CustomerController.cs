@@ -19,11 +19,11 @@ namespace Back.Controllers
             _customer = new CustomerRepository(context, mapper);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult List()
         {
-            List<CustomerInfo> customers = _customer.GetCustomers(count);
+            List<CustomerInfo> customers = _customer.GetCustomers();
             if (customers.Count > 0)
             {
                 return Ok(customers);
@@ -42,7 +42,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPatch]
         public IActionResult Update(CustomerInfo customer)
         {
@@ -59,11 +59,11 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult Banned(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Banned()
         {
-            List<CustomerInfo> customers = _customer.GetCustomersBanned(count);
+            List<CustomerInfo> customers = _customer.GetCustomersBanned();
             if (customers.Count > 0)
             {
                 return Ok(customers);

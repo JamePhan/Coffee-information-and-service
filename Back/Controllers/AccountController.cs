@@ -202,7 +202,7 @@ namespace Back.Controllers
             return BadRequest();
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public IActionResult UpdateBan(int id)
         {

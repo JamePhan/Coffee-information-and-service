@@ -34,7 +34,7 @@ namespace Back.Controllers
             return Ok(info);
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPut]
         public IActionResult Request(int customerId)
         {
@@ -50,7 +50,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Accept(int id)
         {
@@ -80,7 +80,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Deny(int id)
         {
