@@ -30,19 +30,6 @@ namespace Library.DAL
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
-        public List<EventInfo> GetLastest()
-        {
-            List<Event> events;
-
-            events = _context.Events
-                .Include(locale => locale.LocationId)
-                .OrderByDescending(events => events.Date)
-                .Include(group => group.GroupImage)
-                .ThenInclude(image => image.Image).ToList();
-
-            return _mapper.Map<List<Event>, List<EventInfo>>(events);
-        }
-
         public EventInfo? GetEvent(int id)
         {
             Event? eve = _context.Events.Include(group => group.GroupImage).ThenInclude(image => image.Image).FirstOrDefault(ev => ev.EventId.Equals(id));

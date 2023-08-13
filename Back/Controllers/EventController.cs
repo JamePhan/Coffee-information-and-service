@@ -29,17 +29,6 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public IActionResult Lastest()
-        {
-            List<EventInfo> events = _event.GetLastest();
-            if (events.Count > 0)
-            {
-                return Ok(events);
-            }
-            return NotFound();
-        }
-
         //[Authorize(Roles = "User")]
         [HttpPost]
         public IActionResult Add(EventInfo eventInfo)

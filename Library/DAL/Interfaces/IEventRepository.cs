@@ -6,8 +6,6 @@ namespace Library.DAL
     {
         List<EventInfo> GetEvents();
 
-        List<EventInfo> GetLastest();
-
         EventInfo? GetEvent(int id);
 
         void AddEvent(EventInfo eventInfo);
