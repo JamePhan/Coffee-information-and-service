@@ -57,7 +57,6 @@ namespace Back.Controllers
                         return Ok(new
                         {
                             Id = accountStatus.AccountId,
-                            Avatar = accountStatus.AccountImage,
                             Token = token
                         });
                     }
