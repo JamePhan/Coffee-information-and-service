@@ -2,6 +2,7 @@ IF NOT EXISTS (SELECT * FROM sys.databases WHERE name='CoffeehouseSystem')
 BEGIN 
 CREATE DATABASE [CoffeehouseSystem]
 END
+GO
 USE [CoffeehouseSystem]
 GO
 /****** Object:  Table [dbo].[Account]    Script Date: 8/15/2023 11:25:13 PM ******/
