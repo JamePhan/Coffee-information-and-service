@@ -23,6 +23,7 @@ internal class Program
             {
                 policy.AllowAnyOrigin();
                 policy.AllowAnyMethod();
+                policy.AllowAnyHeader();
             }
             ));
 
