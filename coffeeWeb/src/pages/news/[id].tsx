@@ -50,8 +50,8 @@ const NewsDetail = ({newsData}: Props) => {
 };
 
 export async function getStaticProps({ params }: any) {
-  const { newsId } = params;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/News/Detail/${newsId}`)
+  const { id } = params;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/News/Detail/${id}`)
   const newsData = await res.json();
 
   return {
