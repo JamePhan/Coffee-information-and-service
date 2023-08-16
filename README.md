@@ -13,5 +13,5 @@
 ## B. Install Frontend
 1. [Install node.js](https://nodejs.org/en/download)
 2. Open terminal/command prompt, type in "npm -i --global next yarn" then press "ENTER".
-3. Open terminal from "coffeeWeb" folder, type in "npm run dev" to run the application.
+3. Open terminal from "Front" folder, type in "npm run dev" to run the application.
 4. Open browser and access from "localhost:3000".
