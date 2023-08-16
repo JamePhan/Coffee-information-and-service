@@ -4,9 +4,9 @@
     {
         public int ScheduleId { get; set; }
 
-        public int? EventId { get; set; }
+        public EventInfo? Event { get; set; }
 
-        public int? CustomerId { get; set; }
+        public CustomerInfo? Customer { get; set; }
 
         public int? TicketCount { get; set; }
     }

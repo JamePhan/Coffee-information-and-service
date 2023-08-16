@@ -31,6 +31,11 @@ namespace Library.DAL
             }
         }
 
+        public BannerInfo? DetailBanner(int id)
+        {
+            return _mapper.Map<Banner, BannerInfo>(_context.Banners.FirstOrDefault(bann => bann.BannerId.Equals(id)));
+        }
+
         public void UpdateBanner(BannerInfo banner)
         {
             Banner? checkExist = _context.Banners.AsNoTracking().FirstOrDefault(bnn => bnn.BannerId == banner.BannerId);
@@ -71,17 +76,12 @@ namespace Library.DAL
             }
         }
 
-        public List<BannerInfo> GetBanners(int count)
+        public List<BannerInfo> GetBanners()
         {
             List<Banner> banners;
-            if (count > 0)
-            {
-                banners = _context.Banners.Take(count).ToList();
-            }
-            else
-            {
-                banners = _context.Banners.ToList();
-            }
+
+            banners = _context.Banners.ToList();
+
             return _mapper.Map<List<Banner>, List<BannerInfo>>(banners);
         }
 

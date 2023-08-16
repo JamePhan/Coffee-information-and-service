@@ -19,11 +19,11 @@ namespace Back.Controllers
             _customer = new CustomerRepository(context, mapper);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult List()
         {
-            List<CustomerInfo> customers = _customer.GetCustomers(count);
+            List<CustomerInfo> customers = _customer.GetCustomers();
             if (customers.Count > 0)
             {
                 return Ok(customers);
@@ -42,27 +42,28 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Customer")]
-        [HttpPatch]
+        //[Authorize(Roles = "Customer")]
+        [HttpPut]
         public IActionResult Update(CustomerInfo customer)
         {
             try
             {
-                _customer.UpdateCustomer(customer);
+                int accountId = _customer.GetCustomerByEmail(customer.Email).AccountId.Value;
+                _customer.UpdateCustomer(customer, accountId);
                 _customer.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult Banned(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Banned()
         {
-            List<CustomerInfo> customers = _customer.GetCustomersBanned(count);
+            List<CustomerInfo> customers = _customer.GetCustomersBanned();
             if (customers.Count > 0)
             {
                 return Ok(customers);

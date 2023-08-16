@@ -10,7 +10,6 @@ namespace Back.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [Authorize(Roles = "User")]
     public class LocationController : Controller
     {
         private readonly ILocationRepository _location;
@@ -20,10 +19,10 @@ namespace Back.Controllers
             _location = new LocationRepository(context, mapper);
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<LocationInfo> locations = _location.GetLocations(count);
+            List<LocationInfo> locations = _location.GetLocations();
             if (locations.Count > 0)
             {
                 return Ok(locations);
@@ -31,7 +30,7 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(LocationInfo location)
         {
             try

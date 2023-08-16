@@ -17,6 +17,8 @@ public partial class User
 
     public int? AccountId { get; set; }
 
+    public string? Avatar { get; set; }
+
     public virtual Account? Account { get; set; }
 
     public virtual ICollection<Banner> Banners { get; set; } = new List<Banner>();

@@ -33,10 +33,10 @@ namespace Back.Controllers
             }
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<ServiceInfo> services = _service.GetServices(count);
+            List<ServiceInfo> services = _service.GetServices();
             if (services.Count > 0)
             {
                 return Ok(services);
@@ -44,8 +44,8 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPut]
+        //[Authorize(Roles = "User")]
+        [HttpPost]
         public IActionResult Add(ServiceInfo service)
         {
             try
@@ -60,8 +60,8 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPatch]
+        //[Authorize(Roles = "User")]
+        [HttpPut]
         public IActionResult Update(ServiceInfo service)
         {
             try
@@ -76,7 +76,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpDelete("{serviceId}")]
         public IActionResult Delete(int serviceId)
         {

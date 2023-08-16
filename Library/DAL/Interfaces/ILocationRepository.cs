@@ -9,7 +9,7 @@ namespace Library.DAL
 {
     public interface ILocationRepository : IDisposable
     {
-        List<LocationInfo> GetLocations(int count);
+        List<LocationInfo> GetLocations();
 
         void AddLocation(LocationInfo location);
 

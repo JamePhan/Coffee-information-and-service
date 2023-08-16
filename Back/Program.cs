@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
 
@@ -22,10 +23,15 @@ internal class Program
             {
                 policy.AllowAnyOrigin();
                 policy.AllowAnyMethod();
+                policy.AllowAnyHeader();
             }
             ));
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddNewtonsoftJson(
+            options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddSwaggerGen(options =>
         {
@@ -93,9 +99,9 @@ internal class Program
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
-        app.UseMiddleware<AntiXSSMiddleWare>();
+        app.UseHttpsRedirection();
 
         app.UseCors(myCORSPolicy);
 

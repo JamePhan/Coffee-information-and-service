@@ -10,6 +10,5 @@ namespace Library.DTO
     {
         public int AccountId { get; set; }
         public bool? IsBanned { get; set; }
-        public string? AccountImage { get; set; }
     }
 }

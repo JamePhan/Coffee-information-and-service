@@ -10,11 +10,11 @@ namespace Library.DAL
 {
     public interface ICustomerRepository : IDisposable
     {
-        List<CustomerInfo> GetCustomers(int count);
+        List<CustomerInfo> GetCustomers();
 
         List<CustomerInfo> GetCustomers(string name);
 
-        List<CustomerInfo> GetCustomersBanned(int count);
+        List<CustomerInfo> GetCustomersBanned();
 
         Customer? GetCustomer(int id);
 
@@ -24,7 +24,7 @@ namespace Library.DAL
 
         void InsertCustomer(Customer customer);
 
-        void UpdateCustomer(CustomerInfo customer);
+        void UpdateCustomer(CustomerInfo customer, int accountId);
 
         void DeleteCustomer(int id);
 

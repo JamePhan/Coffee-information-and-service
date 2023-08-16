@@ -34,7 +34,7 @@ namespace Back.Controllers
             return Ok(info);
         }
 
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPost]
         public IActionResult Request(int customerId)
         {
@@ -50,7 +50,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Accept(int id)
         {
@@ -62,9 +62,8 @@ namespace Back.Controllers
                 int accountId = _customer.GetCustomer(waitInfo.CustomerId.Value).AccountId.Value;
 
                 UserInfo uinfo = _mapper.Map<WaitingInfo, UserInfo>(waitInfo);
-                uinfo.AccountId = accountId;
 
-                _user.AddUser(uinfo);
+                _user.AddUser(uinfo, accountId);
                 _user.Save();
 
                 _customer.DeleteCustomer(waitInfo.CustomerId.Value);
@@ -81,7 +80,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Deny(int id)
         {

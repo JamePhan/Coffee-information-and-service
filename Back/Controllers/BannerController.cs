@@ -19,10 +19,10 @@ namespace Back.Controllers
             _banner = new BannerRepository(context, mapper);
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<BannerInfo> banners = _banner.GetBanners(count);
+            List<BannerInfo> banners = _banner.GetBanners();
             if (banners.Count > 0)
             {
                 return Ok(banners);
@@ -30,8 +30,8 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPut]
+        //[Authorize(Roles = "User")]
+        [HttpPost]
         public IActionResult Add(BannerInfo banner)
         {
             try
@@ -46,8 +46,19 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPatch]
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            BannerInfo? banner = _banner.DetailBanner(id);
+            if (banner != null)
+            {
+                return Ok(banner);
+            }
+            return NotFound();
+        }
+
+        //[Authorize(Roles = "User")]
+        [HttpPut]
         public IActionResult Update(BannerInfo banner)
         {
             try
@@ -62,7 +73,7 @@ namespace Back.Controllers
             }
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

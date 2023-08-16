@@ -19,10 +19,10 @@ namespace Back.Controllers
             _user = new UserRepository(context, mapper);
         }
 
-        [HttpGet("{count}")]
-        public IActionResult List(int count)
+        [HttpGet]
+        public IActionResult List()
         {
-            List<UserInfo> users = _user.GetUsers(count);
+            List<UserInfo> users = _user.GetUsers();
             if (users.Count > 0)
             {
                 return Ok(users);
@@ -41,27 +41,28 @@ namespace Back.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPatch]
+        //[Authorize(Roles = "User")]
+        [HttpPut]
         public IActionResult Update(UserInfo user)
         {
             try
             {
-                _user.UpdateUser(user);
+                int accountId = _user.GetUserByEmail(user.Email).AccountId.Value;
+                _user.UpdateUser(user, accountId);
                 _user.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("{count}")]
-        public IActionResult Banned(int count)
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Banned()
         {
-            List<UserInfo> users = _user.GetUsersBanned(count);
+            List<UserInfo> users = _user.GetUsersBanned();
             if (users.Count > 0)
             {
                 return Ok(users);

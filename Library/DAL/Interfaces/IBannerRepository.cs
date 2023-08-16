@@ -11,11 +11,13 @@ namespace Library.DAL
     {
         void AddBanner(BannerInfo banner);
 
+        BannerInfo? DetailBanner(int id);
+
         void UpdateBanner(BannerInfo banner);
 
         void RemoveBanner(int bannerId);
 
-        List<BannerInfo> GetBanners(int count);
+        List<BannerInfo> GetBanners();
 
         void Save();
     }

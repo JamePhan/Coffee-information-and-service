@@ -11,7 +11,7 @@ namespace Library.DAL
     {
         ServiceInfo? GetService(int id);
 
-        List<ServiceInfo> GetServices(int count);
+        List<ServiceInfo> GetServices();
 
         void AddService(ServiceInfo service);
 

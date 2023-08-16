@@ -22,23 +22,18 @@ namespace Library.DAL
             _mapper = mapper;
         }
 
-        public List<LocationInfo> GetLocations(int count)
+        public List<LocationInfo> GetLocations()
         {
             List<Location> locations;
-            if (count > 0)
-            {
-                locations = _context.Locations.Take(count).ToList();
-            }
-            else
-            {
-                locations = _context.Locations.ToList();
-            }
+
+            locations = _context.Locations.ToList();
+
             return _mapper.Map<List<Location>, List<LocationInfo>>(locations);
         }
 
         public void AddLocation(LocationInfo location)
         {
-            Location? checkExist = _context.Locations.FirstOrDefault(local => local.PlusCode.ToLower().Equals(location.PlusCode.ToLower()));
+            Location? checkExist = _context.Locations.FirstOrDefault(local => local.Address.ToLower().Equals(location.Address.ToLower()));
             if (checkExist == null)
             {
                 try

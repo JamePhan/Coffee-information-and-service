@@ -10,15 +10,15 @@ namespace Library.DTO
     public class EventInfo
     {
         public int EventId { get; set; }
-        public string Name { get; set; }
-        public int? LocationId { get; set; }
+        public string? Name { get; set; }
+        public string? Address { get; set; }
         public DateTime? Date { get; set; }
-        public string ImageUrl { get; set; }
-        public string Description { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? Description { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public int? SeatCount { get; set; }
         public decimal? Price { get; set; }
-        public int? UserId { get; set; }
+        public string? CoffeeShopName { get; set; }
     }
 }

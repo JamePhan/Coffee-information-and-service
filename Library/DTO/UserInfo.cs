@@ -18,6 +18,6 @@ namespace Library.DTO
 
         public string? CoffeeShopName { get; set; }
 
-        public int? AccountId { get; set; }
+        public string? Avatar { get; set; }
     }
 }

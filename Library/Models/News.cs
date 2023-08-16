@@ -15,6 +15,8 @@ public partial class News
 
     public int? GroupImageId { get; set; }
 
+    public DateTime? CreatedDate { get; set; }
+
     public virtual GroupImage? GroupImage { get; set; }
 
     public virtual User? User { get; set; }
