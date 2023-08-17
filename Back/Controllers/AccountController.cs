@@ -86,6 +86,8 @@ namespace Back.Controllers
 
                         var token = GenerateJwtToken(new TokenInfo
                         {
+                            Id = accountStatus.AccountId,
+                            ProfileId = profileId,
                             Role = role,
                             Name = name,
                             Phone = phone,
@@ -95,8 +97,6 @@ namespace Back.Controllers
 
                         return Ok(new
                         {
-                            Id = accountStatus.AccountId,
-                            ProfileId = profileId,
                             Token = token
                         });
                     }
@@ -264,11 +264,13 @@ namespace Back.Controllers
         {
             var claims = new List<Claim>
             {
+                new Claim(type: "id", tokenInfo.Id.ToString()),
+                new Claim(type: "profileId", tokenInfo.ProfileId.ToString()),
                 new Claim(ClaimTypes.Role, tokenInfo.Role),
-                new Claim(ClaimTypes.Name, tokenInfo.Name),
-                new Claim(ClaimTypes.MobilePhone, tokenInfo.Phone),
+                new Claim(type: "name", tokenInfo.Name),
+                new Claim(type: "phone", tokenInfo.Phone),
                 new Claim(ClaimTypes.Email, tokenInfo.Email),
-                new Claim(ClaimTypes.StreetAddress, tokenInfo.Address),
+                new Claim(type: "address", tokenInfo.Address),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Aud, _configuration["Jwt:Audience"]),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iss, _configuration["Jwt:Issuer"])
             };
