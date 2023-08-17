@@ -50,6 +50,7 @@ namespace Back.Controllers
                         string phone = "";
                         string email = "";
                         string address = "";
+                        int profileId = -1;
 
                         // Prioritize higher privilege role
 
@@ -60,6 +61,7 @@ namespace Back.Controllers
                             phone = isCustomer.Phone;
                             email = isCustomer.Email;
                             address = isCustomer.Address;
+                            profileId = isCustomer.CustomerId;
                         }
 
                         if (isUser != null)
@@ -69,6 +71,7 @@ namespace Back.Controllers
                             phone = isUser.Phone;
                             email = isUser.Email;
                             address = isUser.Address;
+                            profileId = isUser.UserId;
                         }
 
                         if (isAdmin != null)
@@ -78,6 +81,7 @@ namespace Back.Controllers
                             phone = isAdmin.Phone;
                             email = isAdmin.Email;
                             address = isAdmin.Address;
+                            profileId = isAdmin.AdminId;
                         }
 
                         var token = GenerateJwtToken(new TokenInfo
@@ -88,9 +92,11 @@ namespace Back.Controllers
                             Email = email,
                             Address = address
                         });
+
                         return Ok(new
                         {
                             Id = accountStatus.AccountId,
+                            ProfileId = profileId,
                             Token = token
                         });
                     }
