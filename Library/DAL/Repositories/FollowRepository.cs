@@ -43,13 +43,37 @@ namespace Library.DAL
             }
         }
 
-        public List<FollowInfo> GetFollowingUsers(int customerId)
+        public List<CustomerFollowInfo> GetFollowingUsers(int customerId)
         {
-            List<Following> followings = _context.Followings
+            List<int?> follows = _context.Followings
                 .Include(follow => follow.User)
                 .Include(follow => follow.Customer)
-                .Where(follow => follow.CustomerId == customerId).ToList();
-            return _mapper.Map<List<Following>, List<FollowInfo>>(followings);
+                .Where(follow => follow.CustomerId == customerId)
+                .Select(follow => follow.UserId)
+                .ToList();
+
+            List<User> users = _context.Users.Include(user => user.Account).Where(user => user.Account.IsBanned == false).ToList();
+
+            List<CustomerFollowInfo> customerFollowInfos = new();
+
+            foreach (User user in users)
+            {
+                customerFollowInfos.Add(new CustomerFollowInfo
+                {
+                    User = _mapper.Map<User, UserInfo>(user),
+                    Followed = false,
+                });
+            }
+
+            foreach (CustomerFollowInfo customerFollowInfo in customerFollowInfos)
+            {
+                if (follows.Contains(customerFollowInfo.User.UserId))
+                {
+                    customerFollowInfo.Followed = true;
+                }
+            }
+
+            return customerFollowInfos;
         }
 
         public List<FollowInfo> GetFollowingCustomers(int userId)

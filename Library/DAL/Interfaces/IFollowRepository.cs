@@ -11,7 +11,7 @@ namespace Library.DAL
     {
         void AddFollow(FollowInfo follow);
 
-        List<FollowInfo> GetFollowingUsers(int customerId);
+        List<CustomerFollowInfo> GetFollowingUsers(int customerId);
 
         List<FollowInfo> GetFollowingCustomers(int userId);
 
