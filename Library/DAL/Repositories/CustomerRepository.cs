@@ -65,6 +65,16 @@ namespace Library.DAL
             return _context.Customers.SingleOrDefault(customers => customers.Email.Equals(email));
         }
 
+        public CustomerInfo? GetCustomerInfo(int id)
+        {
+            Customer? customer = GetCustomer(id);
+            if (customer != null)
+            {
+                return _mapper.Map<Customer, CustomerInfo>(customer);
+            }
+            return null;
+        }
+
         public void InsertCustomer(Customer customer)
         {
             _context.Customers.Add(customer);

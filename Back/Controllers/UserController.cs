@@ -41,6 +41,17 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            UserInfo? user = _user.GetUser(id);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            return NotFound();
+        }
+
         //[Authorize(Roles = "User")]
         [HttpPut]
         public IActionResult Update(UserInfo user)

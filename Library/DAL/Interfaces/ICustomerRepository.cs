@@ -22,6 +22,8 @@ namespace Library.DAL
 
         Customer? GetCustomerByEmail(string email);
 
+        CustomerInfo? GetCustomerInfo(int id);
+
         void InsertCustomer(Customer customer);
 
         void UpdateCustomer(CustomerInfo customer, int accountId);

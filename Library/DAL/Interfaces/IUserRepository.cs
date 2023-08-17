@@ -20,6 +20,8 @@ namespace Library.DAL
 
         List<UserInfo> GetUsersBanned();
 
+        UserInfo? GetUser(int id);
+
         void AddUser(UserInfo user, int AccountId);
 
         void UpdateUser(UserInfo user, int AccountId);

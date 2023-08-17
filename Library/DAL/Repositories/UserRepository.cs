@@ -65,6 +65,16 @@ namespace Library.DAL
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
+        public UserInfo? GetUser(int id)
+        {
+            User? user = _context.Users.FirstOrDefault(us => us.UserId.Equals(id));
+            if (user != null)
+            {
+                return _mapper.Map<User, UserInfo>(user);
+            }
+            return null;
+        }
+
         public void AddUser(UserInfo user, int accountId)
         {
             User newUser = _mapper.Map<UserInfo, User>(user);

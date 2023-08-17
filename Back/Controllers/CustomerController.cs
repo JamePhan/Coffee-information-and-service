@@ -31,6 +31,17 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            CustomerInfo? customer = _customer.GetCustomerInfo(id);
+            if (customer != null)
+            {
+                return Ok(customer);
+            }
+            return NotFound();
+        }
+
         [HttpGet("{name}")]
         public IActionResult Search(string name)
         {
