@@ -12,6 +12,6 @@ namespace Library.DTO
 
         public string? Address { get; set; }
 
-        public int? UserId { get; set; }
+        public virtual UserInfo User { get; set; }
     }
 }

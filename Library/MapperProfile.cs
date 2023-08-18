@@ -41,8 +41,12 @@ namespace Library
                 .ForMember(dest => dest.Customer, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore());
 
-            CreateMap<Location, LocationInfo>();
-            CreateMap<LocationInfo, Location>().ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate());
+            CreateMap<Location, LocationInfo>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+            CreateMap<LocationInfo, Location>()
+                .ForSourceMember(src => src.LocationId, opt => opt.DoNotValidate())
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
+                .ForMember(dest => dest.User, opt => opt.Ignore());
 
             CreateMap<News, NewsInfo>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.GroupImage.Image.Image1))

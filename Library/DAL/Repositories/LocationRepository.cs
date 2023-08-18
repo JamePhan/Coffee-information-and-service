@@ -2,6 +2,7 @@
 using Library.DTO;
 using Library.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,7 @@ namespace Library.DAL
 
         public List<LocationInfo> GetLocations()
         {
-            List<Location> locations;
-
-            locations = _context.Locations.ToList();
+            List<Location> locations = _context.Locations.Include(locale => locale.User).ToList();
 
             return _mapper.Map<List<Location>, List<LocationInfo>>(locations);
         }
