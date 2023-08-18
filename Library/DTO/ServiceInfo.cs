@@ -14,6 +14,8 @@ namespace Library.DTO
 
         public string? Description { get; set; }
 
+        public int? UserId { get; set; }
+
         public string? CoffeeShopName { get; set; }
 
         public string? ImageUrl { get; set; }

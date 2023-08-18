@@ -64,11 +64,8 @@ namespace Library.DAL
                 _context.SaveChanges();
                 int groupId = _context.GroupImages.OrderBy(group => group.GroupImageId).LastOrDefault().GroupImageId;
 
-                int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(service.CoffeeShopName.ToLower())).UserId;
-
                 Service toAdd = _mapper.Map<ServiceInfo, Service>(service);
                 toAdd.GroupImageId = groupId;
-                toAdd.UserId = userId;
 
                 _context.Services.Add(toAdd);
             }
@@ -93,13 +90,10 @@ namespace Library.DAL
                         if (serviceImage != null) serviceImage.Image1 = service.ImageUrl;
                     }
 
-                    int userId = _context.Users.FirstOrDefault(user => user.CoffeeShopName.ToLower().Equals(service.CoffeeShopName.ToLower())).UserId;
-
                     _context.Entry(checkExist).State = EntityState.Detached;
 
                     Service toUpdate = _mapper.Map<ServiceInfo, Service>(service);
                     toUpdate.GroupImageId = serviceGroupImage.GroupImageId;
-                    toUpdate.UserId = userId;
 
                     _context.Entry(toUpdate).State = EntityState.Modified;
                 }
