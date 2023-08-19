@@ -105,17 +105,7 @@ namespace Library.DAL
             {
                 try
                 {
-                    GroupImage? newsGroupImage = _context.GroupImages.FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
-                    if (newsGroupImage != null)
-                    {
-                        Image? newsImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(newsGroupImage.ImageId));
-                        if (newsImage != null)
-                        {
-                            _context.News.Remove(checkExist);
-                            _context.GroupImages.Remove(newsGroupImage);
-                            _context.Images.Remove(newsImage);
-                        }
-                    }
+                    _context.News.Remove(checkExist);
                 }
                 catch (SqlException ex)
                 {

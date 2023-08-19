@@ -236,28 +236,24 @@ namespace Back.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
             }
-
-            return BadRequest();
         }
 
         //[Authorize(Roles = "Admin")]
-        [HttpPatch("{id}")]
-        public IActionResult UpdateBan(int id)
+        [HttpPut]
+        public IActionResult UpdateBan(BanInfo info)
         {
             try
             {
-                _account.UpdateBanStatus(id);
+                _account.UpdateBanStatus(info);
                 _account.Save();
                 return Ok();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
             }
-
-            return BadRequest();
         }
 
         private string GenerateJwtToken(TokenInfo tokenInfo)

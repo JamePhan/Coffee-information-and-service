@@ -19,7 +19,7 @@ namespace Library.DAL
 
         void RemoveForgetCode(int accountId);
 
-        void UpdateBanStatus(int accountId);
+        void UpdateBanStatus(BanInfo banInfo);
 
         void InsertAccount(Account account);
 

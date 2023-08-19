@@ -107,9 +107,29 @@ namespace Library.DAL
             }
         }
 
-        public void UpdateBanStatus(int accountId)
+        public void UpdateBanStatus(BanInfo banInfo)
         {
-            Account? checkExist = _context.Accounts.FirstOrDefault(account => account.AccountId == accountId);
+            int? accountId = null;
+
+            if (banInfo.Role.ToLower().Equals("admin"))
+                throw new Exception("Cannot ban an Administrator!");
+
+            if (banInfo.Role.ToLower().Equals("customer"))
+
+                accountId = _context.Customers.FirstOrDefault(cust => cust.CustomerId.Equals(banInfo.ProfileId)).AccountId;
+
+            if (banInfo.Role.ToLower().Equals("user"))
+
+                accountId = _context.Users.FirstOrDefault(user => user.UserId.Equals(banInfo.ProfileId)).AccountId;
+
+            if (banInfo.Role.ToLower().Equals("customer"))
+
+                accountId = _context.Customers.FirstOrDefault(cust => cust.CustomerId.Equals(banInfo.ProfileId)).AccountId;
+
+            if (accountId == null) throw new Exception("No such account found");
+
+            Account? checkExist = _context.Accounts.FirstOrDefault(acc => acc.AccountId.Equals(accountId));
+
             if (checkExist != null)
             {
                 checkExist.IsBanned = !checkExist.IsBanned;
