@@ -12,6 +12,8 @@
 
 ## B. Install Frontend
 1. [Install node.js](https://nodejs.org/en/download)
-2. Open terminal/command prompt, type in "npm -i --global next yarn" then press "ENTER".
-3. Open terminal from "Front" folder, type in "npm run dev" to run the application.
-4. Open browser and access from "localhost:3000".
+2. [Install Visual Studio Code](https://code.visualstudio.com/download)
+3. Install NPM : Open terminal/command prompt, type in "npm install -g npm" then press "ENTER".
+4. Open terminal/command prompt, type in "npm i" then press "ENTER".
+5. Open terminal from "Front-end" folder, type in "npm run dev" to run the application.
+6. Open browser and access from "localhost:3000".
