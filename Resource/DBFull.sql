@@ -1,6 +1,11 @@
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name='CoffeehouseSystem')
+IF EXISTS (SELECT * FROM sys.databases WHERE name='CoffeehouseSystem')
+BEGIN
+DROP DATABASE [CoffeehouseSystem]
+CREATE DATABASE [CoffeehouseSystem] COLLATE Latin1_General_100_CI_AI_SC_UTF8
+END
+ELSE
 BEGIN 
-CREATE DATABASE [CoffeehouseSystem]
+CREATE DATABASE [CoffeehouseSystem] COLLATE Latin1_General_100_CI_AI_SC_UTF8
 END
 GO
 USE [CoffeehouseSystem]
@@ -12,10 +17,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Account](
 	[account_id] [int] IDENTITY(1,1) NOT NULL,
-	[username] [varchar](20) NULL,
-	[password] [varchar](20) NULL,
+	[username] [nvarchar](20) NULL,
+	[password] [nvarchar](20) NULL,
 	[is_banned] [bit] NULL,
-	[forget_code] [varchar](10) NULL,
+	[forget_code] [nvarchar](10) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[account_id] ASC
@@ -30,10 +35,10 @@ GO
 CREATE TABLE [dbo].[Admin](
 	[admin_id] [int] IDENTITY(1,1) NOT NULL,
 	[account_id] [int] NULL,
-	[name] [varchar](30) NULL,
-	[phone] [varchar](15) NULL,
+	[name] [nvarchar](30) NULL,
+	[phone] [nvarchar](15) NULL,
 	[address] [nvarchar](255) NULL,
-	[email] [varchar](30) NULL,
+	[email] [nvarchar](30) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[admin_id] ASC
@@ -62,12 +67,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Customer](
 	[customer_id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](30) NULL,
-	[phone] [varchar](15) NULL,
-	[address] [varchar](150) NULL,
-	[email] [varchar](30) NULL,
+	[name] [nvarchar](30) NULL,
+	[phone] [nvarchar](15) NULL,
+	[address] [nvarchar](150) NULL,
+	[email] [nvarchar](30) NULL,
 	[account_id] [int] NULL,
-	[avatar] [varchar](max) NULL,
+	[avatar] [nvarchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[customer_id] ASC
@@ -81,11 +86,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Event](
 	[event_id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](50) NULL,
+	[name] [nvarchar](max) NULL,
 	[location_id] [int] NULL,
 	[date] [date] NULL,
 	[groupImage_id] [int] NULL,
-	[description] [text] NULL,
+	[description] [nvarchar](max) NULL,
 	[start_time] [datetime] NULL,
 	[end_time] [datetime] NULL,
 	[seat_count] [int] NULL,
@@ -163,8 +168,8 @@ GO
 CREATE TABLE [dbo].[News](
 	[news_id] [int] IDENTITY(1,1) NOT NULL,
 	[user_id] [int] NULL,
-	[title] [varchar](100) NULL,
-	[description] [text] NULL,
+	[title] [nvarchar](100) NULL,
+	[description] [nvarchar](max) NULL,
 	[groupImage_id] [int] NULL,
 	[created_date] [date] NULL,
 PRIMARY KEY CLUSTERED 
@@ -196,8 +201,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Service](
 	[service_id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](50) NULL,
-	[description] [text] NULL,
+	[name] [nvarchar](50) NULL,
+	[description] [nvarchar](max) NULL,
 	[user_id] [int] NULL,
 	[groupImage_id] [int] NULL,
 PRIMARY KEY CLUSTERED 
@@ -213,12 +218,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[User](
 	[user_id] [int] IDENTITY(1,1) NOT NULL,
-	[address] [varchar](150) NULL,
-	[email] [varchar](30) NULL,
-	[phone] [varchar](15) NULL,
-	[coffeeShopName] [varchar](50) NULL,
+	[address] [nvarchar](150) NULL,
+	[email] [nvarchar](30) NULL,
+	[phone] [nvarchar](15) NULL,
+	[coffeeShopName] [nvarchar](50) NULL,
 	[account_id] [int] NULL,
-	[avatar] [varchar](max) NULL,
+	[avatar] [nvarchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[user_id] ASC
@@ -233,10 +238,10 @@ GO
 CREATE TABLE [dbo].[Waiting](
 	[customer_id] [int] NULL,
 	[waiting_id] [int] IDENTITY(1,1) NOT NULL,
-	[address] [varchar](150) NULL,
-	[email] [varchar](30) NULL,
-	[phone] [varchar](15) NULL,
-	[coffeeShopName] [varchar](50) NULL,
+	[address] [nvarchar](150) NULL,
+	[email] [nvarchar](30) NULL,
+	[phone] [nvarchar](15) NULL,
+	[coffeeShopName] [nvarchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[waiting_id] ASC
