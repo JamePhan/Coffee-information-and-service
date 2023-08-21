@@ -28,7 +28,7 @@ const Footer = () => {
       <div className='w-full flex justify-between items-center border-t-2 pt-5'>
         <div className='flex justify-between items-center gap-3'>
           <IconLocation />
-          <p>International (EN)</p>
+          <p>FPT EDUCATION</p>
         </div>
         <ul className='flex justify-between items-center gap-3'>
           <li>Risk & Violation Reporting</li>
