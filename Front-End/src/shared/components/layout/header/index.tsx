@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { fakeMenu, IMenu } from '@/mocks/menu/website';
 import { PreImage } from '@/components/common/PreImage';
 import ThemeModeToggle from '@/components/common/ToggleThemeMode';
-import LanguageSwitch from '@/components/common/LanguageSwitch';
+
 import { Sheet, SheetContent, SheetTrigger } from '@/components/common/ui/sheet';
 
 import { HambugerMenu } from './HambugerMenu';
@@ -150,7 +150,7 @@ const Header = ({isLogin}: Props) => {
           </div>
 
           <ThemeModeToggle />
-          <LanguageSwitch />
+          
           {isLogin ? (
             <button
               onClick={() => onActionClick()}

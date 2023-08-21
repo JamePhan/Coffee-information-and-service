@@ -48,24 +48,7 @@ const CustomerManagement = ({}: Props) => {
       dataIndex: 'email',
       key: 'email',
     },
-    {
-      title: 'Hành động',
-      key: 'action',
-      render: (_, record) => (
-        <Space size='middle'>
-          <div
-            className='cursor-pointer'
-            onClick={() => {
-              setAtion('edit');
-              setOpen(true);
-              setRowId(record.customerId);
-            }}
-          >
-            <EditOutlined />
-          </div>
-        </Space>
-      ),
-    },
+    
   ];
 
   return (

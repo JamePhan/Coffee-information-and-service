@@ -5,6 +5,7 @@ import { formattedDate } from '@/utils/functions/convertDay';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ISchedule } from 'src/shared/types/schedule.type';
 import { PreImage } from '../../common/PreImage';
+import { Button, message } from 'antd';
 
 interface Props {
   scheduleData: ISchedule[];
@@ -58,6 +59,9 @@ const Schedule = ({ userType, scheduleData }: Props) => {
                         </p>
                       </div>
                       <h1 className='text-xl min-w-1/2 h-[400px] hover:overflow-y-auto'>{item.event.description}</h1>
+                      <Button className='float-right dark:text-white' onClick={(()=>{message.success('Hủy Thành Công');})}>
+                        Cancel Event
+                      </Button>
                     </div>
                   </div>
                 );

@@ -1,4 +1,4 @@
-import useTrans from 'src/shared/hooks/useTrans';
+
 import { NextPage, NextPageContext } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Error: NextPage<Props> = ({ statusCode }) => {
-    const { trans } = useTrans()
+    
     return (<section className="pt-48 lg:pt-50 xl:pt-55 pb-25 lg:pb-32.5 xl:pb-37.5 overflow-hidden">
         <div className="animate_top mx-auto max-w-[518px] text-center">
             <Image

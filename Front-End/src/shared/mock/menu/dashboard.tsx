@@ -20,7 +20,7 @@ export const menuUser: MenuItem[] = [
   getItem('Banner', '/user/banner', <FileImageOutlined />),
   getItem('Sự kiện', '/user/event', <UserOutlined />),
   getItem('Tin tức', '/user/news', <AppstoreOutlined />),
-  getItem('Địa điểm', '/user/location', <UsergroupAddOutlined />),
+
   getItem('Dịch vụ', '/user/serviceCoffee', <InsertRowLeftOutlined />),
   getItem('Khách hàng thân thiết', '/user/customer-following', <BookOutlined />),
 ];

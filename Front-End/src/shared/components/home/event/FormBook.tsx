@@ -22,7 +22,7 @@ const FormBook = ({data, open, setOpen}: Props) => {
       if (!data) return;
       message.success('Đặt thành công');
       setOpen(false);
-      router.reload()
+      // router.reload()
     },
     onError(error, variables, context) {
       message.error('Đặt không thành công');
