@@ -4,7 +4,7 @@ import { AlignJustifyIcon, BellRingIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import useTrans from '@/hooks/useTrans';
+// import useTrans from '@/hooks/useTrans';
 import { logout } from 'src/shared/stores/appSlice';
 import IconUser from '@/components/icon/IconUser';
 import { APP_SAVE_KEY } from '@/utils/constants';
@@ -17,7 +17,7 @@ const HeaderDashboard = () => {
   const token = antTheme.useToken();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.appSlice);
-  const { changeLanguage, lang, currentcy, trans } = useTrans();
+  // const { changeLanguage, lang, currentcy, trans } = useTrans();
   const [cookies, setCookie, removeCookie] = useCookies([APP_SAVE_KEY.TOKEN_KEY]);
 
   const onActionClick = () => {
@@ -33,16 +33,16 @@ const HeaderDashboard = () => {
       },
     });
   };
-  function RenderFlag() {
-    switch (lang) {
-      case 'vi':
-        return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
-      case 'en':
-        return <Image src={'/united-kingdom.png'} alt='vn' width={24} height={24} />;
-      default:
-        return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
-    }
-  }
+  // function RenderFlag() {
+  //   switch (lang) {
+  //     case 'vi':
+  //       return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
+  //     case 'en':
+  //       return <Image src={'/united-kingdom.png'} alt='vn' width={24} height={24} />;
+  //     default:
+  //       return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
+  //   }
+  // }
   return (
     <Header className='layout-page-header bg-2' style={{ backgroundColor: token.token.colorBgContainer }}>
       <div className='lg:hidden'>
@@ -63,21 +63,21 @@ const HeaderDashboard = () => {
                   key: 'vn',
                   label: <div>Vietnamese</div>,
                   onClick: () => {
-                    if (lang !== 'vi') changeLanguage('vi');
+                    // if (lang !== 'vi') changeLanguage('vi');
                   },
                 },
                 {
                   key: 'en',
                   label: <div>English </div>,
                   onClick: () => {
-                    if (lang !== 'en') changeLanguage('en');
+                    // if (lang !== 'en') changeLanguage('en');
                   },
                 },
               ],
             }}
           >
             <div className='flex flex-col items-center'>
-              <RenderFlag />
+              {/* <RenderFlag /> */}
             </div>
           </Dropdown>
           <Dropdown
@@ -86,11 +86,11 @@ const HeaderDashboard = () => {
               items: [
                 {
                   key: '1',
-                  label: <div>{trans.common.notification} 1</div>,
+                  // label: <div>{trans.common.notification} 1</div>,
                 },
                 {
                   key: '2',
-                  label: <div>{trans.common.notification} 2 </div>,
+                  // label: <div>{trans.common.notification} 2 </div>,
                 },
               ],
             }}
@@ -106,19 +106,19 @@ const HeaderDashboard = () => {
                 {
                   key: '1',
                   icon: <UserOutlined />,
-                  label: <span>{trans.menu.header.AccountInfo}</span>,
+                  // label: <span>{trans.menu.header.AccountInfo}</span>,
                   onClick: () => router.push('/profile'),
                 },
                 {
                   key: '2',
                   icon: <LockOutlined />,
-                  label: <span>{trans.menu.header.ChangePass}</span>,
+                  // label: <span>{trans.menu.header.ChangePass}</span>,
                   onClick: () => router.push('/change-password'),
                 },
                 {
                   key: '3',
                   icon: <LogoutOutlined />,
-                  label: <span>{trans.menu.header.Logout}</span>,
+                  // label: <span>{trans.menu.header.Logout}</span>,
                   onClick: () => onActionClick(),
                 },
               ],
