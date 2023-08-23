@@ -52,6 +52,19 @@ namespace Library.DAL
             return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
         }
 
+        public List<ServiceInfo> GetUserServices(int id)
+        {
+            List<Service> services;
+
+            services = _context.Services
+                .Include(group => group.GroupImage).ThenInclude(image => image.Image)
+                .Include(serv => serv.User)
+                .Where(serv => serv.UserId.Equals(id))
+                .ToList();
+
+            return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
+        }
+
         public void AddService(ServiceInfo service)
         {
             try

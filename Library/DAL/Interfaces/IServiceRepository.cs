@@ -13,6 +13,8 @@ namespace Library.DAL
 
         List<ServiceInfo> GetServices();
 
+        List<ServiceInfo> GetUserServices(int id);
+
         void AddService(ServiceInfo service);
 
         void UpdateService(ServiceInfo service);

@@ -92,6 +92,17 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet("{userId}")]
+        public IActionResult User(int userId)
+        {
+            List<ServiceInfo> services = _service.GetUserServices(userId);
+            if (services.Count > 0)
+            {
+                return Ok(services);
+            }
+            return NotFound();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _service.Dispose();
