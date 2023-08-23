@@ -31,6 +31,21 @@ namespace Library.DAL
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
 
+        public List<EventInfo> GetUserEvents(int id)
+        {
+            List<Event> events;
+
+            events = _context.Events
+                .Include(locale => locale.Location)
+                .Include(user => user.User)
+                .Include(group => group.GroupImage)
+                .ThenInclude(image => image.Image)
+                .Where(ev => ev.UserId.Equals(id))
+                .ToList();
+
+            return _mapper.Map<List<Event>, List<EventInfo>>(events);
+        }
+
         public EventInfo? GetEvent(int id)
         {
             Event? eve = _context.Events.

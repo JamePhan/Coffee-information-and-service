@@ -89,6 +89,17 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet("{userId}")]
+        public IActionResult User(int userId)
+        {
+            List<EventInfo> events = _event.GetUserEvents(userId);
+            if (events.Count > 0)
+            {
+                return Ok(events);
+            }
+            return NotFound();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _event.Dispose();
