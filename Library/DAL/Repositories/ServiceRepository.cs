@@ -128,17 +128,7 @@ namespace Library.DAL
             {
                 try
                 {
-                    GroupImage? serviceGroupImage = _context.GroupImages.FirstOrDefault(g => g.GroupImageId.Equals(checkExist.GroupImageId));
-                    if (serviceGroupImage != null)
-                    {
-                        Image? serviceImage = _context.Images.FirstOrDefault(image => image.ImageId.Equals(serviceGroupImage.ImageId));
-                        if (serviceImage != null)
-                        {
-                            _context.Services.Remove(checkExist);
-                            _context.GroupImages.Remove(serviceGroupImage);
-                            _context.Images.Remove(serviceImage);
-                        }
-                    }
+                    _context.Services.Remove(checkExist);
                 }
                 catch (SqlException ex)
                 {
