@@ -85,6 +85,17 @@ namespace Back.Controllers
             }
         }
 
+        [HttpGet("{userId}")]
+        public IActionResult User(int userId)
+        {
+            List<NewsInfo> news = _news.GetUserNews(userId);
+            if (news.Count > 0)
+            {
+                return Ok(news);
+            }
+            return NotFound();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _news.Dispose();

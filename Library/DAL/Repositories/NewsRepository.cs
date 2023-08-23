@@ -24,6 +24,17 @@ namespace Library.DAL
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
         }
 
+        public List<NewsInfo> GetUserNews(int id)
+        {
+            List<News> news = _context.News
+                .Include(group => group.GroupImage)
+                .ThenInclude(image => image.Image)
+                .Include(user => user.User)
+                .Where(news => news.UserId.Equals(id))
+                .ToList();
+            return _mapper.Map<List<News>, List<NewsInfo>>(news);
+        }
+
         public NewsInfo? GetNews(int id)
         {
             News? news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).Include(user => user.User).FirstOrDefault(n => n.NewsId.Equals(id));
