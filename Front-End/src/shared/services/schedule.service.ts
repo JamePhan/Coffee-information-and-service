@@ -20,7 +20,7 @@ class ScheduleService {
         return httpsNoToken.get(`/Schedule/Detail/${id}`)
     }
     deleteSchedule(id: number) {
-        return httpsNoToken.delete(`/Schedule/Delete/${id}`)
+        return httpsNoToken.delete(`/Schedule/Delete/?scheduleId=${id}`)
     }
 }
 

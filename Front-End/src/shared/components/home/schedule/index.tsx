@@ -6,12 +6,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ISchedule } from 'src/shared/types/schedule.type';
 import { PreImage } from '../../common/PreImage';
 import { Button, message } from 'antd';
+import { useMutation } from '@tanstack/react-query';
+import { eventService } from 'src/shared/services/event.service';
+import { scheduleService } from 'src/shared/services/schedule.service';
 
 interface Props {
   scheduleData: ISchedule[];
   userType: string;
 }
-const Schedule = ({ userType, scheduleData }: Props) => {
+const Schedule = ({ userType, scheduleData }: Props) => { 
+  const deleteMutation = useMutation({
+    mutationKey: ['deleteEventMutation'],
+    mutationFn: (eventId: number) => scheduleService.deleteSchedule(eventId),
+    onSuccess: () => {
+      message.success('Xoá thành công');
+    
+    },
+    onError() {
+      message.error('Xoá không thành công');
+    },
+  });
   return (
     <section
       id='Event'
@@ -59,7 +73,7 @@ const Schedule = ({ userType, scheduleData }: Props) => {
                         </p>
                       </div>
                       <h1 className='text-xl min-w-1/2 h-[400px] hover:overflow-y-auto'>{item.event.description}</h1>
-                      <Button className='float-right dark:text-white' onClick={(()=>{message.success('Hủy Thành Công');})}>
+                      <Button className='float-right dark:text-white' onClick={(()=>deleteMutation.mutate(item.event.eventId))}>
                         Cancel Event
                       </Button>
                     </div>

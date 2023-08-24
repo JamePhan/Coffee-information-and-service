@@ -12,6 +12,7 @@ import { IInforUserStored } from 'src/shared/types/user.type';
 import { menuAdmin, menuUser } from '@/mocks/menu/dashboard';
 import { useTheme } from 'next-themes';
 
+
 const { Content, Footer, Sider } = Layout;
 
 interface Props {

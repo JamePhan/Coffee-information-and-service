@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { LockOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+
 
 import { fakeMenu, IMenu } from '@/mocks/menu/website';
 import { PreImage } from '@/components/common/PreImage';
@@ -14,10 +16,11 @@ import { HambugerMenu } from './HambugerMenu';
 import { Button } from '@/components/common/ui/button';
 import { getCookie } from 'cookies-next';
 import { APP_SAVE_KEY } from '@/utils/constants';
-import { Modal } from 'antd';
+import { Avatar, Dropdown, Modal } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { logout } from 'src/shared/stores/appSlice';
 import { useCookies } from 'react-cookie';
+import IconUser from '@/components/icon/IconUser';
 
 interface Props{
   isLogin: any
@@ -150,7 +153,38 @@ const Header = ({isLogin}: Props) => {
           </div>
 
           <ThemeModeToggle />
-          
+          <Dropdown
+            placement='bottomRight'
+            menu={{
+              items: [
+                {
+                  key: '1',
+                  icon: <UserOutlined />,
+                  // label: <span>{trans.menu.header.AccountInfo}</span>,
+                  onClick: () => router.push('/profile'),
+                },
+                {
+                  key: '2',
+                  icon: <LockOutlined />,
+                  // label: <span>{trans.menu.header.ChangePass}</span>,
+                  onClick: () => router.push('/change-password'),
+                },
+                {
+                  key: '3',
+                  icon: <LogoutOutlined />,
+                  // label: <span>{trans.menu.header.Logout}</span>,
+                  onClick: () => onActionClick(),
+                },
+              ],
+            }}
+          >
+            <div className='flex items-center justify-center gap-1 cursor-pointer'>
+              <Avatar>
+                <IconUser />
+              </Avatar>
+              <p className='ipad:hidden text-ellipsis truncate h-max leading-none'>{user && user.name}</p>
+            </div>
+          </Dropdown>
           {isLogin ? (
             <button
               onClick={() => onActionClick()}
