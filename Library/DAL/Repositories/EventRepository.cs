@@ -169,6 +169,21 @@ namespace Library.DAL
             {
                 try
                 {
+                    List<Schedule> schedules = _context.Schedules.Where(sched => sched.EventId.Equals(checkExist.EventId)).ToList();
+
+                    if (schedules.Count > 0)
+                    {
+                        try
+                        {
+                            _context.Schedules.RemoveRange(schedules);
+                            _context.SaveChanges();
+                        }
+                        catch (SqlException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+
                     _context.Events.Remove(checkExist);
                 }
                 catch (SqlException ex)
