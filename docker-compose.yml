@@ -1,6 +1,7 @@
 services:
   back:
     image: back
+    build: .
     container_name: back
     ports:
       - "5000:80"
