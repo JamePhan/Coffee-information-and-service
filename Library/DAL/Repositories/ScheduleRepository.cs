@@ -30,6 +30,9 @@ namespace Library.DAL
                     .ThenInclude(ev => ev.User)
                 .Include(schedule => schedule.Event)
                     .ThenInclude(ev => ev.Location)
+                .Include(schedule => schedule.Event)
+                    .ThenInclude(ev => ev.GroupImage)
+                    .ThenInclude(group => group.Image)
                 .Include(schedule => schedule.Customer)
                 .Where(schedule => schedule.Event.User.UserId.Equals(userId))
                 .ToList();
@@ -43,6 +46,9 @@ namespace Library.DAL
                     .ThenInclude(ev => ev.User)
                 .Include(schedule => schedule.Event)
                     .ThenInclude(ev => ev.Location)
+                .Include(schedule => schedule.Event)
+                    .ThenInclude(ev => ev.GroupImage)
+                    .ThenInclude(group => group.Image)
                 .Include(schedule => schedule.Customer)
                 .Where(schedule => schedule.CustomerId.Equals(customerId))
                 .ToList();
