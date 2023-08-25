@@ -6,26 +6,37 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ISchedule } from 'src/shared/types/schedule.type';
 import { PreImage } from '../../common/PreImage';
 import { Button, message } from 'antd';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { eventService } from 'src/shared/services/event.service';
 import { scheduleService } from 'src/shared/services/schedule.service';
+import { useState } from 'react';
 
 interface Props {
   scheduleData: ISchedule[];
   userType: string;
 }
 const Schedule = ({ userType, scheduleData }: Props) => { 
+
+  const [deletedEventId, setDeletedEventId] = useState<number | null>(null);
+  const queryClient = useQueryClient();
+  
   const deleteMutation = useMutation({
     mutationKey: ['deleteEventMutation'],
     mutationFn: (eventId: number) => scheduleService.deleteSchedule(eventId),
     onSuccess: () => {
       message.success('Xoá thành công');
+      setDeletedEventId(null);
+      
+      queryClient.invalidateQueries(['scheduleData']); // Làm mới dữ liệu lịch trình
     
     },
     onError() {
       message.error('Xoá không thành công');
     },
   });
+  const handleDeleteEvent = (eventId: number) => {
+    deleteMutation.mutate(eventId);
+  };
   return (
     <section
       id='Event'
@@ -39,9 +50,14 @@ const Schedule = ({ userType, scheduleData }: Props) => {
         />
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-between items-start gap-5'>
           <AnimatePresence>
-            {scheduleData &&
-              scheduleData.map((item, idx) => {
-                return (
+          {scheduleData &&
+  scheduleData.map((item, idx) => {
+    // Kiểm tra nếu eventId là null hoặc undefined thì không hiển thị sự kiện
+    if (item.event.eventId === null || item.event.eventId === undefined) {
+      return null;
+    }
+    
+    return (
                   <div key={idx} className='relative cursor-pointer overflow-hidden rounded-lg'>
                     <motion.div whileHover={{ scale: 1.1 }}>
                       <PreImage

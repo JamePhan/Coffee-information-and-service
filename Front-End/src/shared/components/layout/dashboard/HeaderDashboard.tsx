@@ -106,19 +106,19 @@ const HeaderDashboard = () => {
                 {
                   key: '1',
                   icon: <UserOutlined />,
-                  // label: <span>{trans.menu.header.AccountInfo}</span>,
+                   label: <span>Thông Tin Cá Nhân</span>,
                   onClick: () => router.push('/profile'),
                 },
                 {
                   key: '2',
                   icon: <LockOutlined />,
-                  // label: <span>{trans.menu.header.ChangePass}</span>,
+                   label: <span>Đổi Mật Khẩu</span>,
                   onClick: () => router.push('/change-password'),
                 },
                 {
                   key: '3',
                   icon: <LogoutOutlined />,
-                  // label: <span>{trans.menu.header.Logout}</span>,
+                   label: <span>Đăng Xuất</span>,
                   onClick: () => onActionClick(),
                 },
               ],
