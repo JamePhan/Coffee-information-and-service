@@ -4,14 +4,10 @@ import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { LockOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
-
-
 import { fakeMenu, IMenu } from '@/mocks/menu/website';
 import { PreImage } from '@/components/common/PreImage';
 import ThemeModeToggle from '@/components/common/ToggleThemeMode';
-
 import { Sheet, SheetContent, SheetTrigger } from '@/components/common/ui/sheet';
-
 import { HambugerMenu } from './HambugerMenu';
 import { Button } from '@/components/common/ui/button';
 import { getCookie } from 'cookies-next';
@@ -21,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { logout } from 'src/shared/stores/appSlice';
 import { useCookies } from 'react-cookie';
 import IconUser from '@/components/icon/IconUser';
-import menu from 'antd/es/menu';
 
 
 interface Props {
@@ -67,10 +62,10 @@ const Header = ({ isLogin }: Props) => {
     setIsLogout(true);
     const menuCurrent =
       isLogin && user?.role === 'Customer'
-        ? fakeMenu.slice(0, 6)
+        ? fakeMenu.slice(0, 7)
         : user?.role === 'User'
           ? fakeMenu
-          : fakeMenu.slice(0, 4);
+          : fakeMenu.slice(0, 5);
     return setMenuData(menuCurrent);
   }, [isLogin, user]);
 

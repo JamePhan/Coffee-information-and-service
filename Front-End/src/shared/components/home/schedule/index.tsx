@@ -6,36 +6,55 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ISchedule } from 'src/shared/types/schedule.type';
 import { PreImage } from '../../common/PreImage';
 import { Button, message } from 'antd';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { eventService } from 'src/shared/services/event.service';
 import { scheduleService } from 'src/shared/services/schedule.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+
 
 interface Props {
   scheduleData: ISchedule[];
   userType: string;
+  customerId: number;
 }
-const Schedule = ({ userType, scheduleData }: Props) => { 
+
+const Schedule = ({ userType, scheduleData, }: Props) => {
+  const queryClient = useQueryClient();
+
 
   const [deletedEventId, setDeletedEventId] = useState<number | null>(null);
-  const queryClient = useQueryClient();
-  
+  const [shouldReload, setShouldReload] = useState(false);
+
+  useEffect(() => {
+    if (shouldReload) {
+      // Nếu biến shouldReload là true, thực hiện làm mới trang
+      queryClient.invalidateQueries(['scheduleData']);
+      setShouldReload(false); // Đặt lại biến shouldReload thành false sau khi làm mới
+    }
+  }, [shouldReload, queryClient]);
+
   const deleteMutation = useMutation({
     mutationKey: ['deleteEventMutation'],
-    mutationFn: (eventId: number) => scheduleService.deleteSchedule(eventId),
-    onSuccess: () => {
-      message.success('Xoá thành công');
-      setDeletedEventId(null);
-      
-      queryClient.invalidateQueries(['scheduleData']); // Làm mới dữ liệu lịch trình
-    
+    mutationFn: async (scheduleId: number) => {
+      try {
+        await scheduleService.deleteSchedule(scheduleId);
+        message.success('Hủy Đăng Ký Event thành công');
+        setDeletedEventId(null);
+        setShouldReload(true); // Đặt biến shouldReload thành true để làm mới trang
+      } catch (error) {
+        message.error('Xoá không thành công');
+      }
     },
     onError() {
       message.error('Xoá không thành công');
     },
   });
-  const handleDeleteEvent = (eventId: number) => {
-    deleteMutation.mutate(eventId);
+
+  const handleDeleteEvent = (scheduleId: number) => {
+    deleteMutation.mutate(scheduleId);
+
+
   };
   return (
     <section
@@ -50,14 +69,14 @@ const Schedule = ({ userType, scheduleData }: Props) => {
         />
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-between items-start gap-5'>
           <AnimatePresence>
-          {scheduleData &&
-  scheduleData.map((item, idx) => {
-    // Kiểm tra nếu eventId là null hoặc undefined thì không hiển thị sự kiện
-    if (item.event.eventId === null || item.event.eventId === undefined) {
-      return null;
-    }
-    
-    return (
+            {scheduleData &&
+              scheduleData.map((item, idx) => {
+                // Kiểm tra nếu eventId là null hoặc undefined thì không hiển thị sự kiện
+                if (item.event.eventId === null || item.event.eventId === undefined) {
+                  return null;
+                }
+
+                return (
                   <div key={idx} className='relative cursor-pointer overflow-hidden rounded-lg'>
                     <motion.div whileHover={{ scale: 1.1 }}>
                       <PreImage
@@ -89,8 +108,8 @@ const Schedule = ({ userType, scheduleData }: Props) => {
                         </p>
                       </div>
                       <h1 className='text-xl min-w-1/2 h-[400px] hover:overflow-y-auto'>{item.event.description}</h1>
-                      <Button className='float-right dark:text-white' onClick={(()=>deleteMutation.mutate(item.event.eventId))}>
-                        Cancel Event
+                      <Button className='float-right dark:text-white' onClick={(() => deleteMutation.mutate(item.scheduleId))}>
+                        Cancel Schedule
                       </Button>
                     </div>
                   </div>
