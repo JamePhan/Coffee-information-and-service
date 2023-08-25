@@ -21,11 +21,32 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { logout } from 'src/shared/stores/appSlice';
 import { useCookies } from 'react-cookie';
 import IconUser from '@/components/icon/IconUser';
+import menu from 'antd/es/menu';
+
+
+
+
 
 interface Props{
   isLogin: any
 }
+
 const Header = ({isLogin}: Props) => {
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.appSlice);
   const [_, __, removeCookie] = useCookies([APP_SAVE_KEY.TOKEN_KEY]);
@@ -153,45 +174,60 @@ const Header = ({isLogin}: Props) => {
           </div>
 
           <ThemeModeToggle />
-          <Dropdown
+          
+          {isLogin ? (
+            <Dropdown
             placement='bottomRight'
             menu={{
               items: [
                 {
                   key: '1',
                   icon: <UserOutlined />,
-                  // label: <span>{trans.menu.header.AccountInfo}</span>,
+                   label: <span className="hover:bg-gray-200 px-2 py-1">Thông tin cá nhân</span>,
                   onClick: () => router.push('/profile'),
                 },
                 {
                   key: '2',
                   icon: <LockOutlined />,
-                  // label: <span>{trans.menu.header.ChangePass}</span>,
-                  onClick: () => router.push('/change-password'),
-                },
-                {
+                  label: (
+                    <><Modal title="Bạn muốn trở thành Coffee Shop?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ className: 'bg-red-500', style: { borderColor: 'red' } }}>
+                      <p>Vui lòng xác nhận gửi thông tin cá nhân tới Admin</p>
+                      
+                    </Modal>
+                    <span
+                      className="hover:bg-gray-200 px-2 py-1"
+                      onClick={showModal}
+                    >
+                        Request Become Coffee Shop
+                      </span>
+                      
+                      </>
+                    
+                  ),
+                  
+                  },
+                  {
                   key: '3',
                   icon: <LogoutOutlined />,
-                  // label: <span>{trans.menu.header.Logout}</span>,
+                   label: <span className="hover:bg-gray-200 px-2 py-1">Đăng Xuất</span>,
                   onClick: () => onActionClick(),
                 },
               ],
             }}
           >
-            <div className='flex items-center justify-center gap-1 cursor-pointer'>
+            <div className='flex items-center justify-center gap-1 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded'>
               <Avatar>
                 <IconUser />
               </Avatar>
               <p className='ipad:hidden text-ellipsis truncate h-max leading-none'>{user && user.name}</p>
             </div>
           </Dropdown>
-          {isLogin ? (
-            <button
-              onClick={() => onActionClick()}
-              className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
-            >
-              Đăng xuất
-            </button>
+            // <button
+            //   onClick={() => onActionClick()}
+            //   className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
+            // >
+            //   Đăng xuất
+            // </button>
           ) : (
             <button
               onClick={() => {
@@ -204,6 +240,7 @@ const Header = ({isLogin}: Props) => {
           )}
         </div>
       </div>
+      
     </motion.section>
   );
 };
