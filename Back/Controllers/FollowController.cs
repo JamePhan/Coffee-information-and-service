@@ -59,6 +59,21 @@ namespace Back.Controllers
             }
         }
 
+        [HttpDelete]
+        public IActionResult Unfollow(FollowInfo follow)
+        {
+            try
+            {
+                _follow.RemoveFollow(follow);
+                _follow.Save();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             _follow.Dispose();

@@ -90,6 +90,19 @@ namespace Library.DAL
             _context.SaveChanges();
         }
 
+        public void RemoveFollow(FollowInfo followInfo)
+        {
+            Following checkExist = _context.Followings.FirstOrDefault(follow => follow.UserId.Equals(followInfo.User.UserId) && follow.CustomerId.Equals(followInfo.Customer.CustomerId));
+            if (checkExist != null)
+            {
+                _context.Followings.Remove(checkExist);
+            }
+            else
+            {
+                throw new Exception("Already not following!");
+            }
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed && disposing)
