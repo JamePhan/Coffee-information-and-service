@@ -10,17 +10,17 @@ class ScheduleService {
     getUserSchedule(userId: number): Promise<AxiosResponse<ISchedule[]>> {
         return httpsNoToken.get(`/Schedule/User/${userId}`)
     }
-    bookSchedule(body:IScheduleAdd) {
+    bookSchedule(body: IScheduleAdd) {
         return httpsNoToken.post("/Schedule/Book", body)
     }
-    updateSchedule(body:ISchedule) {
+    updateSchedule(body: ISchedule) {
         return httpsNoToken.put(`/Schedule/Update`, body)
     }
     getScheduleById(id: number): Promise<AxiosResponse<ISchedule>> {
         return httpsNoToken.get(`/Schedule/Detail/${id}`)
     }
     deleteSchedule(id: number) {
-        return httpsNoToken.delete(`/Schedule/Delete/?scheduleId=${id}`)
+        return httpsNoToken.delete(`/Schedule/Delete?scheduleId=${id}`)
     }
 }
 
