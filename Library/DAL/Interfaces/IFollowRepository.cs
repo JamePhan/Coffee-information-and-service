@@ -15,6 +15,8 @@ namespace Library.DAL
 
         List<FollowInfo> GetFollowingCustomers(int userId);
 
+        void RemoveFollow(FollowInfo follow);
+
         void Save();
     }
 }
