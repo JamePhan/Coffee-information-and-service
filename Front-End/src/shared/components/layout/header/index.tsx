@@ -24,15 +24,12 @@ import IconUser from '@/components/icon/IconUser';
 import menu from 'antd/es/menu';
 
 
-
-
-
-interface Props{
+interface Props {
   isLogin: any
 }
 
-const Header = ({isLogin}: Props) => {
-  
+const Header = ({ isLogin }: Props) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -72,8 +69,8 @@ const Header = ({isLogin}: Props) => {
       isLogin && user?.role === 'Customer'
         ? fakeMenu.slice(0, 6)
         : user?.role === 'User'
-        ? fakeMenu
-        : fakeMenu.slice(0, 4);
+          ? fakeMenu
+          : fakeMenu.slice(0, 4);
     return setMenuData(menuCurrent);
   }, [isLogin, user]);
 
@@ -100,11 +97,10 @@ const Header = ({isLogin}: Props) => {
       initial={{ height: '100px' }}
       animate={{ height: isScrolled ? '80px' : '100px' }}
       transition={{ duration: 0.3 }}
-      className={`bg-white w-full top-0 z-50 flex justify-between items-center gap-5 px-5 md:px-10 transition ${
-        isScrolled
-          ? 'sticky light:text-black border-b-[1px] border-opacity-50 border-black-300 inset-0 bg-opacity-10 backdrop-filter backdrop-blur duration-500 ease-in-out light:bg-[#141523]'
-          : 'sticky dark:bg-[#141523] bg-opacity-100 duration-500 ease-in-out'
-      }`}
+      className={`bg-white w-full top-0 z-50 flex justify-between items-center gap-5 px-5 md:px-10 transition ${isScrolled
+        ? 'sticky light:text-black border-b-[1px] border-opacity-50 border-black-300 inset-0 bg-opacity-10 backdrop-filter backdrop-blur duration-500 ease-in-out light:bg-[#141523]'
+        : 'sticky dark:bg-[#141523] bg-opacity-100 duration-500 ease-in-out'
+        }`}
     >
       <div className='flex justify-around items-center'>
         <PreImage
@@ -174,54 +170,54 @@ const Header = ({isLogin}: Props) => {
           </div>
 
           <ThemeModeToggle />
-          
+
           {isLogin ? (
             <Dropdown
-            placement='bottomRight'
-            menu={{
-              items: [
-                {
-                  key: '1',
-                  icon: <UserOutlined />,
-                   label: <span className="hover:bg-gray-200 px-2 py-1">Thông tin cá nhân</span>,
-                  onClick: () => router.push('/profile'),
-                },
-                {
-                  key: '2',
-                  icon: <LockOutlined />,
-                  label: (
-                    <><Modal title="Bạn muốn trở thành Coffee Shop?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ className: 'bg-red-500', style: { borderColor: 'red' } }}>
-                      <p>Vui lòng xác nhận gửi thông tin cá nhân tới Admin</p>
-                      
-                    </Modal>
-                    <span
-                      className="hover:bg-gray-200 px-2 py-1"
-                      onClick={showModal}
-                    >
-                        Request Become Coffee Shop
-                      </span>
-                      
-                      </>
-                    
-                  ),
-                  
+              placement='bottomRight'
+              menu={{
+                items: [
+                  {
+                    key: '1',
+                    icon: <UserOutlined />,
+                    label: <span className="hover:bg-gray-200 px-2 py-1">Thông tin cá nhân</span>,
+                    onClick: () => router.push('/profile'),
                   },
                   {
-                  key: '3',
-                  icon: <LogoutOutlined />,
-                   label: <span className="hover:bg-gray-200 px-2 py-1">Đăng Xuất</span>,
-                  onClick: () => onActionClick(),
-                },
-              ],
-            }}
-          >
-            <div className='flex items-center justify-center gap-1 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded'>
-              <Avatar>
-                <IconUser />
-              </Avatar>
-              <p className='ipad:hidden text-ellipsis truncate h-max leading-none'>{user && user.name}</p>
-            </div>
-          </Dropdown>
+                    key: '2',
+                    icon: <LockOutlined />,
+                    label: (
+                      <><Modal title="Bạn muốn trở thành Coffee Shop?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ className: 'bg-red-500', style: { borderColor: 'red' } }}>
+                        <p>Vui lòng xác nhận gửi thông tin cá nhân tới Admin</p>
+
+                      </Modal>
+                        <span
+                          className="hover:bg-gray-200 px-2 py-1"
+                          onClick={showModal}
+                        >
+                          Request Become Coffee Shop
+                        </span>
+
+                      </>
+
+                    ),
+
+                  },
+                  {
+                    key: '3',
+                    icon: <LogoutOutlined />,
+                    label: <span className="hover:bg-gray-200 px-2 py-1">Đăng Xuất</span>,
+                    onClick: () => onActionClick(),
+                  },
+                ],
+              }}
+            >
+              <div className='flex items-center justify-center gap-1 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded'>
+                <Avatar>
+                  <IconUser />
+                </Avatar>
+                <p className='ipad:hidden text-ellipsis truncate h-max leading-none'>{user && user.name}</p>
+              </div>
+            </Dropdown>
             // <button
             //   onClick={() => onActionClick()}
             //   className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
@@ -240,7 +236,7 @@ const Header = ({isLogin}: Props) => {
           )}
         </div>
       </div>
-      
+
     </motion.section>
   );
 };
