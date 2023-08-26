@@ -5,6 +5,7 @@ import {
   UsergroupAddOutlined,
   UserOutlined,
   FileImageOutlined,
+  CustomerServiceOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number];
@@ -25,7 +26,9 @@ export const menuUser: MenuItem[] = [
   getItem('Khách hàng thân thiết', '/user/customer-following', <BookOutlined />),
 ];
 export const menuAdmin: MenuItem[] = [
-  getItem('Người dùng', '/admin/user', <UserOutlined />),
+  getItem('Quản Lý User', '/admin/user', <UserOutlined />),
+  getItem('Quản Lý Customer', '/admin/customer', <CustomerServiceOutlined />),
   getItem('Yêu cầu duyệt', '/admin/request', <BookOutlined />),
-  getItem('Banner', '/admin/banner', <FileImageOutlined />),
+  getItem('Quản Lý Banner', '/admin/banner', <FileImageOutlined />),
+  getItem('Restrict Account', '/admin/restrictAccount', <FileImageOutlined />),
 ];

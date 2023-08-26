@@ -20,7 +20,7 @@ interface Props {
 }
 
 const DashboardLayout = ({ children }: Props) => {
-  const {theme} = useTheme()
+  const { theme } = useTheme()
   const [isAdmin, setIsAdmin] = useState(false)
   const router = useRouter();
   const currentPath = router.pathname;
@@ -32,9 +32,9 @@ const DashboardLayout = ({ children }: Props) => {
       router.push('/login');
     } else {
       const decodeData: IInforUserStored = jwt_decode(token as string);
-      if(decodeData.role === "Admin"){
+      if (decodeData.role === "Admin") {
         setIsAdmin(true)
-      }else{
+      } else {
         setIsAdmin(false)
       }
       dispatch(login(decodeData));
@@ -43,7 +43,7 @@ const DashboardLayout = ({ children }: Props) => {
   return (
     <>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider style={{backgroundColor: theme === 'light' ? "#fff" : "#001629"}}>
+        <Sider style={{ backgroundColor: theme === 'light' ? "#fff" : "#001629" }}>
           <div className='flex justify-center items-center'>
             <PreImage
               className='cursor-pointer'
@@ -60,7 +60,7 @@ const DashboardLayout = ({ children }: Props) => {
             theme={theme === 'light' ? 'light' : 'dark'}
             defaultSelectedKeys={[`${currentPath.split('/').splice(0, 3).join('/')}` || `${currentPath}`]}
             mode='inline'
-            items={isAdmin ? menuAdmin : menuUser }
+            items={isAdmin ? menuAdmin : menuUser}
           ></Menu>
         </Sider>
         <Layout>

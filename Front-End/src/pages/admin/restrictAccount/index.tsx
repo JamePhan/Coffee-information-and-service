@@ -1,5 +1,5 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
-import { StopOutlined, ReloadOutlined } from '@ant-design/icons'; // Sử dụng StopOutlined thay cho CloseCircleOutlined
+import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons'; // Sử dụng CloseCircleOutlined thay cho DeleteOutlined
 import { Button, Col, Row, Space, Table } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
@@ -71,12 +71,12 @@ const UserManagement = ({ }: Props) => {
           <div
             className='cursor-pointer'
             onClick={() => {
-              setAction('ban'); // Đổi 'unrestrict' thành 'ban'
+              setAction('unrestrict'); // Đổi 'delete' thành 'unrestrict'
               setOpen(true);
               setRowId(record.userId);
             }}
           >
-            <StopOutlined /> {/* Thay thế CloseCircleOutlined bằng StopOutlined */}
+            <CloseCircleOutlined /> {/* Thay thế DeleteOutlined bằng CloseCircleOutlined */}
           </div>
         </Space>
       ),
