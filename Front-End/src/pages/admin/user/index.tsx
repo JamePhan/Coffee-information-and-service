@@ -1,6 +1,6 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { StopOutlined, ReloadOutlined } from '@ant-design/icons'; // Sử dụng StopOutlined thay cho CloseCircleOutlined
-import { Button, Col, Row, Space, Table } from 'antd';
+import { Button, Col, Input, Row, Space, Table } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -15,6 +15,7 @@ const UserManagement = ({ }: Props) => {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState<string>('');
   const [rowId, setRowId] = useState<number>();
+  const [searchText, setSearchText] = useState('');
 
   const { data: dataUser, refetch } = useQuery(['listUser'], () => userService.getAllUser());
   const columns: ColumnType<IInforUser>[] = [
@@ -62,7 +63,6 @@ const UserManagement = ({ }: Props) => {
       dataIndex: 'email',
       key: 'email',
     },
-
     {
       title: 'Hành động',
       key: 'action',
@@ -83,16 +83,26 @@ const UserManagement = ({ }: Props) => {
     },
   ];
 
+  const filteredData = dataUser?.data?.filter((user) =>
+    user.coffeeShopName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <>
       {dataUser && (
         <>
           <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
-              <h1 className='font-bold text-2xl  text-black'>Quản lý người dùng</h1>
+              <h1 className='font-bold text-2xl text-black'>Quản lý người dùng</h1>
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-end items-end gap-3'>
+                <Input
+                  placeholder="Tìm kiếm theo tên người dùng"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  style={{ width: '400px' }}
+                />
                 <Button
                   onClick={() => {
                     refetch();
@@ -104,7 +114,7 @@ const UserManagement = ({ }: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataUser.data} columns={columns} />
+          <Table dataSource={filteredData} columns={columns} />
           {action === 'create' && !rowId ? (
             <FormUser refetch={refetch} open={open} setOpen={setOpen} />
           ) : (
