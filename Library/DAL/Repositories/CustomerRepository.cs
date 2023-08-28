@@ -27,14 +27,17 @@ namespace Library.DAL
         {
             List<Customer> customers;
 
-            customers = _context.Customers.ToList();
+            customers = _context.Customers.Include(cust => cust.Account).Where(cust => cust.Account.IsBanned == false).ToList();
 
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 
         public List<CustomerInfo> GetCustomers(string name)
         {
-            List<Customer> customers = _context.Customers.Where(customer => customer.Name.ToLower().Contains(name.ToLower())).ToList();
+            List<Customer> customers = _context.Customers
+                .Include(cust => cust.Account)
+                .Where(cust => cust.Account.IsBanned == false)
+                .Where(customer => customer.Name.ToLower().Contains(name.ToLower())).ToList();
             return _mapper.Map<List<Customer>, List<CustomerInfo>>(customers);
         }
 
