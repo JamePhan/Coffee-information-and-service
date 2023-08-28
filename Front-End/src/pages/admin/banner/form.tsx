@@ -13,10 +13,12 @@ interface Props {
   setOpen: any;
   refetch: any;
 }
+
 const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm();
   const { user } = useAppSelector(state => state.appSlice);
   const isEditIdValidNumber = typeof editId === 'number';
+
   const createMutation = useMutation({
     mutationFn: (body: IBanner) => bannerService.newBanner(body),
     onSuccess(data, _variables, _context) {
@@ -29,6 +31,7 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
       message.error('Tạo không thành công');
     },
   });
+
   const updateMutation = useMutation({
     mutationFn: (body: IBanner) => bannerService.updateBanner(body),
     onSuccess(data, _variables, _context) {
@@ -41,6 +44,7 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
       message.error('Cập nhật không thành công');
     },
   });
+
   function handleCreate(value: any) {
     if (editId) {
       const formEdit = {
@@ -57,16 +61,26 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
       createMutation.mutate(formCreate);
     }
   }
+
   const { data } = useQuery(['Banner'], () => bannerService.getBannerById(editId as number), {
     enabled: isEditIdValidNumber,
   });
+
   useEffect(() => {
     if (editId && data) {
       form.setFieldsValue(data.data);
     }
   }, [data]);
+
   return (
-    <Modal title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'} centered open={open} width={1000} footer={false}>
+    <Modal
+      title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'}
+      centered
+      visible={open}
+      width={1000}
+      footer={null} // Bỏ footer
+      onCancel={() => setOpen(false)}
+    >
       <Form
         form={form}
         name='basic'
@@ -82,9 +96,7 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
         <Row justify={'center'} align={'middle'} gutter={16}>
           <Col>
             <Form.Item style={{ textAlign: 'center' }}>
-              <Button onClick={() => setOpen(false)} htmlType='button'>
-                Huỷ bỏ
-              </Button>
+              <Button type='default' onClick={() => setOpen(false)}>Huỷ bỏ</Button>
             </Form.Item>
           </Col>
           <Col>

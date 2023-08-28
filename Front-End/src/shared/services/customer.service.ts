@@ -13,6 +13,7 @@ class CustomerService {
     searchCustomer(search: string): Promise<AxiosResponse<ICustomer>> {
         return httpsNoToken.get(`/Customer/Search/${search}`)
     }
+
 }
 
 export const customerService = new CustomerService()

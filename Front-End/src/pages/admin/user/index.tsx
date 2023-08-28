@@ -1,23 +1,34 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
-import { StopOutlined, ReloadOutlined } from '@ant-design/icons'; // Sử dụng StopOutlined thay cho CloseCircleOutlined
-import { Button, Col, Input, Row, Space, Table } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
+import { WarningOutlined } from '@ant-design/icons';
+import { Button, Col, Input, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import FormUser from './form';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
-import { IInforUser } from 'src/shared/types/user.type';
+import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
+import { httpsNoToken } from 'src/shared/config/http.config';
+import { useAppSelector } from '@/hooks/useRedux';
 
 type Props = {};
 
 const UserManagement = ({ }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAction] = useState<string>('');
-  const [rowId, setRowId] = useState<number>();
   const [searchText, setSearchText] = useState('');
-
+  const { user } = useAppSelector(state => state.appSlice);
   const { data: dataUser, refetch } = useQuery(['listUser'], () => userService.getAllUser());
+
+  const banUserMutation = useMutation({
+    mutationFn: (body: IUserbanned) => userService.banUser(body),
+    onSuccess(data, _variables, _context) {
+      message.success('Ban người dùng thành công!');
+      window.location.reload();
+
+    },
+    onError(error, variables, context) {
+      message.error('Đã xảy ra lỗi khi gửi yêu cầu');
+    },
+  });
   const columns: ColumnType<IInforUser>[] = [
     {
       title: '#',
@@ -68,16 +79,20 @@ const UserManagement = ({ }: Props) => {
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <div
-            className='cursor-pointer'
+          <Button
             onClick={() => {
-              setAction('ban'); // Đổi 'unrestrict' thành 'ban'
-              setOpen(true);
-              setRowId(record.userId);
+              const body = {
+                role: 'user',
+                profileId: Number(user?.profileId),
+              }
+              banUserMutation.mutate(body);
             }}
+            icon={<WarningOutlined className='text-xs' />}
+            type="primary"
+            danger // Thêm thuộc tính danger để thay đổi màu nút thành đỏ
           >
-            <StopOutlined /> {/* Thay thế CloseCircleOutlined bằng StopOutlined */}
-          </div>
+            Banned
+          </Button>
         </Space>
       ),
     },
@@ -115,11 +130,6 @@ const UserManagement = ({ }: Props) => {
             </Col>
           </Row>
           <Table dataSource={filteredData} columns={columns} />
-          {action === 'create' && !rowId ? (
-            <FormUser refetch={refetch} open={open} setOpen={setOpen} />
-          ) : (
-            <FormUser refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
-          )}
         </>
       )}
     </>

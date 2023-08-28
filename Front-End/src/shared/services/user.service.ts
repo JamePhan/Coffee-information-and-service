@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { httpsNoToken } from '../config/http.config';
-import { IInforUser } from '../types/user.type';
+import { IInforUser, IUserbanned } from '../types/user.type';
 
 
 class UserService {
@@ -16,6 +16,16 @@ class UserService {
     searchUser(search: string): Promise<AxiosResponse<IInforUser>> {
         return httpsNoToken.get(`/User/Search/${search}`)
     }
+    banUser(body: IUserbanned): Promise<AxiosResponse<void>> {
+        return httpsNoToken.put(`/Account/UpdateBan`, body);
+    }
+
+
+    getBannedUsers(): Promise<AxiosResponse<IInforUser[]>> {
+        return httpsNoToken.get('/User/Banned');
+    }
+
+
 }
 
 export const userService = new UserService()

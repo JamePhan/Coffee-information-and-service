@@ -1,10 +1,10 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
-import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons'; // Sử dụng CloseCircleOutlined thay cho DeleteOutlined
-import { Button, Col, Row, Space, Table } from 'antd';
+import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import FormUser from './form';
+
 import { userService } from 'src/shared/services/user.service';
 import { IInforUser } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
@@ -16,7 +16,8 @@ const UserManagement = ({ }: Props) => {
   const [action, setAction] = useState<string>('');
   const [rowId, setRowId] = useState<number>();
 
-  const { data: dataUser, refetch } = useQuery(['listUser'], () => userService.getAllUser());
+  const { data: dataUser, refetch } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
+
   const columns: ColumnType<IInforUser>[] = [
     {
       title: '#',
@@ -38,8 +39,8 @@ const UserManagement = ({ }: Props) => {
       render: (_, record) => (
         <div className='w-[50px] rounded-lg'>
           <PreImage
-            width={1980}
-            height={50}
+            width={50} // Thay đổi chiều rộng thành 50px
+            height={50} // Thay đổi chiều cao thành 50px
             alt={`Image ${record.userId}`}
             src={record.avatar}
             className='w-full object-cover rounded-full'
@@ -62,7 +63,6 @@ const UserManagement = ({ }: Props) => {
       dataIndex: 'email',
       key: 'email',
     },
-
     {
       title: 'Hành động',
       key: 'action',
@@ -71,12 +71,29 @@ const UserManagement = ({ }: Props) => {
           <div
             className='cursor-pointer'
             onClick={() => {
-              setAction('unrestrict'); // Đổi 'delete' thành 'unrestrict'
+              setAction('unrestrict');
               setOpen(true);
               setRowId(record.userId);
             }}
           >
-            <CloseCircleOutlined /> {/* Thay thế DeleteOutlined bằng CloseCircleOutlined */}
+            <Button
+              type='danger'
+              icon={<CloseCircleOutlined />}
+              onClick={() => {
+                userService
+                  .banUser(record.userId)
+                  .then(() => {
+                    message.success('Unbanned successfully');
+                    refetch();
+                  })
+                  .catch((error) => {
+                    console.error('Error unbanning account', error);
+                    message.error('Failed to unban account');
+                  });
+              }}
+            >
+              Unban Account
+            </Button>
           </div>
         </Space>
       ),
@@ -85,11 +102,11 @@ const UserManagement = ({ }: Props) => {
 
   return (
     <>
-      {dataUser && (
+      {dataUser && dataUser.data && (
         <>
           <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
-              <h1 className='font-bold text-2xl  text-black'>Quản lý người dùng</h1>
+              <h1 className='font-bold text-2xl  text-black'>Quản lý người dùng bị Ban</h1>
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-end items-end gap-3'>
@@ -105,11 +122,6 @@ const UserManagement = ({ }: Props) => {
             </Col>
           </Row>
           <Table dataSource={dataUser.data} columns={columns} />
-          {action === 'create' && !rowId ? (
-            <FormUser refetch={refetch} open={open} setOpen={setOpen} />
-          ) : (
-            <FormUser refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
-          )}
         </>
       )}
     </>

@@ -21,8 +21,6 @@ interface Props {
 
 const Schedule = ({ userType, scheduleData, }: Props) => {
   const queryClient = useQueryClient();
-
-
   const [deletedEventId, setDeletedEventId] = useState<number | null>(null);
   const [shouldReload, setShouldReload] = useState(false);
 
@@ -40,7 +38,9 @@ const Schedule = ({ userType, scheduleData, }: Props) => {
       try {
         await scheduleService.deleteSchedule(scheduleId);
         message.success('Hủy Đăng Ký Event thành công');
-        setDeletedEventId(null);
+        window.location.reload();
+
+        // setDeletedEventId(null);
         setShouldReload(true); // Đặt biến shouldReload thành true để làm mới trang
       } catch (error) {
         message.error('Xoá không thành công');

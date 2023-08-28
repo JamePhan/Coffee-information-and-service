@@ -17,6 +17,11 @@ export interface IUserRegister {
   password: string;
   avatar: string,
 }
+
+export interface IUserbanned {
+  profileid: number;
+  role: string;
+}
 export interface IInforUserStored {
   id: string;
   profileId: string;

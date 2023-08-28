@@ -12,39 +12,65 @@ import { HambugerMenu } from './HambugerMenu';
 import { Button } from '@/components/common/ui/button';
 import { getCookie } from 'cookies-next';
 import { APP_SAVE_KEY } from '@/utils/constants';
-import { Avatar, Dropdown, Modal } from 'antd';
+import { Avatar, Dropdown, Modal, message } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { logout } from 'src/shared/stores/appSlice';
 import { useCookies } from 'react-cookie';
 import IconUser from '@/components/icon/IconUser';
-
+import { requestService } from 'src/shared/services/request.service'; // Đường dẫn đến request.service.ts
+import customer from 'src/pages/admin/customer';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/shared/stores';
+import { useMutation } from '@tanstack/react-query';
 
 interface Props {
   isLogin: any
 }
 
 const Header = ({ isLogin }: Props) => {
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.appSlice);
   const [_, __, removeCookie] = useCookies([APP_SAVE_KEY.TOKEN_KEY]);
   const [menuData, setMenuData] = useState<IMenu[]>();
   const [isLogout, setIsLogout] = useState(false);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleRequestButtonClick = (customerId: number) => {
+
+    showModal();
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+
+
+  const requestMutation = useMutation({
+    mutationFn: (id: number) => requestService.sendRequest(id),
+    onSuccess(data, _variables, _context) {
+      message.success('Yêu cầu đã được gửi thành công');
+
+    },
+    onError(error, variables, context) {
+      message.error('Đã xảy ra lỗi khi gửi yêu cầu');
+    },
+  });
+
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+
+    requestMutation.mutate(user && Number(user.profileId));
+
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+
   const onActionClick = () => {
     Modal.confirm({
       title: 'Chắc chắn đăng xuất chứ?',
@@ -165,6 +191,9 @@ const Header = ({ isLogin }: Props) => {
           </div>
 
           <ThemeModeToggle />
+          <Modal title="Bạn muốn trở thành Coffee Shop?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ className: 'bg-red-500', style: { borderColor: 'red' } }}>
+            <p>Vui lòng xác nhận gửi thông tin cá nhân tới Admin</p>
+          </Modal>
 
           {isLogin ? (
             <Dropdown
@@ -181,13 +210,13 @@ const Header = ({ isLogin }: Props) => {
                     key: '2',
                     icon: <LockOutlined />,
                     label: (
-                      <><Modal title="Bạn muốn trở thành Coffee Shop?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ className: 'bg-red-500', style: { borderColor: 'red' } }}>
-                        <p>Vui lòng xác nhận gửi thông tin cá nhân tới Admin</p>
-
-                      </Modal>
+                      <>
                         <span
-                          className="hover:bg-gray-200 px-2 py-1"
-                          onClick={showModal}
+                          className="hover-bg-gray-200 px-2 py-1"
+                          onClick={() => {
+                            // handleRequestButtonClick(123); // Gọi hàm này trước
+                            showModal(); // Sau đó mới gọi showModal
+                          }}
                         >
                           Request Become Coffee Shop
                         </span>
