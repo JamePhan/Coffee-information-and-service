@@ -41,6 +41,9 @@ namespace Library.DAL.Repositories
         {
             Customer? checkExist = _context.Customers.FirstOrDefault(cust => cust.CustomerId.Equals(id)) ?? throw new Exception("Customer doesn't exist!");
 
+            Waiting? duplicate = _context.Waitings.FirstOrDefault(wait => wait.CustomerId.Equals(id));
+            if (duplicate != null) throw new Exception("Already requested!");
+
             try
             {
                 Waiting toAdd = _mapper.Map<Customer, Waiting>(checkExist);
