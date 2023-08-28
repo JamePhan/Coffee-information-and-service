@@ -25,8 +25,11 @@ namespace Library.DAL
             events = _context.Events
                 .Include(locale => locale.Location)
                 .Include(user => user.User)
+                .ThenInclude(user => user.Account)
                 .Include(group => group.GroupImage)
-                .ThenInclude(image => image.Image).ToList();
+                .ThenInclude(image => image.Image)
+                .Where(ev => ev.User.Account.IsBanned == false)
+                .ToList();
 
             return _mapper.Map<List<Event>, List<EventInfo>>(events);
         }
@@ -38,8 +41,10 @@ namespace Library.DAL
             events = _context.Events
                 .Include(locale => locale.Location)
                 .Include(user => user.User)
+                .ThenInclude(user => user.Account)
                 .Include(group => group.GroupImage)
                 .ThenInclude(image => image.Image)
+                .Where(ev => ev.User.Account.IsBanned == false)
                 .Where(ev => ev.UserId.Equals(id))
                 .ToList();
 
