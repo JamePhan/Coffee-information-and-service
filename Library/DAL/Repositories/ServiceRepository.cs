@@ -47,6 +47,8 @@ namespace Library.DAL
             services = _context.Services
                 .Include(group => group.GroupImage).ThenInclude(image => image.Image)
                 .Include(serv => serv.User)
+                .ThenInclude(user => user.Account)
+                .Where(serv => serv.User.Account.IsBanned == false)
                 .ToList();
 
             return _mapper.Map<List<Service>, List<ServiceInfo>>(services);
@@ -59,6 +61,8 @@ namespace Library.DAL
             services = _context.Services
                 .Include(group => group.GroupImage).ThenInclude(image => image.Image)
                 .Include(serv => serv.User)
+                .ThenInclude(user => user.Account)
+                .Where(serv => serv.User.Account.IsBanned == false)
                 .Where(serv => serv.UserId.Equals(id))
                 .ToList();
 
