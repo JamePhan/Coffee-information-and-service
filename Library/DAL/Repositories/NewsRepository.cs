@@ -20,7 +20,13 @@ namespace Library.DAL
 
         public List<NewsInfo> GetNews()
         {
-            List<News> news = _context.News.Include(group => group.GroupImage).ThenInclude(image => image.Image).Include(user => user.User).ToList();
+            List<News> news = _context.News
+                .Include(group => group.GroupImage)
+                .ThenInclude(image => image.Image)
+                .Include(user => user.User)
+                .ThenInclude(user => user.Account)
+                .Where(news => news.User.Account.IsBanned == false)
+                .ToList();
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
         }
 
@@ -30,6 +36,8 @@ namespace Library.DAL
                 .Include(group => group.GroupImage)
                 .ThenInclude(image => image.Image)
                 .Include(user => user.User)
+                .ThenInclude(user => user.Account)
+                .Where(news => news.User.Account.IsBanned == false)
                 .Where(news => news.UserId.Equals(id))
                 .ToList();
             return _mapper.Map<List<News>, List<NewsInfo>>(news);
