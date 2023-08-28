@@ -42,14 +42,17 @@ namespace Library.DAL
         {
             List<User> users;
 
-            users = _context.Users.ToList();
+            users = _context.Users.Include(user => user.Account).Where(user => user.Account.IsBanned == false).ToList();
 
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
         public List<UserInfo> GetUsers(string name)
         {
-            List<User> users = _context.Users.Where(u => u.CoffeeShopName.ToLower().Contains(name.ToLower())).ToList();
+            List<User> users = _context.Users
+                .Include(user => user.Account)
+                .Where(user => user.Account.IsBanned == false)
+                .Where(u => u.CoffeeShopName.ToLower().Contains(name.ToLower())).ToList();
             return _mapper.Map<List<User>, List<UserInfo>>(users);
         }
 
