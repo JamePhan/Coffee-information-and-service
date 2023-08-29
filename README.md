@@ -21,5 +21,8 @@
 2. [Install Visual Studio Code](https://code.visualstudio.com/download)
 3. Install NPM : Open terminal/command prompt, type in `npm install -g npm` then press "ENTER".
 4. Open terminal/command prompt, type in `npm i` then press "ENTER".
-5. Open terminal from "Front-end" folder, type in `npm run dev` to run the application.
-6. Open browser and access from "localhost:3000".
+5. In Folder Frond-End Create New File ".env" and Paste this content to file and save : 
+NEXT_PUBLIC_APP_NAME= coffee_information_service
+NEXT_PUBLIC_API= http://localhost:5000/api
+6. Open terminal from "Front-end" folder, type in `npm run dev` to run the application.
+7. Open browser and access from "localhost:3000".
