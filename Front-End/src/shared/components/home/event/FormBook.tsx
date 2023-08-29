@@ -7,12 +7,12 @@ import { useState } from 'react';
 import { scheduleService } from 'src/shared/services/schedule.service';
 import { IEvent } from 'src/shared/types/event.type';
 import { IScheduleAdd } from 'src/shared/types/schedule.type';
-interface Props{
-    open: any;
-    setOpen: any;
-    data: IEvent
+interface Props {
+  open: any;
+  setOpen: any;
+  data: IEvent
 }
-const FormBook = ({data, open, setOpen}: Props) => {
+const FormBook = ({ data, open, setOpen }: Props) => {
   const [form] = useForm();
   const router = useRouter()
   const { user } = useAppSelector(state => state.appSlice);
@@ -22,6 +22,7 @@ const FormBook = ({data, open, setOpen}: Props) => {
       if (!data) return;
       message.success('Đặt thành công');
       setOpen(false);
+      window.location.reload();
       // router.reload()
     },
     onError(error, variables, context) {
@@ -30,13 +31,13 @@ const FormBook = ({data, open, setOpen}: Props) => {
   });
   function handleCreate(value: any) {
     const formBook = {
-        event: {
-            eventId: String(data.eventId)
-        },
-        customer: {
-            customerId: user?.profileId || ''
-        },
-        ticketCount: value.ticketCount
+      event: {
+        eventId: String(data.eventId)
+      },
+      customer: {
+        customerId: user?.profileId || ''
+      },
+      ticketCount: value.ticketCount
     };
     createMutation.mutate(formBook);
   }
