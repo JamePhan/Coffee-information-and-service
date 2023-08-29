@@ -4,6 +4,9 @@ import { IFollowing, IFollowingAdd } from '../types/following.type';
 
 
 class FollowingService {
+    unfollow(body: IFollowingAdd) {
+        throw new Error('Method not implemented.');
+    }
     getCustomerList(customerId: number): Promise<AxiosResponse<IFollowing[]>> {
         return httpsNoToken.get(`/Follow/CustomerList/${customerId}`)
     }

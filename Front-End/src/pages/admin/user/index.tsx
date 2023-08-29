@@ -4,11 +4,10 @@ import { WarningOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'; // Import useQueryClient
 import { userService } from 'src/shared/services/user.service';
 import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
-import { httpsNoToken } from 'src/shared/config/http.config';
 import { useAppSelector } from '@/hooks/useRedux';
 
 type Props = {};
@@ -16,19 +15,20 @@ type Props = {};
 const UserManagement = ({ }: Props) => {
   const [searchText, setSearchText] = useState('');
   const { user } = useAppSelector(state => state.appSlice);
+  const queryClient = useQueryClient(); // Initialize queryClient
   const { data: dataUser, refetch } = useQuery(['listUser'], () => userService.getAllUser());
 
   const banUserMutation = useMutation({
     mutationFn: (body: IUserbanned) => userService.banUser(body),
-    onSuccess(data, _variables, _context) {
+    onSuccess(_data, variables, _context) {
       message.success('Ban người dùng thành công!');
-      window.location.reload();
-
+      queryClient.invalidateQueries('listUser'); // Sử dụng queryClient để làm mới danh sách người dùng
     },
     onError(error, variables, context) {
       message.error('Đã xảy ra lỗi khi gửi yêu cầu');
     },
   });
+
   const columns: ColumnType<IInforUser>[] = [
     {
       title: '#',
@@ -84,7 +84,7 @@ const UserManagement = ({ }: Props) => {
               const body = {
                 role: 'user',
                 profileId: Number(user?.profileId),
-              }
+              };
               banUserMutation.mutate(body);
             }}
             icon={<WarningOutlined className='text-xs' />}
@@ -97,10 +97,6 @@ const UserManagement = ({ }: Props) => {
       ),
     },
   ];
-
-  const filteredData = dataUser?.data?.filter((user) =>
-    user.coffeeShopName.toLowerCase().includes(searchText.toLowerCase())
-  );
 
   return (
     <>
@@ -129,7 +125,7 @@ const UserManagement = ({ }: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={filteredData} columns={columns} />
+          <Table dataSource={dataUser.data} columns={columns} />
         </>
       )}
     </>

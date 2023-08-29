@@ -2,6 +2,7 @@ export interface IAuthenticated {
   token: string
 }
 export interface IInforUser {
+  isFollowing: any;
   userId: number;
   address: string;
   email: string;

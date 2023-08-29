@@ -1,17 +1,13 @@
 import { theme } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import LayoutWebsite from 'src/shared/components/layout/LayoutWebsite';
 import { userService } from 'src/shared/services/user.service'; 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { followingService } from 'src/shared/services/following.service'; 
-import { IFollowing, IFollowingAdd } from 'src/shared/types/following.type'; 
 import { useAppSelector } from '@/hooks/useRedux';
 import { APP_SAVE_KEY } from '@/utils/constants';
 import { getCookie } from 'cookies-next';
-
 import dynamic from 'next/dynamic';
-import Brands from '@/components/home/brands';
+import BrandList from '@/components/home/brandList';
 
 const ScrollRevealWrapper = dynamic(() => import('src/shared/components/common/ScrollRevealWrapper'), { ssr: false });
 export function ShopListPage() {
@@ -38,13 +34,13 @@ export function ShopListPage() {
       return (
         <>
           <Head>
-            <title>Yêu thích Coffee Shop</title>
+            <title>Danh Sách Coffee Shop</title>
             <meta name='description' content='Sự kiện Coffee Shop' />
             <meta name='keywords' content='Coffee Shop' />
           </Head>
           {userData && (
             <ScrollRevealWrapper>
-              <Brands brandsData={userData.data}></Brands>
+              <BrandList brandsData={userData.data}></BrandList>
             </ScrollRevealWrapper>
           )}
         </>

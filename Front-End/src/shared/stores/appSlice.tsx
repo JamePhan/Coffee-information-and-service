@@ -6,6 +6,7 @@ import { IInforUserStored } from '../types/user.type';
 
 
 type APPSTATE = {
+    followingData: any;
     user: IInforUserStored | undefined,
     isLogined: boolean,
 }

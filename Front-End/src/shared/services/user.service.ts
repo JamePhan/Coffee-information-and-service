@@ -4,8 +4,10 @@ import { IInforUser, IUserbanned } from '../types/user.type';
 
 
 class UserService {
-    getAllUser(): Promise<AxiosResponse<IInforUser[]>> {
+    getAllUser(): Promise<AxiosResponse<IInforUser[]>> 
+    {
         return httpsNoToken.get('/User/List')
+        
     }
     getUserById(userId: number): Promise<AxiosResponse<IInforUser>> {
         return httpsNoToken.get(`/User/Detail/${userId}`)
@@ -22,7 +24,10 @@ class UserService {
 
 
     getBannedUsers(): Promise<AxiosResponse<IInforUser[]>> {
-        return httpsNoToken.get('/User/Banned');
+        return httpsNoToken.get('/User/Banned/');
+    }
+    unbanUser(body: IUserbanned): Promise<AxiosResponse<void>> {
+        return httpsNoToken.put(`/Account/UpdateBan`, body);
     }
 
 

@@ -1,22 +1,30 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, Col, Row, Space, Table, message } from 'antd';
+import { Button, Col, Input, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
 import { IInforUser } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 
 type Props = {};
 
-const UserManagement = ({ }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAction] = useState<string>('');
-  const [rowId, setRowId] = useState<number>();
-
+const RestrictUser = ({}: Props) => {
+  const [searchText, setSearchText] = useState('');
   const { data: dataUser, refetch } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
+
+  const unbanUserMutation = useMutation({
+    mutationFn: (userId: number) => userService.unbanUser(userId),
+    onSuccess() {
+      message.success('Unbanned successfully');
+      refetch();
+    },
+    onError(error) {
+      console.error('Error unbanning account', error);
+      message.error('Failed to unban account');
+    },
+  });
 
   const columns: ColumnType<IInforUser>[] = [
     {
@@ -24,7 +32,7 @@ const UserManagement = ({ }: Props) => {
       key: 'id',
       render: (_, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{index + 1}</p>
         </div>
       ),
     },
@@ -39,8 +47,8 @@ const UserManagement = ({ }: Props) => {
       render: (_, record) => (
         <div className='w-[50px] rounded-lg'>
           <PreImage
-            width={50} // Thay đổi chiều rộng thành 50px
-            height={50} // Thay đổi chiều cao thành 50px
+            width={50}
+            height={50}
             alt={`Image ${record.userId}`}
             src={record.avatar}
             className='w-full object-cover rounded-full'
@@ -68,48 +76,40 @@ const UserManagement = ({ }: Props) => {
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <div
-            className='cursor-pointer'
+          <Button
+            type='danger'
+            icon={<CloseCircleOutlined />}
             onClick={() => {
-              setAction('unrestrict');
-              setOpen(true);
-              setRowId(record.userId);
+              unbanUserMutation.mutate(record.userId);
             }}
           >
-            <Button
-              type='danger'
-              icon={<CloseCircleOutlined />}
-              onClick={() => {
-                userService
-                  .banUser(record.userId)
-                  .then(() => {
-                    message.success('Unbanned successfully');
-                    refetch();
-                  })
-                  .catch((error) => {
-                    console.error('Error unbanning account', error);
-                    message.error('Failed to unban account');
-                  });
-              }}
-            >
-              Unban Account
-            </Button>
-          </div>
+            Unban
+          </Button>
         </Space>
       ),
     },
   ];
 
+  const filteredData = dataUser?.data?.filter((user) =>
+    user.coffeeShopName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <>
-      {dataUser && dataUser.data && (
+      {dataUser && (
         <>
           <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
-              <h1 className='font-bold text-2xl  text-black'>Quản lý người dùng bị Ban</h1>
+              <h1 className='font-bold text-2xl text-black'>Quản lý người dùng bị Ban</h1>
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-end items-end gap-3'>
+                <Input
+                  placeholder="Tìm kiếm theo tên người dùng"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  style={{ width: '400px' }}
+                />
                 <Button
                   onClick={() => {
                     refetch();
@@ -121,13 +121,13 @@ const UserManagement = ({ }: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataUser.data} columns={columns} />
+          <Table dataSource={filteredData} columns={columns} />
         </>
       )}
     </>
   );
 };
 
-UserManagement.getLayout = (children: React.ReactNode) => <Dashboard>{children}</Dashboard>;
+RestrictUser.getLayout = (children: React.ReactNode) => <Dashboard>{children}</Dashboard>;
 
-export default UserManagement;
+export default RestrictUser;

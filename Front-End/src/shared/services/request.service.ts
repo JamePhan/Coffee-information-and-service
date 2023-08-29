@@ -9,6 +9,14 @@ class RequestService {
     sendRequest(id: number): Promise<AxiosResponse<any>> {
         return httpsNoToken.post(`Waiting/Request?customerId=${id}`)
     }
+    acceptRequest(customerId: number): Promise<AxiosResponse<any>> {
+        return httpsNoToken.post(`Waiting/Accept?customerId=${customerId}`);
+      }
+    
+      // Hàm từ chối yêu cầu
+      declineRequest(customerId: number): Promise<AxiosResponse<any>> {
+        return httpsNoToken.post(`Waiting/Deny?customerId=${customerId}`);
+      }
 }
 
 export const requestService = new RequestService()
