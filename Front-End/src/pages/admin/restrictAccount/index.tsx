@@ -5,7 +5,7 @@ import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
-import { IInforUser } from 'src/shared/types/user.type';
+import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 
 type Props = {};
@@ -15,7 +15,7 @@ const RestrictUser = ({}: Props) => {
   const { data: dataUser, refetch } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
 
   const unbanUserMutation = useMutation({
-    mutationFn: (userId: number) => userService.unbanUser(userId),
+    mutationFn: (body: IUserbanned) => userService.unbanUser(body),
     onSuccess() {
       message.success('Unbanned successfully');
       refetch();
@@ -80,7 +80,11 @@ const RestrictUser = ({}: Props) => {
             type='danger'
             icon={<CloseCircleOutlined />}
             onClick={() => {
-              unbanUserMutation.mutate(record.userId);
+              const body = {
+                role: 'user',
+                profileId: Number(record?.userId),
+              };
+              unbanUserMutation.mutate(body);
             }}
           >
             Unban

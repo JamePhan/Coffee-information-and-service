@@ -9,6 +9,7 @@ import { userService } from 'src/shared/services/user.service';
 import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
+import { log } from 'console';
 
 type Props = {};
 
@@ -83,7 +84,7 @@ const UserManagement = ({ }: Props) => {
             onClick={() => {
               const body = {
                 role: 'user',
-                profileId: Number(user?.profileId),
+                profileId: Number(record?.userId),
               };
               banUserMutation.mutate(body);
             }}

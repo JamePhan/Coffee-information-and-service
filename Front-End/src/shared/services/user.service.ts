@@ -4,6 +4,9 @@ import { IInforUser, IUserbanned } from '../types/user.type';
 
 
 class UserService {
+    changeUserRole(rowId: number | undefined, arg1: string) {
+      throw new Error('Method not implemented.');
+    }
     getAllUser(): Promise<AxiosResponse<IInforUser[]>> 
     {
         return httpsNoToken.get('/User/List')
