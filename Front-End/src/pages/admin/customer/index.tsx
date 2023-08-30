@@ -3,7 +3,7 @@ import { StopOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Space, Table } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import FormUser from './form';
+
 import { ICustomer } from 'src/shared/types/customer.type';
 import { PreImage } from '@/components/common/PreImage';
 import { customerService } from 'src/shared/services/customer.service';
@@ -36,21 +36,7 @@ const CustomerManagement = ({ }: Props) => {
       dataIndex: 'name',
       key: 'name',
     },
-    {
-      title: 'Ảnh đại diện',
-      dataIndex: 'avatar',
-      render: (_, record) => (
-        <div className='w-[50px] rounded-lg'>
-          <PreImage
-            width={1980}
-            height={50}
-            alt={`Image ${record.customerId}`}
-            className='w-full object-cover rounded-full'
-            src={''}
-          />
-        </div>
-      ),
-    },
+    
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',
@@ -119,11 +105,6 @@ const CustomerManagement = ({ }: Props) => {
 
           <Table dataSource={filteredData} columns={columns} />
 
-          {action === 'create' && !rowId ? (
-            <FormUser refetch={refetch} open={open} setOpen={setOpen} />
-          ) : (
-            <FormUser refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
-          )}
         </>
       )}
     </>

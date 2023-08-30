@@ -77,7 +77,7 @@ const RestrictUser = ({}: Props) => {
       render: (_, record) => (
         <Space size='middle'>
           <Button
-            type='danger'
+       
             icon={<CloseCircleOutlined />}
             onClick={() => {
               const body = {

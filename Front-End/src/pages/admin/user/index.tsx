@@ -1,4 +1,5 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
+
 import { ReloadOutlined } from '@ant-design/icons';
 import { WarningOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Space, Table, message } from 'antd';
@@ -23,7 +24,7 @@ const UserManagement = ({ }: Props) => {
     mutationFn: (body: IUserbanned) => userService.banUser(body),
     onSuccess(_data, variables, _context) {
       message.success('Ban người dùng thành công!');
-      queryClient.invalidateQueries('listUser'); // Sử dụng queryClient để làm mới danh sách người dùng
+      queryClient.invalidateQueries(['listUser']); // Sử dụng queryClient để làm mới danh sách người dùng
     },
     onError(error, variables, context) {
       message.error('Đã xảy ra lỗi khi gửi yêu cầu');
