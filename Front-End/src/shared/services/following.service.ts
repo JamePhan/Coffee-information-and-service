@@ -4,8 +4,15 @@ import { IFollowing, IFollowingAdd } from '../types/following.type';
 
 
 class FollowingService {
-    unfollow(body: IFollowingAdd) {
-        throw new Error('Method not implemented.');
+    async unfollow(followingData: IFollowingAdd): Promise<AxiosResponse<void>> {
+        try {
+            const response = await httpsNoToken.delete('/api/Follow/Unfollow', {
+                data: followingData, // Send followingData as the request body
+            });
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
     getCustomerList(customerId: number): Promise<AxiosResponse<IFollowing[]>> {
         return httpsNoToken.get(`/Follow/CustomerList/${customerId}`)
@@ -15,6 +22,14 @@ class FollowingService {
     }
     newFollowing(body: IFollowingAdd) {
         return httpsNoToken.post(`/Follow/Follow`, body)
+    }
+    async getCustomerFollowingList(customerId: number): Promise<AxiosResponse<IFollowing[]>> {
+        try {
+            const response = await httpsNoToken.get(`/Follow/CustomerList/${customerId}`);
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

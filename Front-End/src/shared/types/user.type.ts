@@ -20,10 +20,12 @@ export interface IUserRegister {
 }
 
 export interface IUserbanned {
-  profileid: number;
+  profileId: number;
   role: string;
 }
 export interface IInforUserStored {
+  customerId: number; // Thêm thuộc tính customerId
+  userId: number;
   id: string;
   profileId: string;
   role: string;

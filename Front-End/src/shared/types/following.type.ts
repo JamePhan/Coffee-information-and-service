@@ -1,3 +1,6 @@
+import { ICustomer } from "./customer.type";
+import { IInforUser } from "./user.type";
+
 export interface IFollowing {
     followingId: number;
     customer: Customer;
@@ -35,3 +38,22 @@ interface UserAdd {
 interface CustomerAdd {
     customerId: string;
 }
+
+export interface IFollowingResponse {
+  followingId: number;
+  customer: ICustomer;
+  user: IInforUser;
+}
+
+export interface IFollowingAddRequest {
+  followingId: string;
+  customer: ICustomerAdd;
+  user: IUserAdd;
+}
+export interface IUserAdd {
+    userId: string;
+  }
+  
+  export interface ICustomerAdd {
+    customerId: string;
+  }
