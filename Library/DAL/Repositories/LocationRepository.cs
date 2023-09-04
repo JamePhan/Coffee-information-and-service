@@ -30,6 +30,13 @@ namespace Library.DAL
             return _mapper.Map<List<Location>, List<LocationInfo>>(locations);
         }
 
+        public List<LocationInfo> GetUserLocations(int userId)
+        {
+            List<Location> locations = _context.Locations.Include(locale => locale.User).Where(locale => locale.UserId.Equals(userId)).ToList();
+
+            return _mapper.Map<List<Location>, List<LocationInfo>>(locations);
+        }
+
         public void AddLocation(LocationInfo location)
         {
             Location? checkExist = _context.Locations.FirstOrDefault(local => local.Address.ToLower().Equals(location.Address.ToLower()));

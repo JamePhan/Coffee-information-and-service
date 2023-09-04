@@ -30,6 +30,17 @@ namespace Back.Controllers
             return NotFound();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult List(int id)
+        {
+            List<LocationInfo> locations = _location.GetUserLocations(id);
+            if (locations.Count > 0)
+            {
+                return Ok(locations);
+            }
+            return NotFound();
+        }
+
         [HttpPost]
         public IActionResult Add(LocationInfo location)
         {

@@ -11,6 +11,8 @@ namespace Library.DAL
     {
         List<LocationInfo> GetLocations();
 
+        List<LocationInfo> GetUserLocations(int userId);
+
         void AddLocation(LocationInfo location);
 
         void RemoveLocation(int locationId);
