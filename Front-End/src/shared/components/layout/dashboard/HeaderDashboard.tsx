@@ -1,23 +1,20 @@
 import { LockOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Dropdown, Layout, Modal, theme as antTheme } from 'antd';
-// import { AlignJustifyIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-// import useTrans from '@/hooks/useTrans';
 import { logout } from 'src/shared/stores/appSlice';
 import IconUser from '@/components/icon/IconUser';
 import { APP_SAVE_KEY } from '@/utils/constants';
 import { useCookies } from 'react-cookie';
 
 const { Header } = Layout;
-
 const HeaderDashboard = () => {
   const router = useRouter();
   const token = antTheme.useToken();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.appSlice);
-  // const { changeLanguage, lang, currentcy, trans } = useTrans();
+
   const [cookies, setCookie, removeCookie] = useCookies([APP_SAVE_KEY.TOKEN_KEY]);
 
   const onActionClick = () => {
@@ -33,16 +30,7 @@ const HeaderDashboard = () => {
       },
     });
   };
-  // function RenderFlag() {
-  //   switch (lang) {
-  //     case 'vi':
-  //       return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
-  //     case 'en':
-  //       return <Image src={'/united-kingdom.png'} alt='vn' width={24} height={24} />;
-  //     default:
-  //       return <Image src={'/vietnam.png'} alt='vn' width={24} height={24} />;
-  //   }
-  // }
+
   return (
     <Header className='layout-page-header bg-2' style={{ backgroundColor: token.token.colorBgContainer }}>
       <div className='lg:hidden'>
@@ -91,12 +79,12 @@ const HeaderDashboard = () => {
                   label: <span>Thông Tin Cá Nhân</span>,
                   onClick: () => router.push('/profile'),
                 },
-                {
-                  key: '2',
-                  icon: <LockOutlined />,
-                  label: <span>Đổi Mật Khẩu</span>,
-                  onClick: () => router.push('/change-password'),
-                },
+                // {
+                //   key: '2',
+                //   icon: <LockOutlined />,
+                //   label: <span>Đổi Mật Khẩu</span>,
+                //   onClick: () => router.push('/change-password'),
+                // },
                 {
                   key: '3',
                   icon: <LogoutOutlined />,

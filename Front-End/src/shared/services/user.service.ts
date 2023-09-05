@@ -5,18 +5,20 @@ import { IInforUser, IUserbanned } from '../types/user.type';
 
 class UserService {
     changeUserRole(rowId: number | undefined, arg1: string) {
-      throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
-    getAllUser(): Promise<AxiosResponse<IInforUser[]>> 
-    {
+    getAllUser(): Promise<AxiosResponse<IInforUser[]>> {
         return httpsNoToken.get('/User/List')
-        
+
     }
     getUserById(userId: number): Promise<AxiosResponse<IInforUser>> {
         return httpsNoToken.get(`/User/Detail/${userId}`)
     }
     updateUser(body: IInforUser) {
         return httpsNoToken.put(`/User/Update`, body)
+    }
+    updateUserProfile(userId: number, updatedData: Partial<IInforUser>): Promise<AxiosResponse<void>> {
+        return httpsNoToken.put(`/User/Update/${userId}`, updatedData);
     }
     searchUser(search: string): Promise<AxiosResponse<IInforUser>> {
         return httpsNoToken.get(`/User/Search/${search}`)

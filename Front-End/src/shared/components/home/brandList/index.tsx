@@ -6,7 +6,6 @@ import { userService } from 'src/shared/services/user.service';
 import { IInforUser } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
-import Following from '../following';
 import { IFollowingAdd } from 'src/shared/types/following.type';
 
 interface Props {

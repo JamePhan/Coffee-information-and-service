@@ -12,7 +12,7 @@ import { HambugerMenu } from './HambugerMenu';
 import { Button } from '@/components/common/ui/button';
 import { getCookie } from 'cookies-next';
 import { APP_SAVE_KEY } from '@/utils/constants';
-import { Avatar, Dropdown, Modal, message } from 'antd';
+import { Avatar, Dropdown, MenuProps, Modal, message } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { logout } from 'src/shared/stores/appSlice';
 import { useCookies } from 'react-cookie';
@@ -35,6 +35,8 @@ const Header = ({ isLogin }: Props) => {
   const [isLogout, setIsLogout] = useState(false);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUser, setIsUser] = useState(false)
+  const [menu, setMenu] = useState<MenuProps['items']>();
 
   const handleRequestButtonClick = (customerId: number) => {
 
@@ -45,6 +47,42 @@ const Header = ({ isLogin }: Props) => {
     setIsModalOpen(true);
   };
 
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      icon: <UserOutlined />,
+      label: <span className="hover:bg-gray-200 px-2 py-1">Thông tin cá nhân</span>,
+    },
+    {
+      key: '2',
+      icon: <LockOutlined />,
+      label: (
+        <>
+          <span
+            className="hover-bg-gray-200 px-2 py-1"
+            onClick={() => {
+              showModal();
+            }}
+          >
+            Request Become Coffee Shop
+          </span>
+        </>
+      ),
+    },
+    {
+      key: '3',
+      icon: <LogoutOutlined />,
+      label: <span className="hover:bg-gray-200 px-2 py-1">Đăng Xuất</span>,
+    },
+  ]
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    if (e.key === '1') {
+      router.push('/profile')
+    } else if (e.key === '3') {
+      onActionClick()
+    }
+  };
 
 
   const requestMutation = useMutation({
@@ -86,12 +124,20 @@ const Header = ({ isLogin }: Props) => {
   };
   useEffect(() => {
     setIsLogout(true);
-    const menuCurrent =
-      isLogin && user?.role === 'Customer'
-        ? fakeMenu.slice(0, 7)
-        : user?.role === 'User'
-          ? fakeMenu
-          : fakeMenu.slice(0, 5);
+    let menuCurrent
+    if (isLogin && user?.role === 'Customer') {
+      menuCurrent = fakeMenu.slice(0, 7)
+    } else if (user?.role === 'User') {
+      menuCurrent = fakeMenu
+    } else {
+      menuCurrent = fakeMenu.slice(0, 7);
+    }
+
+    if (user?.role === 'User' || user?.role === 'Admin') {
+      let newItems = items.filter(item => item?.key !== '2')
+      setMenu(newItems)
+    } else setMenu(items)
+      ;
     return setMenuData(menuCurrent);
   }, [isLogin, user]);
 
@@ -199,40 +245,8 @@ const Header = ({ isLogin }: Props) => {
             <Dropdown
               placement='bottomRight'
               menu={{
-                items: [
-                  {
-                    key: '1',
-                    icon: <UserOutlined />,
-                    label: <span className="hover:bg-gray-200 px-2 py-1">Thông tin cá nhân</span>,
-                    onClick: () => router.push('/profile'),
-                  },
-                  {
-                    key: '2',
-                    icon: <LockOutlined />,
-                    label: (
-                      <>
-                        <span
-                          className="hover-bg-gray-200 px-2 py-1"
-                          onClick={() => {
-                            // handleRequestButtonClick(123); // Gọi hàm này trước
-                            showModal(); // Sau đó mới gọi showModal
-                          }}
-                        >
-                          Request Become Coffee Shop
-                        </span>
-
-                      </>
-
-                    ),
-
-                  },
-                  {
-                    key: '3',
-                    icon: <LogoutOutlined />,
-                    label: <span className="hover:bg-gray-200 px-2 py-1">Đăng Xuất</span>,
-                    onClick: () => onActionClick(),
-                  },
-                ],
+                items: menu,
+                onClick: handleMenuClick,
               }}
             >
               <div className='flex items-center justify-center gap-1 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded'>
@@ -242,12 +256,7 @@ const Header = ({ isLogin }: Props) => {
                 <p className='ipad:hidden text-ellipsis truncate h-max leading-none'>{user && user.name}</p>
               </div>
             </Dropdown>
-            // <button
-            //   onClick={() => onActionClick()}
-            //   className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
-            // >
-            //   Đăng xuất
-            // </button>
+
           ) : (
             <button
               onClick={() => {

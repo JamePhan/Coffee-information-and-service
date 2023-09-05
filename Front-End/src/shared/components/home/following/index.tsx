@@ -43,8 +43,8 @@ const Following = ({ followingData, userType, loggedInUserId }: Props) => {
           // Hiển thị thông báo nếu không có ai được theo dõi
           <div className='mt-5'>
             <p className='font-medium text-2xl'>Hiện bạn chưa Follow Cửa Hàng nào cả,
-            
-              bấm vào <a href="/shopList" class="underline text-red-500">đây</a> để truy cập List các quán Coffee.
+
+              bấm vào <a href="/shopList" className="underline text-red-500">đây</a> để truy cập List các quán Coffee.
             </p>
           </div>
         ) : (

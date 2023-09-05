@@ -1,9 +1,37 @@
 import DashboardLayout from '@/components/layout/dashboard/DashboardLayout';
 import { useAppSelector } from '@/hooks/useRedux';
-import { Row, Col, Form, Input } from 'antd';
+import { Row, Col, Form, Input, Button, message } from 'antd';
+import { useState } from 'react';
+import { userService } from 'src/shared/services/user.service';
+import { IInforUser } from 'src/shared/types/user.type';
 
 const Profile = () => {
   const { user } = useAppSelector(state => state.appSlice);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<IInforUser | undefined>();
+
+
+
+  // Hàm xử lý khi nhấn nút "Cập Nhật Thông Tin"
+  const handleUpdateProfile = async () => {
+    try {
+      if (formData) {
+        // Gọi phương thức updateUser của userService để cập nhật thông tin người dùng
+        const response = await userService.updateUser(formData);
+
+        if (response.status === 200) {
+          message.success('Cập nhật thông tin thành công');
+          setIsEditing(false);
+          // Cập nhật lại dữ liệu hiển thị nếu cần thiết
+        } else {
+          message.error('Cập nhật thông tin không thành công');
+        }
+      }
+    } catch (error) {
+      message.error('Cập nhật thông tin không thành công');
+    }
+  };
+
   return (
     <Row className='h-screen w-full' gutter={[16, 16]}>
       <Col className='m-0 h-full w-full p-0' span={12}>
@@ -28,23 +56,47 @@ const Profile = () => {
           autoComplete='off'
         >
           <Form.Item label='Tên' name='name'>
-            <Input disabled placeholder={user?.name} />
+            <Input disabled={!isEditing} placeholder={user?.name} />
           </Form.Item>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item label='Số điện thoại' name='phone'>
-                <Input disabled placeholder={user?.phone} />
+                <Input disabled={!isEditing} placeholder={user?.phone} />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item label='Email' name='email'>
-                <Input disabled placeholder={user?.email} />
+                <Input disabled={!isEditing} placeholder={user?.email} />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item label='Địa chỉ' name='address'>
-            <Input disabled placeholder={user?.address} />
+            <Input disabled={!isEditing} placeholder={user?.address} />
           </Form.Item>
+
+          {/* Hiển thị nút "Cập Nhật Thông Tin" hoặc "Huỷ" tùy thuộc vào trạng thái chỉnh sửa */}
+          {isEditing ? (
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item style={{ textAlign: 'center' }}>
+                  <Button onClick={() => setIsEditing(false)} htmlType='button'>
+                    Huỷ
+                  </Button>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item style={{ textAlign: 'center' }}>
+                  <Button onClick={handleUpdateProfile} htmlType='button'>
+                    Cập Nhật Thông Tin
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          ) : (
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button onClick={() => setIsEditing(true)}>Chỉnh Sửa Thông Tin</Button>
+            </Form.Item>
+          )}
         </Form>
       </Col>
     </Row>

@@ -1,7 +1,7 @@
 import InputUpload from '@/components/common/UploadInput';
 import { useAppSelector } from '@/hooks/useRedux';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Form, Input, message, Modal, Row, Col, DatePicker } from 'antd';
+import { Button, Form, Input, message, Modal, Row, Col, DatePicker, TimePicker } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useEffect } from 'react';
 import { eventService } from 'src/shared/services/event.service';
@@ -46,14 +46,14 @@ const FormEvent = ({ editId, open, setOpen, refetch }: Props) => {
     if (editId) {
       const formEdit = {
         eventId: editId,
-        ...value
-      }
+        ...value,
+      };
       updateMutation.mutate(formEdit);
     } else {
       const formCreate = {
         coffeeShopName: user?.name,
-        ...value
-      }
+        ...value,
+      };
       createMutation.mutate(formCreate);
     }
   }
@@ -65,16 +65,17 @@ const FormEvent = ({ editId, open, setOpen, refetch }: Props) => {
       form.setFieldsValue(data.data);
     }
   }, [data]);
+
   return (
-    <Modal title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'} centered open={open} width={1000} footer={false}>
-      <Form
-        form={form}
-        name='basic'
-        initialValues={{ remember: true }}
-        onFinish={handleCreate}
-        autoComplete='off'
-        layout='vertical'
-      >
+    <Modal
+      title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'}
+      centered
+      visible={open}
+      width={1000}
+      footer={false}
+      onCancel={() => setOpen(false)} // Đóng modal khi nhấn "Huỷ bỏ" hoặc bấm dấu X
+    >
+      <Form form={form} name='basic' initialValues={{ remember: true }} onFinish={handleCreate} autoComplete='off' layout='vertical'>
         <Form.Item label='Tên sự kiện' name='name' rules={[{ required: true, message: 'Vui lòng nhập sự kiện' }]}>
           <Input />
         </Form.Item>
@@ -91,12 +92,12 @@ const FormEvent = ({ editId, open, setOpen, refetch }: Props) => {
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label='Bắt đầu lúc' name='startTime' rules={[{ required: true, message: 'Vui lòng nhập tgian bắt đầu lúc' }]}>
-          <DatePicker />
+        <Form.Item label='Giờ bắt đầu' name='startTime' rules={[{ required: true, message: 'Vui lòng nhập giờ bắt đầu' }]}>
+          <TimePicker format="HH:mm" />
         </Form.Item>
 
-        <Form.Item label='Kết thúc lúc' name='endTime' rules={[{ required: true, message: 'Vui lòng nhập tgian kết thúc lúc' }]}>
-          <DatePicker />
+        <Form.Item label='Giờ kết thúc' name='endTime' rules={[{ required: true, message: 'Vui lòng nhập giờ kết thúc' }]}>
+          <TimePicker format="HH:mm" />
         </Form.Item>
 
         <Form.Item label='Chỗ ngồi' name='seatCount' rules={[{ required: true, message: 'Vui lòng nhập chỗ ngồi' }]}>
@@ -110,8 +111,8 @@ const FormEvent = ({ editId, open, setOpen, refetch }: Props) => {
         <Form.Item label='Mô tả' name='description'>
           <Input.TextArea />
         </Form.Item>
-        
-        <Row justify={'center'} align={'middle'} gutter={16}>
+
+        <Row justify='center' gutter={16}>
           <Col>
             <Form.Item style={{ textAlign: 'center' }}>
               <Button onClick={() => setOpen(false)} htmlType='button'>

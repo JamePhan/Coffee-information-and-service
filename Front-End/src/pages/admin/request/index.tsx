@@ -1,56 +1,53 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { CheckOutlined, ReloadOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Col, Row, Space, Table } from 'antd';
+import { Button, Col, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query'; // Import useMutation
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'; // Import useMutation và useQueryClient
 import { requestService } from 'src/shared/services/request.service';
 import { userService } from 'src/shared/services/user.service'; // Import userService
 import { IRequest } from 'src/shared/types/request.type';
 
 type Props = {};
 
-const RequestManagement = ({}: Props) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAction] = useState<string>('');
+const RequestManagement = ({ }: Props) => {
   const [rowId, setRowId] = useState<number>();
+
+  const queryClient = useQueryClient(); // Initialize queryClient
 
   const { data: dataRequest, refetch } = useQuery(['listRequest'], () => requestService.getAllRequest());
 
   const acceptRequestMutation = useMutation(
-    (requestId: number) => requestService.acceptRequest(requestId), // Đổi tên hàm và truyền requestId
+    (requestId: number) => requestService.acceptRequest(requestId), // Sử dụng requestService để chấp nhận yêu cầu
     {
       onMutate() {
         // Optimistically update the request list by removing the accepted request
-        const updatedData = dataRequest?.data?.filter(request => request.customerId !== rowId);
-        refetch(updatedData); // Refetch with the updated data
+        const data = dataRequest?.data;
+        let updatedData: IRequest[] = [];
+        if (Array.isArray(data)) {
+          updatedData = data.filter(request => request.customerId !== rowId);
+        }
+        queryClient.setQueryData(['listRequest'], updatedData); // Cập nhật dữ liệu truy vấn
+        return updatedData; // Trả về updatedData để sử dụng trong rollback
       },
-      onSuccess(_data, _variables, _context) {
+      onSuccess(updatedData, _variables, _context) {
         message.success('Đã chấp nhận yêu cầu!');
-        refetch(); // Làm mới danh sách yêu cầu (nếu cần)
-        // Sử dụng userService để thay đổi vai trò người dùng từ "customer" thành "user"
-        userService.changeUserRole(rowId, 'user')
-          .then(() => {
-            message.success('Đã chuyển vai trò thành user');
-          })
-          .catch((error) => {
-            console.error('Lỗi khi chuyển vai trò', error);
-            message.error('Lỗi khi chuyển vai trò');
-          });
+        refetch();
       },
       onError(error, variables, context) {
+        console.log("error mutate", error);
         message.error('Đã xảy ra lỗi khi gửi yêu cầu');
       },
     }
   );
 
   const declineRequestMutation = useMutation(
-    (requestId: number) => requestService.declineRequest(requestId), // Đổi tên hàm và truyền requestId
+    (requestId: number) => requestService.declineRequest(requestId), // Sử dụng requestService để từ chối yêu cầu
     {
       onMutate() {
         // Optimistically update the request list by removing the declined request
         const updatedData = dataRequest?.data?.filter(request => request.customerId !== rowId);
-        refetch(updatedData); // Refetch with the updated data
+        queryClient.setQueryData(['listRequest'], updatedData); // Cập nhật dữ liệu truy vấn
       },
       onSuccess(_data, _variables, _context) {
         message.success('Đã từ chối yêu cầu!');
@@ -101,7 +98,7 @@ const RequestManagement = ({}: Props) => {
             <Button
               onClick={() => {
                 setRowId(record.customerId);
-                acceptRequestMutation.mutate(record.requestId); // Khi chấp nhận, gọi mutation acceptRequest
+                acceptRequestMutation.mutate(record.waitingId); // Gọi mutation acceptRequest
               }}
               icon={<CheckOutlined />}
             >
@@ -112,7 +109,7 @@ const RequestManagement = ({}: Props) => {
             <Button
               onClick={() => {
                 setRowId(record.customerId);
-                declineRequestMutation.mutate(record.requestId); // Khi từ chối, gọi mutation declineRequest
+                declineRequestMutation.mutate(record.waitingId); // Gọi mutation declineRequest
               }}
               icon={<CloseOutlined />}
             >
@@ -146,6 +143,7 @@ const RequestManagement = ({}: Props) => {
             </Col>
           </Row>
           <Table dataSource={dataRequest.data} columns={columns} />
+
         </>
       )}
     </>
