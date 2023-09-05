@@ -4,16 +4,16 @@
 2. Install Docker Desktop: Run `winget install -e --id Docker.DockerDesktop`
 3. Install SQL Server Management Studio: Run `winget install -e --id Microsoft.SQLServerManagementStudio`
 4. Install Git : Run `winget install -e --id Git.Git`
-4. Clone the repository with `git clone https://github.com/JamePhan/Coffee-information-and-service.git`
-5. Open a terminal in root folder by hold  Shift + Right-click the "Coffee-information-and-service" folder and choose "Open Terminal / Command Prompt / Powershell here".
-6. Run `docker-compose build` to build new back end docker image.
-7. Run `docker-compose up` to create and start containers.
-8. Run SSMS with "localhost,1433" as server name. Password is provided within appsettings.json file.
-9. Execute the proviced sql script within "Resource" folder (DBFull.script).
-10. Access APIs via localhost:5000/{api-link-here}.
+5. Clone the repository with `git clone https://github.com/JamePhan/Coffee-information-and-service.git`
+6. Open a terminal in root folder by hold  Shift + Right-click the "Coffee-information-and-service" folder and choose "Open Terminal / Command Prompt / Powershell here".
+7. Run `docker-compose build` to build new back end docker image.
+8. Run `docker-compose up` to create and start containers.
+9. Run SSMS with "localhost,1433" as server name. Password is provided within appsettings.json file.
+10. Execute the proviced sql script within "Resource" folder (DBFull.script).
+1`. Access APIs via localhost:5000/{api-link-here}.
 
 ### Note: 
-- Whenever the source code is updated, run step 6 and 7 again.
+- Whenever the source code is updated, run step 7 and 8 again.
 - To remove deprecated built images, run `docker image prune`
 
 ## B. Install Frontend
