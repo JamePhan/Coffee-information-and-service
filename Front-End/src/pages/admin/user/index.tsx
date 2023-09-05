@@ -1,30 +1,28 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
-
 import { ReloadOutlined } from '@ant-design/icons';
 import { WarningOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'; // Import useQueryClient
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
 import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
-import { log } from 'console';
 
 type Props = {};
 
 const UserManagement = ({ }: Props) => {
   const [searchText, setSearchText] = useState('');
-  const { user } = useAppSelector(state => state.appSlice);
-  const queryClient = useQueryClient(); // Initialize queryClient
+  const { user } = useAppSelector((state) => state.appSlice);
+  const queryClient = useQueryClient();
   const { data: dataUser, refetch } = useQuery(['listUser'], () => userService.getAllUser());
 
   const banUserMutation = useMutation({
     mutationFn: (body: IUserbanned) => userService.banUser(body),
     onSuccess(_data, variables, _context) {
       message.success('Ban người dùng thành công!');
-      queryClient.invalidateQueries(['listUser']); // Sử dụng queryClient để làm mới danh sách người dùng
+      queryClient.invalidateQueries(['listUser']);
     },
     onError(error, variables, context) {
       message.error('Đã xảy ra lỗi khi gửi yêu cầu');
@@ -35,11 +33,7 @@ const UserManagement = ({ }: Props) => {
     {
       title: '#',
       key: 'id',
-      render: (_, record, index) => (
-        <div>
-          <p>{index}</p>
-        </div>
-      ),
+      render: (_, record, index) => <div><p>{index}</p></div>,
     },
     {
       title: 'Tên người dùng',
@@ -90,8 +84,8 @@ const UserManagement = ({ }: Props) => {
               banUserMutation.mutate(body);
             }}
             icon={<WarningOutlined className='text-xs' />}
-            type="primary"
-            danger // Thêm thuộc tính danger để thay đổi màu nút thành đỏ
+            type='primary'
+            danger
           >
             Banned
           </Button>
@@ -99,6 +93,11 @@ const UserManagement = ({ }: Props) => {
       ),
     },
   ];
+
+  // Lọc danh sách người dùng dựa trên searchText
+  const filteredData = dataUser?.data.filter((user) =>
+    user.coffeeShopName.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <>
@@ -111,7 +110,7 @@ const UserManagement = ({ }: Props) => {
             <Col span={12}>
               <div className='flex py-2 justify-end items-end gap-3'>
                 <Input
-                  placeholder="Tìm kiếm theo tên người dùng"
+                  placeholder='Tìm kiếm theo tên người dùng'
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   style={{ width: '400px' }}
@@ -127,7 +126,7 @@ const UserManagement = ({ }: Props) => {
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataUser.data} columns={columns} />
+          <Table dataSource={filteredData} columns={columns} />
         </>
       )}
     </>

@@ -1,6 +1,6 @@
 import { LockOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Dropdown, Layout, Modal, theme as antTheme } from 'antd';
-import { AlignJustifyIcon, BellRingIcon } from 'lucide-react';
+// import { AlignJustifyIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
@@ -50,7 +50,7 @@ const HeaderDashboard = () => {
           id='sidebar-trigger'
           className='flex cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-slate-200'
         >
-          <AlignJustifyIcon />
+          {/* <AlignJustifyIcon /> */}
         </span>
       </div>
       <div className='flex justify-end w-full h-full pr-4'>
@@ -80,25 +80,7 @@ const HeaderDashboard = () => {
               {/* <RenderFlag /> */}
             </div>
           </Dropdown>
-          <Dropdown
-            placement='bottomRight'
-            menu={{
-              items: [
-                {
-                  key: '1',
-                  // label: <div>{trans.common.notification} 1</div>,
-                },
-                {
-                  key: '2',
-                  // label: <div>{trans.common.notification} 2 </div>,
-                },
-              ],
-            }}
-          >
-            <Badge count={2}>
-              <BellRingIcon />
-            </Badge>
-          </Dropdown>
+
           <Dropdown
             placement='bottomRight'
             menu={{
@@ -106,19 +88,19 @@ const HeaderDashboard = () => {
                 {
                   key: '1',
                   icon: <UserOutlined />,
-                   label: <span>Thông Tin Cá Nhân</span>,
+                  label: <span>Thông Tin Cá Nhân</span>,
                   onClick: () => router.push('/profile'),
                 },
                 {
                   key: '2',
                   icon: <LockOutlined />,
-                   label: <span>Đổi Mật Khẩu</span>,
+                  label: <span>Đổi Mật Khẩu</span>,
                   onClick: () => router.push('/change-password'),
                 },
                 {
                   key: '3',
                   icon: <LogoutOutlined />,
-                   label: <span>Đăng Xuất</span>,
+                  label: <span>Đăng Xuất</span>,
                   onClick: () => onActionClick(),
                 },
               ],
