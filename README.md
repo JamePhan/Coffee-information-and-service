@@ -10,7 +10,7 @@
 8. Run `docker-compose up` to create and start containers.
 9. Run SSMS with "localhost,1433" as server name. Password is provided within appsettings.json file.
 10. Execute the proviced sql script within "Resource" folder (DBFull.script).
-1`. Access APIs via localhost:5000/{api-link-here}.
+11. Access APIs via localhost:5000/{api-link-here}.
 
 ### Note: 
 - Whenever the source code is updated, run step 7 and 8 again.
