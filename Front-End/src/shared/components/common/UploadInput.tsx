@@ -13,6 +13,7 @@ type Props = {
 }
 
 export default function InputUpload({ initSrc, onChange, className }: Props) {
+
     const [filePath, setFilePath] = useState(initSrc)
     const inputRef = useRef<HTMLInputElement>(null)
     const uploadService = useMutation({

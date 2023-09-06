@@ -12,7 +12,7 @@ import { useAppSelector } from '@/hooks/useRedux';
 
 type Props = {};
 
-const ServiceCoffeeManagement = ({}: Props) => {
+const ServiceCoffeeManagement = ({ }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const [open, setOpen] = useState(false);
   const [action, setAtion] = useState<string>('');
@@ -33,6 +33,19 @@ const ServiceCoffeeManagement = ({}: Props) => {
       message.error('Xoá không thành công');
     },
   });
+  const createMutation = useMutation({
+    mutationFn: (body: IServiceCoffee) => serviceCoffeeService.newServiceCoffee(body),
+    onSuccess(data, _variables, _context) {
+      if (!data) return;
+      message.success('Tạo thành công');
+      setOpen(false);
+      refetch(); // Đảm bảo làm mới dữ liệu sau khi tạo mới dịch vụ
+    },
+    onError(error, variables, context) {
+      message.error('Tạo không thành công');
+    },
+  });
+
 
   const columns: ColumnType<IServiceCoffee>[] = [
     {

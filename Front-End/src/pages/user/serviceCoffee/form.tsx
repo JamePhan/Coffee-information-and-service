@@ -13,6 +13,7 @@ interface Props {
   setOpen: any;
   refetch: any;
 }
+
 const FormServiceCoffee = ({ editId, open, setOpen, refetch }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const [form] = useForm();
@@ -41,6 +42,7 @@ const FormServiceCoffee = ({ editId, open, setOpen, refetch }: Props) => {
       message.error('Cập nhật không thành công');
     },
   });
+
   function handleCreate(value: any) {
     if (editId) {
       const formEdit = {
@@ -57,16 +59,26 @@ const FormServiceCoffee = ({ editId, open, setOpen, refetch }: Props) => {
       createMutation.mutate(formCreate);
     }
   }
+
   const { data } = useQuery(['ServiceCoffee'], () => serviceCoffeeService.getServiceCoffeeById(editId as number), {
     enabled: isEditIdValidNumber,
   });
+
   useEffect(() => {
     if (editId && data) {
       form.setFieldsValue(data.data);
     }
   }, [data]);
+
   return (
-    <Modal title={editId ? `Chỉnh sửa dịch vụ` : 'Tạo mới dịch vụ'} centered open={open} width={1000} footer={false}>
+    <Modal
+      title={editId ? `Chỉnh sửa dịch vụ` : 'Tạo mới dịch vụ'}
+      centered
+      visible={open} // Sử dụng visible để điều khiển hiển thị Modal
+      width={1000}
+      footer={false}
+      onCancel={() => setOpen(false)} // Sử dụng sự kiện onCancel để đóng Modal
+    >
       <Form
         form={form}
         name='basic'

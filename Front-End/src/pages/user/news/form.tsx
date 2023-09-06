@@ -3,8 +3,9 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, message, Modal, Row, Col, DatePicker } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useEffect } from 'react';
-import { eventService } from 'src/shared/services/event.service';
-import { IEvent } from 'src/shared/types/event.type';
+import user from 'src/pages/admin/user';
+import { newsService } from 'src/shared/services/news.service';
+import { INews, INewsAdd } from 'src/shared/types/news.type';
 
 interface Props {
   editId?: number;
@@ -12,16 +13,17 @@ interface Props {
   setOpen: any;
   refetch: any;
 }
+
 const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
   const [form] = useForm();
   const isEditIdValidNumber = typeof editId === 'number';
   const createMutation = useMutation({
-    mutationFn: (body: IEvent) => eventService.newEvent(body),
+    mutationFn: (body: INewsAdd) => newsService.createNews(body),
     onSuccess(data, _variables, _context) {
       const res = data.data;
       if (!res) return;
       message.success('Tạo thành công');
-      setOpen(false);
+      setOpen(false); // Đóng Modal khi tạo thành công
       refetch();
     },
     onError(error, variables, context) {
@@ -29,39 +31,50 @@ const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
     },
   });
   const updateMutation = useMutation({
-    mutationFn: (body: IEvent) => eventService.updateEvent(body),
+    mutationFn: (body: INews) => newsService.updateNews(body),
     onSuccess(data, _variables, _context) {
       const res = data.data;
       if (!res) return;
       message.success('Cập nhật thành công');
-      setOpen(false);
+      setOpen(false); // Đóng Modal khi cập nhật thành công
       refetch();
     },
     onError(error, variables, context) {
       message.error('Cập nhật không thành công');
     },
   });
+
   function handleCreate(value: any) {
     if (editId) {
       const formEdit = {
-        eventId: editId,
-        ...value
-      }
+        newsId: editId,
+        ...value,
+      };
       updateMutation.mutate(formEdit);
     } else {
       createMutation.mutate(value);
     }
   }
-  const { data } = useQuery(['event'], () => eventService.getEventById(editId as number), {
+
+  const { data } = useQuery(['news'], () => newsService.getNewsById(editId as number), {
     enabled: isEditIdValidNumber,
   });
+
   useEffect(() => {
     if (editId && data) {
       form.setFieldsValue(data.data);
     }
   }, [data]);
+
   return (
-    <Modal title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'} centered open={open} width={1000} footer={false}>
+    <Modal
+      title={editId ? `Chỉnh sửa tin tức` : 'Tạo tin tức mới'}
+      centered
+      visible={open} // Sử dụng visible để điều khiển hiển thị Modal
+      width={1000}
+      footer={false}
+      onCancel={() => setOpen(false)} // Sử dụng sự kiện onCancel để đóng Modal
+    >
       <Form
         form={form}
         name='basic'
@@ -70,42 +83,21 @@ const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
         autoComplete='off'
         layout='vertical'
       >
-        <Form.Item label='Tên sự kiện' name='name' rules={[{ required: true, message: 'Vui lòng nhập sự kiện' }]}>
+        <Form.Item label='Tên coffee shop' name='coffeeShopName' initialValue={user?.name}>
+          <Input />
+        </Form.Item>
+        <Form.Item label='Tiêu đề' name='title' rules={[{ required: true, message: 'Vui lòng nhập tiêu đề' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label='Tên địa điểm' name='address' rules={[{ required: true, message: 'Vui lòng nhập địa điểm' }]}>
-          <Input />
+        <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item label='Ảnh' name='imageUrl' rules={[{ required: true, message: 'Vui lòng nhập ảnh' }]}>
           <InputUpload initSrc={data?.data.imageUrl} />
         </Form.Item>
 
-        <Form.Item label='Ngày' name='date' rules={[{ required: true, message: 'Vui lòng nhập ngày' }]}>
-          <DatePicker />
-        </Form.Item>
-
-        <Form.Item label='Bắt đầu lúc' name='startTime' rules={[{ required: true, message: 'Vui lòng nhập tgian bắt đầu lúc' }]}>
-          <DatePicker />
-        </Form.Item>
-
-        <Form.Item label='Kết thúc lúc' name='endTime' rules={[{ required: true, message: 'Vui lòng nhập tgian kết thúc lúc' }]}>
-          <DatePicker />
-        </Form.Item>
-
-        <Form.Item label='Chỗ ngồi' name='seatCount' rules={[{ required: true, message: 'Vui lòng nhập chỗ ngồi' }]}>
-          <Input type='number' />
-        </Form.Item>
-
-        <Form.Item label='Giá vé' name='price' rules={[{ required: true, message: 'Vui lòng nhập giá vé' }]}>
-          <Input type='number' />
-        </Form.Item>
-
-        <Form.Item label='Mô tả' name='description'>
-          <Input.TextArea />
-        </Form.Item>
-        
         <Row justify={'center'} align={'middle'} gutter={16}>
           <Col>
             <Form.Item style={{ textAlign: 'center' }}>

@@ -1,3 +1,4 @@
+import InputUpload from '@/components/common/UploadInput';
 import DashboardLayout from '@/components/layout/dashboard/DashboardLayout';
 import { useAppSelector } from '@/hooks/useRedux';
 import { Row, Col, Form, Input, Button, message } from 'antd';
@@ -9,6 +10,20 @@ const Profile = () => {
   const { user } = useAppSelector(state => state.appSlice);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<IInforUser | undefined>();
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(user?.avatar);
+
+  const handleAvatarChange = (newAvatarUrl: string) => {
+    const updatedAvatarUrl = newAvatarUrl || '';
+
+    setAvatarUrl(updatedAvatarUrl);
+
+    // Kiểm tra nếu formData tồn tại, thì cập nhật avatar trong formData
+    if (formData) {
+      const updatedFormData = { ...formData, avatar: updatedAvatarUrl };
+      setFormData(updatedFormData);
+    }
+  };
+
 
 
 
@@ -23,6 +38,10 @@ const Profile = () => {
           message.success('Cập nhật thông tin thành công');
           setIsEditing(false);
           // Cập nhật lại dữ liệu hiển thị nếu cần thiết
+
+          // Tạo một biến tạm thời để lưu trữ formData sau khi cập nhật avatar
+          const updatedFormData = { ...formData, avatar: avatarUrl };
+          setFormData(formData);
         } else {
           message.error('Cập nhật thông tin không thành công');
         }
@@ -31,6 +50,8 @@ const Profile = () => {
       message.error('Cập nhật thông tin không thành công');
     }
   };
+
+
 
   return (
     <Row className='h-screen w-full' gutter={[16, 16]}>
@@ -55,6 +76,12 @@ const Profile = () => {
           initialValues={{ remember: true }}
           autoComplete='off'
         >
+          <Form.Item label='Avatar' name='avatar'>
+            <InputUpload
+              initSrc={avatarUrl}
+              onChange={handleAvatarChange}
+            />
+          </Form.Item>
           <Form.Item label='Tên' name='name'>
             <Input disabled={!isEditing} placeholder={user?.name} />
           </Form.Item>
