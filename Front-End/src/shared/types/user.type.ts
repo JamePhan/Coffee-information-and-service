@@ -38,4 +38,5 @@ export interface IInforUserStored {
   nbf: number;
   exp: number;
   iat: number;
+  avatar: string;
 }

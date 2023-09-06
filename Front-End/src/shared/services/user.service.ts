@@ -17,9 +17,7 @@ class UserService {
     updateUser(body: IInforUser) {
         return httpsNoToken.put(`/User/Update`, body)
     }
-    updateUserProfile(userId: number, updatedData: Partial<IInforUser>): Promise<AxiosResponse<void>> {
-        return httpsNoToken.put(`/User/Update/${userId}`, updatedData);
-    }
+
     searchUser(search: string): Promise<AxiosResponse<IInforUser>> {
         return httpsNoToken.get(`/User/Search/${search}`)
     }
