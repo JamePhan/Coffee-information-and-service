@@ -13,22 +13,17 @@ interface Props {
 }
 
 const BrandList = ({ brandsData }: Props) => {
-  const [userType, setUserType] = useState<string>('User');
   const user = useAppSelector(state => state.appSlice.user);
   const queryClient = useQueryClient();
 
-  // Sử dụng React Query để lấy danh sách thương hiệu
-  const { data: brandData } = useQuery(['listBrands'], () => {
-    return userService.getAllUser()
-      .then((response) => response.data);
+  const { data: brandData, isLoading: brandDataLoading } = useQuery(['listBrands'], () => {
+    return userService.getAllUser().then(response => response.data);
   });
 
-  // Sử dụng React Query để theo dõi trạng thái follow
   const followMutation = useMutation(
     (followingData: IFollowingAdd) => followingService.newFollowing(followingData),
     {
       onMutate: (followingData) => {
-        // Cập nhật giao diện người dùng một cách lạc quan
         const updatedBrandData = brandData?.map((brand) => {
           if (brand.userId === Number(followingData.user.userId)) {
             return { ...brand, isFollowing: true };
@@ -36,7 +31,6 @@ const BrandList = ({ brandsData }: Props) => {
           return brand;
         });
 
-        // Cập nhật dữ liệu truy vấn
         queryClient.setQueryData(['listBrands'], updatedBrandData);
       },
       onError: () => {
@@ -45,11 +39,9 @@ const BrandList = ({ brandsData }: Props) => {
     }
   );
 
-  // Sử dụng React Query để hủy theo dõi
   const unfollowMutation = useMutation<void, unknown, IFollowingAdd>(
     async (followingData) => {
       try {
-        // Gọi hàm hủy theo dõi và đợi nó hoàn thành
         await followingService.unfollow(followingData);
       } catch (error) {
         throw error;
@@ -57,7 +49,6 @@ const BrandList = ({ brandsData }: Props) => {
     },
     {
       onMutate: (followingData) => {
-        // Cập nhật giao diện người dùng một cách lạc quan
         const updatedBrandData = brandData?.map((brand) => {
           if (brand.userId === parseInt(followingData.user.userId, 10)) {
             return { ...brand, isFollowing: false };
@@ -65,7 +56,6 @@ const BrandList = ({ brandsData }: Props) => {
           return brand;
         });
 
-        // Cập nhật dữ liệu truy vấn
         queryClient.setQueryData(['listBrands'], updatedBrandData);
       },
       onError: () => {
@@ -74,31 +64,24 @@ const BrandList = ({ brandsData }: Props) => {
     }
   );
 
-  // Sử dụng useEffect để kiểm tra danh sách theo dõi của người dùng khi tải trang
   useEffect(() => {
     const fetchFollowingLists = async () => {
-      if (user) {
-        // Lấy danh sách thương hiệu mà khách hàng và người dùng đã theo dõi
-        const customerList = await followingService.getCustomerList(user.customerId);
-        const userList = await followingService.getUserList(user.userId);
+      if (user && !brandDataLoading) {
+        const customerList = await followingService.getCustomerList(parseInt(user.profileId, 10));
 
-        // Ánh xạ danh sách thương hiệu và đặt trạng thái isFollowing dựa trên danh sách theo dõi
         const updatedBrandData = brandData?.map((brand) => {
           const isFollowingCustomer = customerList.data.some((item) => item.user.userId === brand.userId);
-          const isFollowingUser = userList.data.some((item) => item.user.userId === brand.userId);
 
-          return { ...brand, isFollowing: isFollowingCustomer || isFollowingUser };
+          return { ...brand, isFollowing: isFollowingCustomer };
         });
 
-        // Cập nhật dữ liệu truy vấn với dữ liệu đã cập nhật
         queryClient.setQueryData(['listBrands'], updatedBrandData);
       }
     };
 
     fetchFollowingLists();
-  }, [user, brandData, queryClient]);
+  }, [user, brandData, brandDataLoading, queryClient]);
 
-  // Xử lý sự kiện khi người dùng nhấn nút Theo Dõi hoặc Đang Theo Dõi
   const handleFollowClick = async (brandId: number, isFollowing: boolean): Promise<void> => {
     if (!user) {
       message.warning('Vui lòng đăng nhập để theo dõi.');
@@ -113,7 +96,7 @@ const BrandList = ({ brandsData }: Props) => {
     }
 
     const followingData: IFollowingAdd = {
-      followingId: '0', // Sử dụng giá trị thích hợp
+      followingId: '0', // Đặt followingId thành 0
       customer: {
         customerId: user.profileId, // Sử dụng ID khách hàng của người dùng đã đăng nhập
       },
@@ -129,11 +112,14 @@ const BrandList = ({ brandsData }: Props) => {
     }
   };
 
+
   return (
     <section className='w-full flex flex-col justify-around items-center mx-auto px-4 md:px-12 lg:px-32 pb-24'>
       <div className='relative w-full mt-5 pb-32 grid grid-cols-1 sm:gird-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-between gap-10'>
-        {brandData ? (
-          brandData.map((brand, idx) => (
+        {brandDataLoading ? (
+          <p>Loading...</p>
+        ) : (
+          brandData?.map((brand, idx) => (
             <div className='mt-5' key={idx}>
               <PreImage
                 src={brand.avatar}
@@ -167,8 +153,6 @@ const BrandList = ({ brandsData }: Props) => {
               </div>
             </div>
           ))
-        ) : (
-          <p>Loading...</p>
         )}
       </div>
     </section>

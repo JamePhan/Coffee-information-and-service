@@ -25,9 +25,9 @@ const Login = () => {
         setCookie(APP_SAVE_KEY.TOKEN_KEY, data.data.token);
         setCookie(APP_SAVE_KEY.LOGIN_STATUS, 'true');
         dispatch(login(decodeData));
-        if(decodeData.role === "Admin") {
+        if (decodeData.role === "Admin") {
           router.push("/admin/user")
-        }else{
+        } else {
           router.push("/")
         }
       }
@@ -60,7 +60,7 @@ const Login = () => {
             <div className={`bg-black absolute top-0 left-0 w-full h-full opacity-50`}></div>
 
             <div className='relative z-20 h-10 flex justify-start text-lg font-medium'>
-              <b>COFFEE INFORMATION & SERVICE</b>
+              <a href="/"> <b>COFFEE INFORMATION & SERVICE</b></a>
             </div>
             <div className='relative z-20 mt-auto'>
               <h1 className='text-4xl font-semibold tracking-tight'>

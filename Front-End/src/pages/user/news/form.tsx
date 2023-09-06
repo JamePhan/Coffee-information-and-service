@@ -83,7 +83,7 @@ const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
         autoComplete='off'
         layout='vertical'
       >
-        <Form.Item label='Tên coffee shop' name='coffeeShopName' initialValue={user?.name}>
+        <Form.Item label='Tên coffee shop' name='coffeeShopName'>
           <Input />
         </Form.Item>
         <Form.Item label='Tiêu đề' name='title' rules={[{ required: true, message: 'Vui lòng nhập tiêu đề' }]}>
