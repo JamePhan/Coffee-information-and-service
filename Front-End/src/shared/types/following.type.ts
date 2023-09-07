@@ -2,41 +2,42 @@ import { ICustomer } from "./customer.type";
 import { IInforUser } from "./user.type";
 
 export interface IFollowing {
-    followingId: number;
-    customer: Customer;
-    user: User;
+  followed: boolean
+  followingId: number;
+  customer: Customer;
+  user: User;
 }
 
 interface User {
-    userId: number;
-    address: string;
-    email: string;
-    phone: string;
-    coffeeShopName: string;
-    avatar: string;
+  userId: number;
+  address: string;
+  email: string;
+  phone: string;
+  coffeeShopName: string;
+  avatar: string;
 }
 
 interface Customer {
-    customerId: number;
-    name: string;
-    phone: string;
-    address: string;
-    email: string;
-    avatar: string;
+  customerId: number;
+  name: string;
+  phone: string;
+  address: string;
+  email: string;
+  avatar: string;
 }
 
 export interface IFollowingAdd {
-    followingId: string;
-    customer: CustomerAdd;
-    user: UserAdd;
+  followingId: string;
+  customer: CustomerAdd;
+  user: UserAdd;
 }
 
 interface UserAdd {
-    userId: string;
+  userId: string;
 }
 
 interface CustomerAdd {
-    customerId: string;
+  customerId: string;
 }
 
 export interface IFollowingResponse {
@@ -51,9 +52,9 @@ export interface IFollowingAddRequest {
   user: IUserAdd;
 }
 export interface IUserAdd {
-    userId: string;
-  }
-  
-  export interface ICustomerAdd {
-    customerId: string;
-  }
+  userId: string;
+}
+
+export interface ICustomerAdd {
+  customerId: string;
+}

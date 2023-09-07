@@ -23,14 +23,7 @@ class FollowingService {
     newFollowing(body: IFollowingAdd) {
         return httpsNoToken.post(`/Follow/Follow`, body)
     }
-    async getCustomerFollowingList(customerId: number): Promise<AxiosResponse<IFollowing[]>> {
-        try {
-            const response = await httpsNoToken.get(`/Follow/CustomerList/${customerId}`);
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    }
+
 }
 
 export const followingService = new FollowingService()

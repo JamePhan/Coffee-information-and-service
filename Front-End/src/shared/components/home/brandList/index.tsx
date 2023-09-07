@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, message } from 'antd';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { followingService } from 'src/shared/services/following.service';
-import { userService } from 'src/shared/services/user.service';
-import { IInforUser } from 'src/shared/types/user.type';
+import { followingService } from 'src/shared/services/following.service'; // Sử dụng followingService
+import { ICustomer } from 'src/shared/types/customer.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
 import { IFollowingAdd } from 'src/shared/types/following.type';
 
 interface Props {
-  brandsData: IInforUser[];
+  brandsData: ICustomer[];
 }
 
 const BrandList = ({ brandsData }: Props) => {
@@ -17,15 +16,18 @@ const BrandList = ({ brandsData }: Props) => {
   const queryClient = useQueryClient();
 
   const { data: brandData, isLoading: brandDataLoading } = useQuery(['listBrands'], () => {
-    return userService.getAllUser().then(response => response.data);
+    return followingService.getCustomerList(parseInt(user?.profileId || '0', 10)); // Sử dụng followingService
   });
+
+  console.log(brandData);
+
 
   const followMutation = useMutation(
     (followingData: IFollowingAdd) => followingService.newFollowing(followingData),
     {
       onMutate: (followingData) => {
-        const updatedBrandData = brandData?.map((brand) => {
-          if (brand.userId === Number(followingData.user.userId)) {
+        const updatedBrandData = brandData?.data.map((brand) => {
+          if (brand.user.userId === Number(followingData.user.userId)) {
             return { ...brand, isFollowing: true };
           }
           return brand;
@@ -49,8 +51,8 @@ const BrandList = ({ brandsData }: Props) => {
     },
     {
       onMutate: (followingData) => {
-        const updatedBrandData = brandData?.map((brand) => {
-          if (brand.userId === parseInt(followingData.user.userId, 10)) {
+        const updatedBrandData = brandData?.data.map((brand) => {
+          if (brand.user.userId === parseInt(followingData.user.userId, 10)) {
             return { ...brand, isFollowing: false };
           }
           return brand;
@@ -66,11 +68,9 @@ const BrandList = ({ brandsData }: Props) => {
 
   useEffect(() => {
     const fetchFollowingLists = async () => {
-      if (user && !brandDataLoading) {
-        const customerList = await followingService.getCustomerList(parseInt(user.profileId, 10));
-
-        const updatedBrandData = brandData?.map((brand) => {
-          const isFollowingCustomer = customerList.data.some((item) => item.user.userId === brand.userId);
+      if (user && !brandDataLoading && Array.isArray(brandData)) { // Kiểm tra brandData là một mảng
+        const updatedBrandData = brandData.map((brand) => {
+          const isFollowingCustomer = brand.followingId !== null; // Xác định trạng thái theo dõi
 
           return { ...brand, isFollowing: isFollowingCustomer };
         });
@@ -88,7 +88,7 @@ const BrandList = ({ brandsData }: Props) => {
       return;
     }
 
-    const brand = brandData?.find((brand) => brand.userId === brandId);
+    const brand = brandData?.data.find((brand) => brand.user.userId === brandId);
 
     if (!brand) {
       message.error('Không tìm thấy thông tin người dùng.');
@@ -98,10 +98,10 @@ const BrandList = ({ brandsData }: Props) => {
     const followingData: IFollowingAdd = {
       followingId: '0', // Đặt followingId thành 0
       customer: {
-        customerId: user.profileId, // Sử dụng ID khách hàng của người dùng đã đăng nhập
+        customerId: user.profileId || '0', // Sử dụng ID khách hàng của người dùng đã đăng nhập
       },
       user: {
-        userId: brand.userId.toString(), // Sử dụng ID người dùng của thương hiệu
+        userId: brand.user.userId.toString(), // Sử dụng ID người dùng của thương hiệu
       },
     };
 
@@ -112,42 +112,41 @@ const BrandList = ({ brandsData }: Props) => {
     }
   };
 
-
   return (
     <section className='w-full flex flex-col justify-around items-center mx-auto px-4 md:px-12 lg:px-32 pb-24'>
       <div className='relative w-full mt-5 pb-32 grid grid-cols-1 sm:gird-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-between gap-10'>
         {brandDataLoading ? (
           <p>Loading...</p>
         ) : (
-          brandData?.map((brand, idx) => (
+          Array.isArray(brandData?.data) && brandData?.data.map((brand, idx) => (
             <div className='mt-5' key={idx}>
               <PreImage
-                src={brand.avatar}
+                src={brand.user.avatar}
                 height={200}
                 width={200}
                 layer={false}
-                alt={brand.coffeeShopName}
+                alt={brand.user.coffeeShopName}
                 className='rounded-md cursor-pointer object-cover border-2 light:border-slate-700 border-slate-100'
               />
               <div className='w-full pt-15 flex justify-between items-center gap-5 light:text-black'>
                 <div className='w-full flex flex-col justify-start items-start gap-3'>
                   <p className='font-medium text-2xl'>
-                    Tên: {brand.coffeeShopName}
+                    Tên: {brand.user.coffeeShopName}
                   </p>
                   <p className='font-thin text-sm'>
-                    Địa chỉ: {brand.address}
+                    Địa chỉ: {brand.user.address}
                   </p>
                   <p className='font-thin text-sm'>
-                    Email: {brand.email}
+                    Email: {brand.user.email}
                   </p>
                   <p className='font-thin text-sm'>
-                    Sđt: {brand.phone}
+                    Sđt: {brand.user.phone}
                   </p>
                   <Button
                     className='dark:text-white'
-                    onClick={() => handleFollowClick(brand.userId, brand.isFollowing)}
+                    onClick={() => handleFollowClick(brand.user.userId, brand.followed)}
                   >
-                    {brand.isFollowing ? 'Đang Theo Dõi' : 'Theo Dõi'}
+                    {brand.followed ? 'Đang Theo Dõi' : 'Theo Dõi'}
                   </Button>
                 </div>
               </div>
