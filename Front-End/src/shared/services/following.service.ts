@@ -6,7 +6,7 @@ import { IFollowing, IFollowingAdd } from '../types/following.type';
 class FollowingService {
     async unfollow(followingData: IFollowingAdd): Promise<AxiosResponse<void>> {
         try {
-            const response = await httpsNoToken.delete('/api/Follow/Unfollow', {
+            const response = await httpsNoToken.delete('/Follow/Unfollow', {
                 data: followingData, // Send followingData as the request body
             });
             return response;

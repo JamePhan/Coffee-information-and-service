@@ -15,18 +15,19 @@ export function FollowingPage() {
   const [role, setRole] = useState<string>('');
   const { user } = useAppSelector(state => state.appSlice);
   const [userType, setUserType] = useState<string>();
-  
-  const { data: followingData, refetch } = useQuery(['listFollowing', userType], () =>
+
+
+  const { data: followingData, refetch } = useQuery(['listFollowing', userType, user], () =>
     userType !== 'Customer'
-      ? followingService.getUserList(user?.profileId as unknown as number)
-      : followingService.getCustomerList(user?.profileId as unknown as number),
+      ? followingService.getUserList(Number(user?.profileId))
+      : followingService.getCustomerList(Number(user?.profileId)),
   );
-  
+
   useEffect(() => {
     const role = getCookie(APP_SAVE_KEY.ROLE);
     setRole(role as string);
   }, []);
-  
+
   useEffect(() => {
     if (role === 'Customer') {
       setUserType('Customer');
@@ -34,6 +35,7 @@ export function FollowingPage() {
       setUserType('User');
     }
   }, [role]);
+
 
   return (
     <>

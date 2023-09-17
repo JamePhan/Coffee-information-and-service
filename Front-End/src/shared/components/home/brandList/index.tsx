@@ -6,6 +6,7 @@ import { ICustomer } from 'src/shared/types/customer.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
 import { IFollowingAdd } from 'src/shared/types/following.type';
+import { useRouter } from 'next/router';
 
 interface Props {
   brandsData: ICustomer[];
@@ -14,6 +15,7 @@ interface Props {
 const BrandList = ({ brandsData }: Props) => {
   const user = useAppSelector(state => state.appSlice.user);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data: brandData, isLoading: brandDataLoading } = useQuery(['listBrands'], () => {
     return followingService.getCustomerList(parseInt(user?.profileId || '0', 10)); // Sử dụng followingService
@@ -107,8 +109,10 @@ const BrandList = ({ brandsData }: Props) => {
 
     if (isFollowing) {
       await unfollowMutation.mutateAsync(followingData);
+      window.location.reload();
     } else {
       await followMutation.mutateAsync(followingData);
+      window.location.reload();
     }
   };
 
@@ -119,7 +123,8 @@ const BrandList = ({ brandsData }: Props) => {
           <p>Loading...</p>
         ) : (
           Array.isArray(brandData?.data) && brandData?.data.map((brand, idx) => (
-            <div className='mt-5' key={idx}>
+
+            <div className='mt-5' key={idx} >
               <PreImage
                 src={brand.user.avatar}
                 height={200}
@@ -128,7 +133,9 @@ const BrandList = ({ brandsData }: Props) => {
                 alt={brand.user.coffeeShopName}
                 className='rounded-md cursor-pointer object-cover border-2 light:border-slate-700 border-slate-100'
               />
-              <div className='w-full pt-15 flex justify-between items-center gap-5 light:text-black'>
+
+              <div className='w-full pt-15 flex justify-between items-center gap-5 light:text-black' onClick={() => router.push(`/shopList/${brand.user.userId}`)}>
+
                 <div className='w-full flex flex-col justify-start items-start gap-3'>
                   <p className='font-medium text-2xl'>
                     Tên: {brand.user.coffeeShopName}
@@ -142,14 +149,15 @@ const BrandList = ({ brandsData }: Props) => {
                   <p className='font-thin text-sm'>
                     Sđt: {brand.user.phone}
                   </p>
-                  <Button
-                    className='dark:text-white'
-                    onClick={() => handleFollowClick(brand.user.userId, brand.followed)}
-                  >
-                    {brand.followed ? 'Đang Theo Dõi' : 'Theo Dõi'}
-                  </Button>
+
                 </div>
               </div>
+              <Button
+                className='dark:text-white'
+                onClick={() => handleFollowClick(brand.user.userId, brand.followed)}
+              >
+                {brand.followed ? 'Đang Theo Dõi' : 'Theo Dõi'}
+              </Button>
             </div>
           ))
         )}
