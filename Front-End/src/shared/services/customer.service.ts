@@ -20,6 +20,7 @@ class CustomerService {
     getBannedCustomer(): Promise<AxiosResponse<ICustomer[]>> {
         return httpsNoToken.get('/Customer/Banned/');
     }
+
 }
 
 export const customerService = new CustomerService()

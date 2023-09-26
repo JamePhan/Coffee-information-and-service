@@ -9,6 +9,7 @@ import { userService } from 'src/shared/services/user.service';
 import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppSelector } from '@/hooks/useRedux';
+import { StopOutlined } from '@ant-design/icons';
 
 type Props = {};
 
