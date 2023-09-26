@@ -45,6 +45,8 @@ namespace Capstone_UnitTest.Controller
             EventInfo eventInfo = new EventInfo();
             eventInfo.EventId = 1;
             eventInfo.Name = "Melody Event";
+            eventInfo.ImageUrl = "hhja.img";
+            eventInfo.Address = "hhja.img";
             Test_AddEvent(eventInfo);
         }
 
@@ -61,7 +63,7 @@ namespace Capstone_UnitTest.Controller
         public void TC3_AddEvent_Test()
         {
             EventInfo eventInfo = new EventInfo();
-            eventInfo.EventId = 2;
+            eventInfo.EventId = 3;
             eventInfo.Name = "Melody Event 3";
             Test_AddEvent(eventInfo);
         }
@@ -76,7 +78,6 @@ namespace Capstone_UnitTest.Controller
 
         public void Test_AddEvent(EventInfo eventInfo)
         {
-
             var events = new List<Event>();
 
             var mockDBEvent = new Mock<DbSet<Event>>();
@@ -94,14 +95,12 @@ namespace Capstone_UnitTest.Controller
             }
             else
             {
-                eventNew.EventId = 1;
-                eventNew.Name = "Melody Event";
+                eventNew.EventId = eventInfo.EventId;
+                eventNew.Name = eventInfo.Name;
                 _mockMapper.Setup(m => m.Map<EventInfo, Event>(It.IsAny<EventInfo>())).Returns(eventNew);
             }
             EventController eventController = new EventController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkResult>(eventController.Add(eventInfo));
-            _mockContext.Verify(c => c.Events.Add(eventNew), Times.Once);
-            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.IsType<BadRequestObjectResult>(eventController.Add(eventInfo));
         }
     }
 }

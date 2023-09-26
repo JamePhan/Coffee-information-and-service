@@ -38,8 +38,7 @@ namespace Capstone_UnitTest.Controller
         {
             FollowInfo follow = new FollowInfo();
             follow.FollowingId = 1;
-            follow.UserId = 1;
-            follow.CustomerId = 1;
+
             Test_Follow(follow);
         }
 
@@ -48,8 +47,7 @@ namespace Capstone_UnitTest.Controller
         {
             FollowInfo follow = new FollowInfo();
             follow.FollowingId = 2;
-            follow.UserId = 2;
-            follow.CustomerId = 3;
+  
             Test_Follow(follow);
         }
 
@@ -58,8 +56,7 @@ namespace Capstone_UnitTest.Controller
         {
             FollowInfo follow = new FollowInfo();
             follow.FollowingId = 3;
-            follow.UserId = 1;
-            follow.CustomerId = 2;
+   
             Test_Follow(follow);
         }
 

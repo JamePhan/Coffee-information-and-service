@@ -82,8 +82,8 @@ namespace Capstone_UnitTest.Controller
         {
             var locations = new List<Location>
             {
-                new Location { PlusCode = "pluscode1", },
-                new Location { PlusCode = "pluscode2", },
+                new Location { },
+                new Location { },
             };
             var mockDBLocation = new Mock<DbSet<Location>>();
             mockDBLocation.As<IQueryable<Location>>().Setup(m => m.Provider).Returns(locations.AsQueryable().Provider);
@@ -94,15 +94,15 @@ namespace Capstone_UnitTest.Controller
 
             var locationInfos = new List<LocationInfo>
             {
-                new LocationInfo { PlusCode = "pluscode1", },
-                new LocationInfo { PlusCode = "pluscode2", },
+                new LocationInfo { },
+                new LocationInfo {  },
             };
 
             _mockMapper.Setup(m => m.Map<List<Location>, List<LocationInfo>>(It.IsAny<List<Location>>())).Returns(locationInfos);
 
             LocationController locationController = new LocationController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<OkObjectResult>(locationController.List(count));
+            Assert.IsType<OkObjectResult>(locationController.List());
             _mockContext.Verify(c => c.Locations, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map <List<Location>,List<LocationInfo>>(It.IsAny<List<Location>>()), Times.Once);
         }
@@ -128,7 +128,7 @@ namespace Capstone_UnitTest.Controller
 
             LocationController locationController = new LocationController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<NotFoundResult>(locationController.List(count));
+            Assert.IsType<NotFoundResult>(locationController.List());
             _mockContext.Verify(c => c.Locations, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<Location>, List<LocationInfo>>(It.IsAny<List<Location>>()), Times.Once);
         }

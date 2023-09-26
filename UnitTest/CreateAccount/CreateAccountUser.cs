@@ -99,11 +99,11 @@ namespace Capstone_UnitTest.Controller
 
                 var waitInfo = new WaitingInfo();
                 waitInfo.WaitingId = 1;
-                waitInfo.AccountId = 1;
+
                 _mockMapper.Setup(m => m.Map<CustomerInfo, WaitingInfo>(It.IsAny<CustomerInfo>())).Returns(waitInfo);
                 var waitting = new Waiting();
                 waitting.WaitingId = 1;
-                waitting.AccountId = 1;
+
                 _mockMapper.Setup(m => m.Map<WaitingInfo, Waiting>(It.IsAny<WaitingInfo>())).Returns(waitting);
 
             }
@@ -115,11 +115,11 @@ namespace Capstone_UnitTest.Controller
 
                 var waitInfo = new WaitingInfo();
                 waitInfo.WaitingId = 2;
-                waitInfo.AccountId = 2;
+
                 _mockMapper.Setup(m => m.Map<CustomerInfo, WaitingInfo>(It.IsAny<CustomerInfo>())).Returns(waitInfo);
                 var waitting = new Waiting();
                 waitting.WaitingId = 2;
-                waitting.AccountId = 2;
+
                 _mockMapper.Setup(m => m.Map<WaitingInfo, Waiting>(It.IsAny<WaitingInfo>())).Returns(waitting);
 
             }
@@ -167,11 +167,11 @@ namespace Capstone_UnitTest.Controller
 
                 var waitInfo = new WaitingInfo();
                 waitInfo.WaitingId = 1;
-                waitInfo.AccountId = 1;
+
                 _mockMapper.Setup(m => m.Map<CustomerInfo, WaitingInfo>(It.IsAny<CustomerInfo>())).Returns(waitInfo);
                 var waitting = new Waiting();
                 waitting.WaitingId = 1;
-                waitting.AccountId = 1;
+        
                 _mockMapper.Setup(m => m.Map<WaitingInfo, Waiting>(It.IsAny<WaitingInfo>())).Returns(waitting);
 
             }
@@ -183,18 +183,18 @@ namespace Capstone_UnitTest.Controller
 
                 var waitInfo = new WaitingInfo();
                 waitInfo.WaitingId = 2;
-                waitInfo.AccountId = 2;
+     
                 _mockMapper.Setup(m => m.Map<CustomerInfo, WaitingInfo>(It.IsAny<CustomerInfo>())).Returns(waitInfo);
                 var waitting = new Waiting();
                 waitting.WaitingId = 2;
-                waitting.AccountId = 2;
+     
                 _mockMapper.Setup(m => m.Map<WaitingInfo, Waiting>(It.IsAny<WaitingInfo>())).Returns(waitting);
 
             }
             WaitingController wController = new WaitingController(_mockContext.Object, _mockMapper.Object);
 
             Assert.Equal(0, _mockContext.Object.Waitings.Count());
-            Assert.IsType<NotFoundObjectResult>(wController.Request(id));
+            Assert.IsType<BadRequestObjectResult>(wController.Request(id));
             _mockContext.Verify(c => c.SaveChanges(), Times.Never);
             Assert.Equal(0, _mockContext.Object.Waitings.Count());
         }

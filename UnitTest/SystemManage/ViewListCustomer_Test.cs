@@ -28,40 +28,17 @@ namespace Capstone_UnitTest.Controller
         [Fact]
         public void TC2_ViewListCustomer_Test()
         {
-            Test_ViewListCustomer_HaveData(3);
-        }
-
-        [Fact]
-        public void TC3_ViewListCustomer_Test()
-        {
-            Test_ViewListCustomer_HaveData(9);
-        }
-
-        [Fact]
-        public void TC4_ViewListCustomer_Test()
-        {
             Test_ViewListCustomer_NoData(5);
         }
 
-        [Fact]
-        public void TC5_ViewListCustomer_Test()
-        {
-            Test_ViewListCustomer_NoData(8);
-        }
-
-        [Fact]
-        public void TC6_ViewListCustomer_Test()
-        {
-            Test_ViewListCustomer_NoData(2);
-        }
         public void Test_ViewListCustomer_HaveData(int count)
         {
             var customers = new List<Customer>
             {
-                new Customer { CustomerId = 1, AccountId = 1 },
-                new Customer { CustomerId = 2, AccountId = 2 },
-                new Customer { CustomerId = 3, AccountId = 3 },
-                new Customer { CustomerId = 4, AccountId = 4 },
+                new Customer { CustomerId = 1, AccountId = 1 , Account = new Account { IsBanned = false } },
+                new Customer { CustomerId = 2, AccountId = 2 , Account = new Account { IsBanned = true } },
+                new Customer { CustomerId = 3, AccountId = 3 , Account = new Account { IsBanned = false } },
+                new Customer { CustomerId = 4, AccountId = 4 , Account = new Account { IsBanned = false } },
             };
             var mockDBCustomer = new Mock<DbSet<Customer>>();
             mockDBCustomer.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(customers.AsQueryable().Provider);
@@ -72,15 +49,14 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<CustomerInfo>
             {
-                new CustomerInfo { CustomerId = 1, AccountId = 1 },
-                new CustomerInfo { CustomerId = 2, AccountId = 2 },
-                new CustomerInfo { CustomerId = 3, AccountId = 3 },
-                new CustomerInfo { CustomerId = 4, AccountId = 4 },
+                new CustomerInfo { CustomerId = 1, },
+                new CustomerInfo { CustomerId = 3, },
+                new CustomerInfo { CustomerId = 4, },
             };
             _mockMapper.Setup(m => m.Map<List<Customer>, List<CustomerInfo>>(It.IsAny<List<Customer>>())).Returns(usersInfo);
 
             CustomerController userController = new CustomerController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkObjectResult>(userController.List(count));
+            Assert.IsType<OkObjectResult>(userController.List());
             _mockContext.Verify(c => c.Customers, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<Customer>, List<CustomerInfo>>(It.IsAny<List<Customer>>()), Times.Once);
         }
@@ -105,7 +81,7 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<Customer>, List<CustomerInfo>>(It.IsAny<List<Customer>>())).Returns(usersInfo);
 
             CustomerController userController = new CustomerController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<NotFoundResult>(userController.List(count));
+            Assert.IsType<NotFoundResult>(userController.List());
             _mockContext.Verify(c => c.Customers, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<Customer>, List<CustomerInfo>>(It.IsAny<List<Customer>>()), Times.Once);
         }

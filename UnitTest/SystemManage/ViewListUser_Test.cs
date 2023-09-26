@@ -22,46 +22,23 @@ namespace Capstone_UnitTest.Controller
         [Fact]
         public void TC1_ViewListUser_Test()
         {
-            Test_ViewListUser_HaveData(5);
+            Test_ViewListUser_HaveData();
         }
 
         [Fact]
         public void TC2_ViewListUser_Test()
         {
-            Test_ViewListUser_HaveData(3);
+            Test_ViewListUser_NoData();
         }
 
-        [Fact]
-        public void TC3_ViewListUser_Test()
-        {
-            Test_ViewListUser_HaveData(9);
-        }
-
-        [Fact]
-        public void TC4_ViewListUser_Test()
-        {
-            Test_ViewListUser_NoData(5);
-        }
-
-        [Fact]
-        public void TC5_ViewListUser_Test()
-        {
-            Test_ViewListUser_NoData(8);
-        }
-
-        [Fact]
-        public void TC6_ViewListUser_Test()
-        {
-            Test_ViewListUser_NoData(2);
-        }
-        public void Test_ViewListUser_HaveData(int count)
+        public void Test_ViewListUser_HaveData()
         {
             var users = new List<User>
             {
-                new User {  UserId = 1, AccountId = 1 },
-                new User {  UserId = 2, AccountId = 1 },
-                new User {  UserId = 3, AccountId = 1 },
-                new User {  UserId = 4, AccountId = 1 },
+                new User {  UserId = 1, AccountId = 1 , Account = new Account { IsBanned = false } },
+                new User {  UserId = 2, AccountId = 2 , Account = new Account { IsBanned = true } },
+                new User {  UserId = 3, AccountId = 3 , Account = new Account { IsBanned = false } },
+                new User {  UserId = 4, AccountId = 4 , Account = new Account { IsBanned = false } },
             };
             var mockDBUser = new Mock<DbSet<User>>();
             mockDBUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(users.AsQueryable().Provider);
@@ -72,22 +49,19 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<UserInfo>
             {
-                new UserInfo {  UserId = 1, AccountId = 1 },
-                new UserInfo {  UserId = 2, AccountId = 1 },
-                new UserInfo {  UserId = 3, AccountId = 1 },
-                new UserInfo {  UserId = 4, AccountId = 1 },
+                new UserInfo {  UserId = 1, },
+                new UserInfo {  UserId = 3, },
+                new UserInfo {  UserId = 4, },
             };
             _mockMapper.Setup(m => m.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>())).Returns(usersInfo);
 
-
-
             UserController userController = new UserController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkObjectResult>(userController.List(count));
+            Assert.IsType<OkObjectResult>(userController.List());
             _mockContext.Verify(c => c.Users, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>()), Times.Once);
         }
 
-        public void Test_ViewListUser_NoData(int count)
+        public void Test_ViewListUser_NoData()
         {
             var users = new List<User>
             {
@@ -107,7 +81,7 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>())).Returns(usersInfo);
 
             UserController userController = new UserController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<NotFoundResult>(userController.List(count));
+            Assert.IsType<NotFoundResult>(userController.List());
             _mockContext.Verify(c => c.Users, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>()), Times.Once);
         }

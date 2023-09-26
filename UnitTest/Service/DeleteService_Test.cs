@@ -108,7 +108,7 @@ namespace Capstone_UnitTest.Controller
 
             ServiceController serviceController = new ServiceController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<BadRequestResult>(serviceController.Delete(id));
+            Assert.IsType<BadRequestObjectResult>(serviceController.Delete(id));
             _mockContext.Verify(c => c.Services, Times.Exactly(1));
             _mockContext.Verify(c => c.SaveChanges(), Times.Never);
             Assert.Equal(2, _mockContext.Object.Services.Count());

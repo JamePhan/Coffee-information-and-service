@@ -50,10 +50,10 @@ namespace Capstone_UnitTest.Controller
         {
             var news = new List<News>
             {
-                new News { NewsId = 1, UserId = 1, Title = "News 1" },
-                new News { NewsId = 2, UserId = 1, Title = "News 1" },
-                new News { NewsId = 3, UserId = 2, Title = "News 2" },
-                new News { NewsId = 4, UserId = 3, Title = "News 3" },
+                new News { NewsId = 1, UserId = 1, Title = "News 1" , User = new User { Account = new Account { IsBanned = false }}},
+                new News { NewsId = 2, UserId = 1, Title = "News 1" , User = new User { Account = new Account { IsBanned = false }}},
+                new News { NewsId = 3, UserId = 2, Title = "News 2" , User = new User { Account = new Account { IsBanned = false }}},
+                new News { NewsId = 4, UserId = 3, Title = "News 3" , User = new User { Account = new Account { IsBanned = false }}},
             };
 
             var mockDBNew = new Mock<DbSet<News>>();
@@ -65,10 +65,10 @@ namespace Capstone_UnitTest.Controller
 
             var newsInfos = new List<NewsInfo>
             {
-                new NewsInfo { NewsId = 1, UserId = 1, Title = "News 1" },
-                new NewsInfo { NewsId = 2, UserId = 1, Title = "News 1" },
-                new NewsInfo { NewsId = 3, UserId = 2, Title = "News 2" },
-                new NewsInfo { NewsId = 4, UserId = 3, Title = "News 3" },
+                new NewsInfo { NewsId = 1,   Title = "News 1" },
+                new NewsInfo { NewsId = 2,  Title = "News 1" },
+                new NewsInfo { NewsId = 3, Title = "News 2" },
+                new NewsInfo { NewsId = 4,  Title = "News 3" },
             };
 
             _mockMapper.Setup(m => m.Map<List<News>, List<NewsInfo>>(It.IsAny<List<News>>())).Returns(newsInfos);

@@ -22,16 +22,16 @@ namespace Capstone_UnitTest.Controller
         [Fact]
         public void TC1_ViewListBanner_Test()
         {
-            Test_ViewListBanner_HaveData(5);
+            Test_ViewListBanner_HaveData();
         }
 
         [Fact]
         public void TC2_ViewListBanner_Test()
         {
-            Test_ViewListBanner_NoData(5);
+            Test_ViewListBanner_NoData();
         }
 
-        public void Test_ViewListBanner_HaveData(int count)
+        public void Test_ViewListBanner_HaveData()
         {
             var banners = new List<Banner>
             {
@@ -59,10 +59,10 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<Banner>, List<BannerInfo>>(It.IsAny<List<Banner>>())).Returns(bannerInfos);
 
             BannerController bannerController = new BannerController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkObjectResult>(bannerController.List(count));
+            Assert.IsType<OkObjectResult>(bannerController.List());
         }
 
-        public void Test_ViewListBanner_NoData(int count)
+        public void Test_ViewListBanner_NoData()
         {
             var banners = new List<Banner>
             {
@@ -82,7 +82,7 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<Banner>, List<BannerInfo>>(It.IsAny<List<Banner>>())).Returns(bannerInfos);
 
             BannerController bannerController = new BannerController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<NotFoundResult>(bannerController.List(count));
+            Assert.IsType<NotFoundResult>(bannerController.List());
         }
 
 

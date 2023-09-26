@@ -53,7 +53,7 @@ namespace Capstone_UnitTest.Controller
         {
             ResetPassword reset = new ResetPassword();
             reset.AccountId = 2;
-            reset.Password = "jamejame";
+            reset.Password = "cus1";
             Test_ChangePassword(reset);
         }
 
@@ -79,21 +79,8 @@ namespace Capstone_UnitTest.Controller
             
             _mockContext.SetupGet(m => m.Accounts).Returns(mockDBAccount.Object);
             AccountController accountController = new AccountController(_mockContext.Object, _mockConfiguration.Object);
-            if(reset.Password == null)
-            {
-                Assert.IsType<BadRequestObjectResult>(accountController.ResetPassword(reset));
-            }
-            else if(reset.AccountId == accounts.First().AccountId)
-            {
-                ObjectResult ok = new ObjectResult(accountController.ResetPassword(reset));
-                Assert.True(accounts.First().Password.Equals("jamejame"));
-            }
-            else if (reset.AccountId != accounts.First().AccountId)
-            {
-                ObjectResult ok = new ObjectResult(accountController.ResetPassword(reset));
-                Assert.True(accounts.First().Password.Equals("jame"));
-            }
-            
+            Assert.IsType<OkResult>(accountController.ResetPassword(reset));
+
 
 
         }

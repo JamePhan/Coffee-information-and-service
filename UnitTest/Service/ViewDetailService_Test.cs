@@ -77,7 +77,7 @@ namespace Capstone_UnitTest.Controller
             var followInfos = new ServiceInfo();
             followInfos.ServiceId = 2;
             followInfos.Name = "Payment";
-            followInfos.UserId = 3;
+       
 
             _mockMapper.Setup(m => m.Map<Service, ServiceInfo>(It.IsAny<Service>())).Returns(followInfos);
             ServiceController serviceController = new ServiceController(_mockContext.Object, _mockMapper.Object);
@@ -109,7 +109,7 @@ namespace Capstone_UnitTest.Controller
             var followInfos = new ServiceInfo();
             followInfos.ServiceId = 2;
             followInfos.Name = "Payment";
-            followInfos.UserId = 3;
+         
 
             _mockMapper.Setup(m => m.Map<Service, ServiceInfo>(It.IsAny<Service>())).Returns(followInfos);
             ServiceController serviceController = new ServiceController(_mockContext.Object, _mockMapper.Object);
