@@ -15,7 +15,7 @@ class RequestService {
 
   // Hàm từ chối yêu cầu
   declineRequest(customerId: number): Promise<AxiosResponse<any>> {
-    return httpsNoToken.post(`Waiting/Deny?customerId=${customerId}`);
+    return httpsNoToken.delete(`Waiting/Deny?id=${customerId}`);
   }
 }
 
