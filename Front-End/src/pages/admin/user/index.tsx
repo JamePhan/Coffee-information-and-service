@@ -44,17 +44,19 @@ const UserManagement = ({ }: Props) => {
       title: 'Ảnh đại diện',
       dataIndex: 'avatar',
       render: (_, record) => (
-        <div className='w-[50px] rounded-lg'>
+        <div style={{ width: '50px', height: '50px' }} className='rounded-lg'>
           <PreImage
-            width={1980}
+            width={50}
             height={50}
             alt={`Image ${record.userId}`}
             src={record.avatar}
-            className='w-full object-cover rounded-full'
+            className='w-full h-full object-cover rounded-full'
           />
         </div>
       ),
     },
+
+
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',

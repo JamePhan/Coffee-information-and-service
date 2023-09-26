@@ -37,7 +37,7 @@ export function PreImage({ src, layer, width, height, style, className, alt, onC
         <div>
           <img
             src='/images/default.png'
-            style={{ ...style, width: `50px`, height: `50px` }}
+            style={{ ...style }}
             className={className}
           />
         </div>

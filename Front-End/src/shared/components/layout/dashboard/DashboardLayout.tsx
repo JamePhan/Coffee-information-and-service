@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import HeaderDashboard from './HeaderDashboard';
 import { PreImage } from '@/components/common/PreImage';
 import { useAppDispatch } from '@/hooks/useRedux';
@@ -19,6 +19,10 @@ interface Props {
   children: React.ReactNode;
 }
 
+const handleLogoClick = () => {
+  // Sử dụng router để chuyển hướng về trang chủ
+  router.push('/');
+};
 const DashboardLayout = ({ children }: Props) => {
   const { theme } = useTheme()
   const [isAdmin, setIsAdmin] = useState(false)
@@ -52,6 +56,7 @@ const DashboardLayout = ({ children }: Props) => {
               src={'/Logo2.png'}
               alt={'Logo'}
               layer={false}
+              onClick={handleLogoClick}
             />
           </div>
           <Menu
