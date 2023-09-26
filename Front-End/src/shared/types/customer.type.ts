@@ -6,3 +6,8 @@ export interface ICustomer {
   email: string;
   accountId: number;
 }
+
+export interface ICustomerbanned {
+  profileId: number;
+  role: string;
+}

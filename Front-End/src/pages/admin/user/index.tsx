@@ -89,7 +89,7 @@ const UserManagement = ({ }: Props) => {
             type='primary'
             danger
           >
-            Banned
+            <StopOutlined /> Ban Account
           </Button>
         </Space>
       ),

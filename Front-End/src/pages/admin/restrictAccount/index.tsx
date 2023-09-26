@@ -1,32 +1,51 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, Col, Input, Row, Space, Table, message } from 'antd';
+import { Button, Col, Input, Row, Space, Table, message, Tabs } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
+import { customerService } from 'src/shared/services/customer.service';
 import { IInforUser, IUserbanned } from 'src/shared/types/user.type';
+import { ICustomer, ICustomerbanned } from 'src/shared/types/customer.type';
 import { PreImage } from '@/components/common/PreImage';
+
+const { TabPane } = Tabs;
 
 type Props = {};
 
-const RestrictUser = ({}: Props) => {
+const RestrictUser = ({ }: Props) => {
   const [searchText, setSearchText] = useState('');
-  const { data: dataUser, refetch } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
+  const { data: dataUser, refetch: refetchUser } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
+  const { data: dataCustomer, refetch: refetchCustomer } = useQuery(['bannedCustomerList'], () => customerService.getBannedCustomer());
 
-  const unbanUserMutation = useMutation({
-    mutationFn: (body: IUserbanned) => userService.unbanUser(body),
+
+  const unbanUserMutation = useMutation((body: IUserbanned) => userService.banUser(body), {
     onSuccess() {
       message.success('Unbanned successfully');
-      refetch();
+      refetchUser();
     },
     onError(error) {
-      console.error('Error unbanning account', error);
-      message.error('Failed to unban account');
+      console.error('Error unbanning user account', error);
+      message.error('Failed to unban user account');
     },
   });
 
-  const columns: ColumnType<IInforUser>[] = [
+
+  const unbanCustomerMutation = useMutation((body: ICustomerbanned) => customerService.banCustomer(body), {
+    onSuccess() {
+      message.success('Unbanned successfully');
+      refetchCustomer();
+    },
+    onError(error) {
+      console.error('Error unbanning customer account', error);
+      message.error('Failed to unban customer account');
+    },
+  });
+
+
+
+  const columnsUser: ColumnType<IInforUser>[] = [
     {
       title: '#',
       key: 'id',
@@ -77,7 +96,7 @@ const RestrictUser = ({}: Props) => {
       render: (_, record) => (
         <Space size='middle'>
           <Button
-       
+
             icon={<CloseCircleOutlined />}
             onClick={() => {
               const body = {
@@ -86,6 +105,8 @@ const RestrictUser = ({}: Props) => {
               };
               unbanUserMutation.mutate(body);
             }}
+            type='primary'
+            danger
           >
             Unban
           </Button>
@@ -94,40 +115,94 @@ const RestrictUser = ({}: Props) => {
     },
   ];
 
-  const filteredData = dataUser?.data?.filter((user) =>
+  const columnsCustomer: ColumnType<ICustomer>[] = [
+    {
+      title: '#',
+      key: 'id',
+      render: (_, record, index) => (
+        <div>
+          <p>{index + 1}</p>
+        </div>
+      ),
+    },
+    {
+      title: 'Tên người dùng',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Hành động',
+      key: 'action',
+      render: (_, record) => (
+        <Space size='middle'>
+          <Button
+            icon={<CloseCircleOutlined />}
+            onClick={() => {
+              const body = {
+                role: 'customer',
+                profileId: Number(record?.customerId),
+              };
+              unbanCustomerMutation.mutate(body);
+            }}
+            type='primary'
+            danger
+          >
+            Unban
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const filteredUserData = dataUser?.data?.filter((user) =>
     user.coffeeShopName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const filteredCustomerData = dataCustomer?.data?.filter((customer: { name: string; }) =>
+    customer.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
     <>
-      {dataUser && (
-        <>
-          <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
-            <Col span={12}>
-              <h1 className='font-bold text-2xl text-black'>Quản lý người dùng bị Ban</h1>
-            </Col>
-            <Col span={12}>
-              <div className='flex py-2 justify-end items-end gap-3'>
-                <Input
-                  placeholder="Tìm kiếm theo tên người dùng"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  style={{ width: '400px' }}
-                />
-                <Button
-                  onClick={() => {
-                    refetch();
-                  }}
-                  icon={<ReloadOutlined className='text-xs' />}
-                >
-                  Làm mới
-                </Button>
-              </div>
-            </Col>
-          </Row>
-          <Table dataSource={filteredData} columns={columns} />
-        </>
-      )}
+      <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
+        <Col span={12}>
+          <h1 className='font-bold text-2xl text-black'>Quản lý Account Banned</h1>
+        </Col>
+        <Col span={12}>
+          <div className='flex py-2 justify-end items-end gap-3'>
+            <Input
+              placeholder="Tìm kiếm theo tên người dùng"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              style={{ width: '400px' }}
+            />
+
+          </div>
+        </Col>
+      </Row>
+      <Tabs defaultActiveKey='user' tabBarGutter={50}>
+        <TabPane tab='User bị Ban' key='user'>
+          <Table dataSource={filteredUserData} columns={columnsUser} />
+        </TabPane>
+        <TabPane tab='Customer bị Ban' key='customer'>
+          <Table dataSource={filteredCustomerData} columns={columnsCustomer} />
+        </TabPane>
+      </Tabs>
     </>
   );
 };

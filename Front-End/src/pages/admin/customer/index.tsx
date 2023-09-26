@@ -1,25 +1,35 @@
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { StopOutlined } from '@ant-design/icons';
-import { Button, Col, Input, Row, Space, Table } from 'antd';
+import { Button, Col, Input, Row, Space, Table, message } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 
-import { ICustomer } from 'src/shared/types/customer.type';
+import { ICustomer, ICustomerbanned } from 'src/shared/types/customer.type';
 import { PreImage } from '@/components/common/PreImage';
 import { customerService } from 'src/shared/services/customer.service';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReloadOutlined } from '@ant-design/icons';
-
 
 type Props = {};
 
 const CustomerManagement = ({ }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAction] = useState<string>('');
-  const [rowId, setRowId] = useState<number>();
   const [searchText, setSearchText] = useState('');
+  const queryClient = useQueryClient();
 
   const { data: dataCustomer, refetch } = useQuery(['listCustomer'], () => customerService.getAllCustomer());
+
+  const banCustomerMutation = useMutation({
+    mutationFn: (body: ICustomerbanned) => customerService.banCustomer(body),
+    onSuccess(_data, variables, _context) {
+      message.success('Ban Khách Hàng thành công!');
+      queryClient.invalidateQueries(['listCustomer']);
+    },
+    onError(error, variables, context) {
+      message.error('Đã xảy ra lỗi khi gửi yêu cầu');
+    },
+  });
+
+
 
   const columns: ColumnType<ICustomer>[] = [
     {
@@ -36,7 +46,7 @@ const CustomerManagement = ({ }: Props) => {
       dataIndex: 'name',
       key: 'name',
     },
-    
+
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',
@@ -56,21 +66,29 @@ const CustomerManagement = ({ }: Props) => {
       title: 'Hành động',
       key: 'action',
       render: (_, record) => (
+
         <Space size='middle'>
-          <div
+          <Button
+
             className='cursor-pointer'
             onClick={() => {
-              setAction('ban');
-              setOpen(true);
-              setRowId(record.customerId);
+              const body = {
+                role: 'customer',
+                profileId: Number(record?.customerId),
+              };
+              banCustomerMutation.mutate(body);
             }}
-          >
+
+            type='primary'
+            danger>
             <StopOutlined /> Ban Account
-          </div>
+          </Button>
         </Space>
       ),
     },
   ];
+
+  // Lọc danh sách người dùng dựa trên searchText
   const filteredData = dataCustomer?.data?.filter((customer) =>
     customer.name.toLowerCase().includes(searchText.toLowerCase())
   );

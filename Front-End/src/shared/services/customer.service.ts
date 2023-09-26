@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { httpsNoToken } from '../config/http.config';
-import { ICustomer } from '../types/customer.type';
+import { ICustomer, ICustomerbanned } from '../types/customer.type';
 
 
 class CustomerService {
@@ -13,7 +13,13 @@ class CustomerService {
     searchCustomer(search: string): Promise<AxiosResponse<ICustomer>> {
         return httpsNoToken.get(`/Customer/Search/${search}`)
     }
+    banCustomer(body: ICustomerbanned): Promise<AxiosResponse<void>> {
+        return httpsNoToken.put(`/Account/UpdateBan`, body);
+    }
 
+    getBannedCustomer(): Promise<AxiosResponse<ICustomer[]>> {
+        return httpsNoToken.get('/Customer/Banned/');
+    }
 }
 
 export const customerService = new CustomerService()
