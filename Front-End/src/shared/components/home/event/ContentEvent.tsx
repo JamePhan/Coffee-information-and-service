@@ -23,9 +23,11 @@ const ContentEvent = ({ event }: Props) => {
           <p>Địa chỉ {event.address}</p>
         </p>
       </div>
-      <h1 className='text-2xl min-w-1/2'>
-        {event.description.length > 22 ? event.description.substring(0, 20) + '...' : event.description}
-      </h1>
+      {event && event.description && (
+        <h1 className='text-2xl min-w-1/2'>
+          {event.description.length > 22 ? event.description.substring(0, 20) + '...' : event.description}
+        </h1>
+      )}
       <div className='flex flex-col justify-start items-start gap-3'>
         <p>Chỗ ngồi: {event.seatCount}</p>
         <p>Giá: {event.price} VND</p>

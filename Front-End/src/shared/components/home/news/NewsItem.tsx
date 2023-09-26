@@ -25,7 +25,7 @@ const NewsItem = ({ data }: Props) => {
           <p className='text-sm text-slate-500'>13/08/2023</p>
         </div>
         <h2 className='text-2xl'>{data.title}</h2>
-        <p className='text-sm text-slate-500'>{data.description}</p>
+        {/* <p className='text-sm text-slate-500'>{data.description}</p> */}
         <p className='text-sm text-slate-500'>Tác giả: {data.coffeeShopName}</p>
         <BtnCommon cls='bg-transparent p-0 m-0' title='Tìm hiểu thêm' />
       </div>

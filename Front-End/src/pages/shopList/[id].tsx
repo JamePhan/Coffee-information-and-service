@@ -1,18 +1,28 @@
 import React from 'react';
 import Head from 'next/head';
 import { IInforUser } from 'src/shared/types/user.type';
-import { PreImage } from '@/components/common/PreImage';
+import { INews } from 'src/shared/types/news.type';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import dynamic from 'next/dynamic';
+import News from '@/components/home/news';
+import { IEvent } from 'src/shared/types/event.type';
+import Event from '@/components/home/event';
+import { eventData } from '@/mocks/event';
 
-const containerStyle = {
-    width: '100%',
-    height: '400px', // Điều chỉnh kích thước bản đồ tùy ý
-};
+// const containerStyle = {
+//     width: '100%',
+//     height: '400px', // Điều chỉnh kích thước bản đồ tùy ý
+// };
+const ScrollRevealWrapper = dynamic(() => import('src/shared/components/common/ScrollRevealWrapper'), { ssr: false });
 
 interface Props {
     shopListData: IInforUser;
+    newsData: INews[]; // Thêm dữ liệu tin tức vào props
+    eventData: IEvent[]
 }
 
-const UsersDetail = ({ shopListData }: Props) => {
+const UsersDetail = ({ shopListData, newsData, eventData }: Props) => {
     if (!shopListData) return <></>;
 
     return (
@@ -43,10 +53,24 @@ const UsersDetail = ({ shopListData }: Props) => {
                             <p className='text-white-600'>Số điện thoại: {shopListData.phone}</p>
                             <p className='text-white-600'>User ID: {shopListData.userId}</p>
                             <p className='text-white-600'>Email:{shopListData.email}</p>
-
                         </div>
                     </div>
 
+                    <div className='mt-10 w-full bg-[#141523]'>
+
+                        <br></br>
+                        <ScrollRevealWrapper>
+                            <Event isPage={false} count={6} eventData={eventData && eventData.length > 0 ? eventData : []} />
+                        </ScrollRevealWrapper>
+                    </div>
+                    {/* Hiển thị danh sách tin tức */}
+                    <div className='mt-10 w-full bg-[#141523]'>
+
+                        <br></br>
+                        <ScrollRevealWrapper>
+                            <News isPage={false} newsData={newsData && newsData.length > 0 ? newsData : []} />
+                        </ScrollRevealWrapper>
+                    </div>
 
                     <div className='mt-10 w-full h-full'>
                         {/* Hiển thị Google Map */}
@@ -70,9 +94,15 @@ export async function getStaticProps({ params }: any) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/User/Detail/${id}`);
     const shopListData = await res.json();
 
+    // Simulate fetching news data (replace with actual API call)
+    const newsRes = await fetch(`${process.env.NEXT_PUBLIC_API}/News/List`);
+    const newsData = await newsRes.json();
+
     return {
         props: {
             shopListData,
+            newsData, // Đưa dữ liệu tin tức vào props
+            eventData,
         },
     };
 }
@@ -81,7 +111,10 @@ export async function getStaticPaths() {
     return {
         paths: [],
         fallback: false,
+
     };
 }
+
+
 
 export default UsersDetail;
