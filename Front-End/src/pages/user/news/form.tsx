@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, message, Modal, Row, Col, DatePicker } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useEffect } from 'react';
-import user from 'src/pages/admin/user';
+
 import { newsService } from 'src/shared/services/news.service';
 import { INews, INewsAdd } from 'src/shared/types/news.type';
 
@@ -18,37 +18,45 @@ interface Props {
 const FormNews = ({ editId, open, setOpen, refetch, coffeeShopName }: Props) => {
   const [form] = useForm();
   const isEditIdValidNumber = typeof editId === 'number';
-  const createMutation = useMutation({
-    mutationFn: (body: INewsAdd) => {
-      return newsService.createNews(body);
-    },
-    onSuccess(data, _variables, _context) {
-      const res = data.data;
-      if (!res) return;
-      message.success('Tạo thành công');
-      setOpen(false); // Đóng Modal khi tạo thành công
-      refetch();
-    },
-    onError(error, variables, context) {
-      message.error('Tạo không thành công');
-    },
-  });
-  const updateMutation = useMutation({
-    mutationFn: (body: INews) => newsService.updateNews(body),
-    onSuccess(data, _variables, _context) {
-      const res = data.data;
-      if (!res) return;
-      message.success('Cập nhật thành công');
-      setOpen(false); // Đóng Modal khi cập nhật thành công
-      refetch();
-    },
-    onError(error, variables, context) {
-      message.error('Cập nhật không thành công');
-    },
-  });
+
+  const createMutation = useMutation(
+    (body: INewsAdd) => newsService.createNews(body),
+    {
+      onSuccess: (data) => {
+        const res = data;
+        if (res) {
+          message.success('Tạo thành công');
+          setOpen(false); // Đóng Modal khi tạo thành công
+          refetch();
+        } else {
+          message.error('Dữ liệu trả về không hợp lệ'); // Thêm thông báo nếu dữ liệu trả về không hợp lệ
+        }
+      },
+      onError: (error) => {
+        message.error('Tạo không thành công');
+      },
+    }
+  );
+
+
+  const updateMutation = useMutation(
+    (body: INews) => newsService.updateNews(body),
+    {
+      onSuccess: (data) => {
+        const res = data;
+        if (!res) return;
+        message.success('Cập nhật thành công');
+        setOpen(false); // Đóng Modal khi cập nhật thành công
+        refetch();
+      },
+      onError: (error) => {
+        message.error('Cập nhật không thành công');
+      },
+    }
+  );
 
   function handleCreate(value: any) {
-    console.log(coffeeShopName);
+
 
     if (editId) {
       const formEdit = {
