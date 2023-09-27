@@ -2,7 +2,7 @@ import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { DeleteOutlined, EditOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, Col, message, Popconfirm, Row, Space, Table } from 'antd';
 import { ColumnType } from 'antd/lib/table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import FormNews from './form';
 import { newsService } from 'src/shared/services/news.service';
@@ -12,18 +12,19 @@ import { PreImage } from '@/components/common/PreImage';
 
 type Props = {};
 
-const NewsManagement = ({}: Props) => {
+const NewsManagement = ({ }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const [open, setOpen] = useState(false);
   const [action, setAtion] = useState<string>('');
   const [rowId, setRowId] = useState<number>();
-
   const { data: dataNews, refetch } = useQuery(['listNews'], () => newsService.getAllNews(), {
     select: data => {
+
       const filterData = data.data.filter(item => item.coffeeShopName === user?.name);
       return filterData;
     },
   });
+
   const deleteMutation = useMutation({
     mutationKey: ['deleteNewsMutation'],
     mutationFn: (NewsId: number) => newsService.deleteNews(NewsId),
@@ -130,11 +131,12 @@ const NewsManagement = ({}: Props) => {
               </div>
             </Col>
           </Row>
+
           <Table dataSource={dataNews} columns={columns} scroll={{ x: true }} />
           {action === 'create' && !rowId ? (
-            <FormNews refetch={refetch} open={open} setOpen={setOpen} />
+            <FormNews refetch={refetch} open={open} setOpen={setOpen} coffeeShopName={user?.name} />
           ) : (
-            <FormNews refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
+            <FormNews refetch={refetch} editId={rowId} open={open} coffeeShopName={user?.name} setOpen={setOpen} />
           )}
         </>
       )}

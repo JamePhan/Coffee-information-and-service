@@ -12,13 +12,16 @@ interface Props {
   open: any;
   setOpen: any;
   refetch: any;
+  coffeeShopName: any;
 }
 
-const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
+const FormNews = ({ editId, open, setOpen, refetch, coffeeShopName }: Props) => {
   const [form] = useForm();
   const isEditIdValidNumber = typeof editId === 'number';
   const createMutation = useMutation({
-    mutationFn: (body: INewsAdd) => newsService.createNews(body),
+    mutationFn: (body: INewsAdd) => {
+      return newsService.createNews(body);
+    },
     onSuccess(data, _variables, _context) {
       const res = data.data;
       if (!res) return;
@@ -45,14 +48,21 @@ const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
   });
 
   function handleCreate(value: any) {
+    console.log(coffeeShopName);
+
     if (editId) {
       const formEdit = {
+        coffeeShopName: coffeeShopName,
         newsId: editId,
         ...value,
       };
       updateMutation.mutate(formEdit);
     } else {
-      createMutation.mutate(value);
+      const formEdit = {
+        coffeeShopName: coffeeShopName,
+        ...value,
+      };
+      createMutation.mutate(formEdit);
     }
   }
 
@@ -83,8 +93,8 @@ const FormNews = ({ editId, open, setOpen, refetch }: Props) => {
         autoComplete='off'
         layout='vertical'
       >
-        <Form.Item label='Tên coffee shop' name='coffeeShopName'>
-          <Input />
+        <Form.Item label='Tên coffee shop'>
+          <Input disabled defaultValue={coffeeShopName} />
         </Form.Item>
         <Form.Item label='Tiêu đề' name='title' rules={[{ required: true, message: 'Vui lòng nhập tiêu đề' }]}>
           <Input />
