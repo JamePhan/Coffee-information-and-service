@@ -1,10 +1,10 @@
-import InputUpload from '@/components/common/UploadInput';
 import DashboardLayout from '@/components/layout/dashboard/DashboardLayout';
 import { useAppSelector } from '@/hooks/useRedux';
-import { Row, Col, Form, Input, Button, message } from 'antd';
+import { Row, Col, Form, Input, Button } from 'antd';
 import { useState } from 'react';
 import { userService } from 'src/shared/services/user.service';
 import { IInforUser } from 'src/shared/types/user.type';
+import InputUpload from '@/components/common/UploadInput';
 
 const Profile = () => {
   const { user } = useAppSelector(state => state.appSlice);
@@ -24,34 +24,33 @@ const Profile = () => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Kiểm tra nếu formData tồn tại, thì cập nhật giá trị của trường tương ứng
+    if (formData) {
+      const { name, value } = e.target;
+      const updatedFormData = { ...formData, [name]: value };
+      setFormData(updatedFormData);
+    }
+  };
 
-
-
-  // Hàm xử lý khi nhấn nút "Cập Nhật Thông Tin"
   const handleUpdateProfile = async () => {
     try {
       if (formData) {
         // Gọi phương thức updateUser của userService để cập nhật thông tin người dùng
+        // UserService và response.status cần phải được định nghĩa ở phía bạn
         const response = await userService.updateUser(formData);
 
         if (response.status === 200) {
-          message.success('Cập nhật thông tin thành công');
+          // Xử lý thành công
           setIsEditing(false);
-          // Cập nhật lại dữ liệu hiển thị nếu cần thiết
-
-          // Tạo một biến tạm thời để lưu trữ formData sau khi cập nhật avatar
-          const updatedFormData = { ...formData, avatar: avatarUrl };
-          setFormData(formData);
         } else {
-          message.error('Cập nhật thông tin không thành công');
+          // Xử lý thất bại
         }
       }
     } catch (error) {
-      message.error('Cập nhật thông tin không thành công');
+      // Xử lý lỗi
     }
   };
-
-
 
   return (
     <Row className='h-screen w-full' gutter={[16, 16]}>
@@ -73,32 +72,49 @@ const Profile = () => {
           name='basic'
           layout='vertical'
           style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
           autoComplete='off'
         >
           <Form.Item label='Avatar' name='avatar'>
             <InputUpload
-              initSrc={avatarUrl}
+              initSrc={avatarUrl || user?.avatar} // Sử dụng user?.avatar như giá trị mặc định
               onChange={handleAvatarChange}
             />
           </Form.Item>
           <Form.Item label='Tên' name='name'>
-            <Input disabled={!isEditing} placeholder={user?.name} />
+            <Input
+              disabled={!isEditing}
+              name='name'
+              value={user?.name}
+              onChange={handleInputChange}
+              placeholder={user?.name} // Sử dụng user?.name như giá trị mặc định
+            />
           </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item label='Số điện thoại' name='phone'>
-                <Input disabled={!isEditing} placeholder={user?.phone} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label='Email' name='email'>
-                <Input disabled={!isEditing} placeholder={user?.email} />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item label='Số điện thoại' name='phone'>
+            <Input
+              disabled={!isEditing}
+              name='phone'
+              value={user?.phone}
+              onChange={handleInputChange}
+              placeholder={user?.phone} // Sử dụng user?.phone như giá trị mặc định
+            />
+          </Form.Item>
+          <Form.Item label='Email' name='email'>
+            <Input
+              disabled={!isEditing}
+              name='email'
+              value={user?.email}
+              onChange={handleInputChange}
+              placeholder={user?.email} // Sử dụng user?.email như giá trị mặc định
+            />
+          </Form.Item>
           <Form.Item label='Địa chỉ' name='address'>
-            <Input disabled={!isEditing} placeholder={user?.address} />
+            <Input
+              disabled={!isEditing}
+              name='address'
+              value={user?.address}
+              onChange={handleInputChange}
+              placeholder={user?.address} // Sử dụng user?.address như giá trị mặc định
+            />
           </Form.Item>
 
           {/* Hiển thị nút "Cập Nhật Thông Tin" hoặc "Huỷ" tùy thuộc vào trạng thái chỉnh sửa */}
@@ -106,14 +122,14 @@ const Profile = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item style={{ textAlign: 'center' }}>
-                  <Button onClick={() => setIsEditing(false)} htmlType='button'>
+                  <Button onClick={() => setIsEditing(false)}>
                     Huỷ
                   </Button>
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item style={{ textAlign: 'center' }}>
-                  <Button onClick={handleUpdateProfile} htmlType='button'>
+                  <Button onClick={handleUpdateProfile}>
                     Cập Nhật Thông Tin
                   </Button>
                 </Form.Item>

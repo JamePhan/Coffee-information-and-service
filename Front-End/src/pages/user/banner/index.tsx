@@ -4,35 +4,57 @@ import { Button, Col, message, Popconfirm, Row, Space, Table } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { IBanner } from 'src/shared/types/banner.type';
+import { bannerService } from 'src/shared/services/banner.service';
 import FormBanner from './form';
 import { useAppSelector } from '@/hooks/useRedux';
 import { PreImage } from '@/components/common/PreImage';
-import { bannerService } from 'src/shared/services/banner.service';
-import { IBanner } from 'src/shared/types/banner.type';
 
 type Props = {};
 
-const BannerManagement = ({}: Props) => {
+const BannerManagement = ({ }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const [open, setOpen] = useState(false);
-  const [action, setAtion] = useState<string>('');
-  const [rowId, setRowId] = useState<number>();
+  const [action, setAction] = useState<string>('');
+  const [rowId, setRowId] = useState<number | undefined>(0);
 
-  const { data: dataBanner, refetch } = useQuery(['listBanner'], () => bannerService.getAllBanner(), {
-    select: data => {
-      const filterData = data.data.filter(item => item.userId === Number(user?.id));
-      return filterData;
-    },
-  });
-  const deleteMutation = useMutation({
-    mutationKey: ['deleteBannerMutation'],
-    mutationFn: (BannerId: number) => bannerService.deleteBanner(BannerId),
+  const { data: dataBanner, refetch } = useQuery(['listBanner'], () =>
+    bannerService.getAllBanner(),
+    {
+      select: data => {
+        const filterData = data.data.filter(item => item.userId === Number(user?.profileId));
+        return filterData;
+      },
+    }
+  );
+
+
+
+  const createMutation = useMutation({
+    mutationKey: ['createBannerMutation'],
+    mutationFn: (newBannerData: IBanner) => bannerService.newBanner(newBannerData),
     onSuccess: () => {
-      message.success('Xoá thành công');
+      message.success('Thêm banner thành công');
+      setOpen(false);
       refetch();
     },
     onError() {
-      message.error('Xoá không thành công');
+      message.error('Thêm banner không thành công');
+    },
+
+  });
+
+
+
+  const deleteMutation = useMutation({
+    mutationKey: ['deleteBannerMutation'],
+    mutationFn: (bannerId: number) => bannerService.deleteBanner(bannerId),
+    onSuccess: () => {
+      message.success('Xoá banner thành công');
+      refetch();
+    },
+    onError() {
+      message.error('Xoá banner không thành công');
     },
   });
 
@@ -42,7 +64,7 @@ const BannerManagement = ({}: Props) => {
       key: 'id',
       render: (_, record, index) => (
         <div>
-          <p>{index}</p>
+          <p>{index + 1}</p>
         </div>
       ),
     },
@@ -69,7 +91,7 @@ const BannerManagement = ({}: Props) => {
           <div
             className='cursor-pointer'
             onClick={() => {
-              setAtion('edit');
+              setAction('edit');
               setOpen(true);
               setRowId(record.bannerId);
             }}
@@ -93,7 +115,7 @@ const BannerManagement = ({}: Props) => {
   return (
     <>
       {dataBanner && (
-        <>
+        <div>
           <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
               <h1 className='font-bold text-2xl text-black'>Quản lý banner</h1>
@@ -110,26 +132,43 @@ const BannerManagement = ({}: Props) => {
                 </Button>
                 <Button
                   onClick={() => {
-                    setAtion('create');
-                    setRowId(NaN);
+                    setAction('create');
+                    setRowId(0);
                     setOpen(true);
                   }}
                 >
                   Tạo mới
                 </Button>
+
               </div>
             </Col>
           </Row>
           <Table dataSource={dataBanner} columns={columns} scroll={{ x: true }} />
-          {action === 'create' && !rowId ? (
-            <FormBanner refetch={refetch} open={open} setOpen={setOpen} />
+          {action === 'create' && rowId === 0 ? (
+            <FormBanner
+              open={open}
+              setOpen={setOpen}
+              onFormSubmit={() => {
+                refetch();
+              }}
+              refetch={refetch}
+            />
           ) : (
-            <FormBanner refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
+            <FormBanner
+              editId={rowId}
+              open={open}
+              setOpen={setOpen}
+              onFormSubmit={() => {
+                refetch();
+              }}
+              refetch={refetch}
+            />
           )}
-        </>
+        </div>
       )}
     </>
   );
 };
+
 BannerManagement.getLayout = (children: React.ReactNode) => <Dashboard>{children}</Dashboard>;
 export default BannerManagement;

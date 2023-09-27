@@ -7,14 +7,14 @@ class BannerService {
     getAllBanner(): Promise<AxiosResponse<IBanner[]>> {
         return httpsNoToken.get('/Banner/List')
     }
-    newBanner(body: { userId: number, imageUrl: string }) {
+    newBanner(body: IBanner) {
         return httpsNoToken.post("/Banner/Add", body)
     }
     updateBanner(body: IBanner) {
         return httpsNoToken.put(`/Banner/Update`, body)
     }
     getBannerById(id: number): Promise<AxiosResponse<IBanner>> {
-        return httpsNoToken.get(`/Banner/Detail?id=/${id}`)
+        return httpsNoToken.get(`/Banner/Detail?id=${id}`)
     }
     deleteBanner(id: number) {
         return httpsNoToken.delete(`/Banner/Delete/${id}`)

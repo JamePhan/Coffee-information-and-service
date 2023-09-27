@@ -9,11 +9,13 @@ import { IBanner } from 'src/shared/types/banner.type';
 
 interface Props {
   editId?: number;
-  open: any;
-  setOpen: any;
-  refetch: any;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  refetch: () => Promise<void>;
+  onFormSubmit: () => void;
 }
-const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
+
+const FormBanner: React.FC<Props> = ({ editId, open, setOpen, refetch, onFormSubmit }: Props) => {
   const [form] = useForm();
   const { user } = useAppSelector(state => state.appSlice);
   const isEditIdValidNumber = typeof editId === 'number';
@@ -21,27 +23,27 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
 
   const createMutation = useMutation({
     mutationFn: (body: IBanner) => bannerService.newBanner(body),
-    onSuccess(data, _variables, _context) {
-      if (!data) return;
+    onSuccess: () => {
       message.success('Tạo thành công');
       setActionPromise(null);
       refetch();
     },
-    onError(error, variables, context) {
+    onError: () => {
       message.error('Tạo không thành công');
       setActionPromise(null);
     },
   });
 
+
+
   const updateMutation = useMutation({
     mutationFn: (body: IBanner) => bannerService.updateBanner(body),
-    onSuccess(data, _variables, _context) {
-      if (!data) return;
+    onSuccess: () => {
       message.success('Cập nhật thành công');
       setActionPromise(null);
       refetch();
     },
-    onError(error, variables, context) {
+    onError: () => {
       message.error('Cập nhật không thành công');
       setActionPromise(null);
     },
@@ -57,18 +59,38 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
 
   function handleCreate(value: any) {
     if (editId) {
-      const formEdit = {
+      const formEdit: IBanner = {
         bannerId: editId,
-        userId: user?.id,
+        userId: user?.profileId || 0, // Sử dụng userId thay vì accountId
         ...value,
+
       };
-      setActionPromise(updateMutation.mutateAsync(formEdit));
+
+      updateMutation
+        .mutateAsync(formEdit)
+        .then(() => {
+          setActionPromise(null);
+          onFormSubmit(); // Gọi onFormSubmit khi form được submit thành công
+        })
+        .catch(() => {
+          setActionPromise(null);
+        });
     } else {
-      const formCreate = {
-        userId: user?.id,
+      const formCreate: IBanner = {
+        userId: user?.profileId || 0,
         ...value,
       };
-      setActionPromise(createMutation.mutateAsync(formCreate));
+
+
+      createMutation
+        .mutateAsync(formCreate)
+        .then(() => {
+          setActionPromise(null);
+          onFormSubmit(); // Gọi onFormSubmit khi form được submit thành công
+        })
+        .catch(() => {
+          setActionPromise(null);
+        });
     }
   }
 
@@ -77,36 +99,32 @@ const FormBanner = ({ editId, open, setOpen, refetch }: Props) => {
   });
 
   useEffect(() => {
+
     if (editId && data) {
       form.setFieldsValue(data.data);
     }
-  }, [data]);
+  }, [data, editId, form]);
 
   return (
-    <Modal title={editId ? `Chỉnh sửa sự kiện` : 'Tạo sự kiện mới'} centered open={open} width={1000} footer={false} onCancel={() => setOpen(false)}>
-      <Form
-        form={form}
-        name='basic'
-        initialValues={{ remember: true }}
-        onFinish={handleCreate}
-        autoComplete='off'
-        layout='vertical'
-      >
+    <Modal title={editId ? `Chỉnh sửa banner` : 'Tạo banner mới'} centered visible={open} width={1000} footer={null} onCancel={() => setOpen(false)}>
+      <Form form={form} name='basic' initialValues={{ remember: true }} onFinish={handleCreate} autoComplete='off' layout='vertical'>
         <Form.Item label='Ảnh' name='imageUrl' rules={[{ required: true, message: 'Vui lòng nhập ảnh' }]}>
           <InputUpload initSrc={data?.data.imageUrl} />
         </Form.Item>
 
-        <Row justify={'center'} align={'middle'} gutter={16}>
+        <Row justify='center' gutter={16}>
           <Col>
             <Form.Item style={{ textAlign: 'center' }}>
-              <Button onClick={() => setOpen(false)} htmlType='button'>
+              <Button type='default' onClick={() => setOpen(false)}>
                 Huỷ bỏ
               </Button>
             </Form.Item>
           </Col>
           <Col>
             <Form.Item style={{ textAlign: 'center' }}>
-              <Button htmlType='submit'>{editId ? 'Chỉnh sửa' : 'Tạo mới'}</Button>
+              <Button htmlType='submit'>
+                {editId ? 'Chỉnh sửa' : 'Tạo mới'}
+              </Button>
             </Form.Item>
           </Col>
         </Row>
