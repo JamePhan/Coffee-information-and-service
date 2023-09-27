@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from 'react';
 import Dashboard from '@/components/layout/dashboard/DashboardLayout';
 import { CloseCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Space, Table, message, Tabs } from 'antd';
 import { ColumnType } from 'antd/lib/table';
-import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { userService } from 'src/shared/services/user.service';
 import { customerService } from 'src/shared/services/customer.service';
@@ -18,7 +18,24 @@ const RestrictUser = ({ }: Props) => {
   const [searchText, setSearchText] = useState('');
   const { data: dataUser, refetch: refetchUser } = useQuery(['bannedUserList'], () => userService.getBannedUsers());
   const { data: dataCustomer, refetch: refetchCustomer } = useQuery(['bannedCustomerList'], () => customerService.getBannedCustomer());
+  const [noUserData, setNoUserData] = useState(false);
+  const [noCustomerData, setNoCustomerData] = useState(false);
 
+  useEffect(() => {
+    if (!dataUser?.data || dataUser.data.length === 0) {
+      setNoUserData(true);
+    } else {
+      setNoUserData(false);
+    }
+  }, [dataUser]);
+
+  useEffect(() => {
+    if (!dataCustomer?.data || dataCustomer.data.length === 0) {
+      setNoCustomerData(true);
+    } else {
+      setNoCustomerData(false);
+    }
+  }, [dataCustomer]);
 
   const unbanUserMutation = useMutation((body: IUserbanned) => userService.banUser(body), {
     onSuccess() {
@@ -31,7 +48,6 @@ const RestrictUser = ({ }: Props) => {
     },
   });
 
-
   const unbanCustomerMutation = useMutation((body: ICustomerbanned) => customerService.banCustomer(body), {
     onSuccess() {
       message.success('Unbanned successfully');
@@ -42,8 +58,6 @@ const RestrictUser = ({ }: Props) => {
       message.error('Failed to unban customer account');
     },
   });
-
-
 
   const columnsUser: ColumnType<IInforUser>[] = [
     {
@@ -96,7 +110,6 @@ const RestrictUser = ({ }: Props) => {
       render: (_, record) => (
         <Space size='middle'>
           <Button
-
             icon={<CloseCircleOutlined />}
             onClick={() => {
               const body = {
@@ -191,16 +204,23 @@ const RestrictUser = ({ }: Props) => {
               onChange={(e) => setSearchText(e.target.value)}
               style={{ width: '400px' }}
             />
-
           </div>
         </Col>
       </Row>
       <Tabs defaultActiveKey='user' tabBarGutter={50}>
         <TabPane tab='User bị Ban' key='user'>
-          <Table dataSource={filteredUserData} columns={columnsUser} />
+          {noUserData ? (
+            <p>Không có users bị ban</p>
+          ) : (
+            <Table dataSource={filteredUserData} columns={columnsUser} />
+          )}
         </TabPane>
         <TabPane tab='Customer bị Ban' key='customer'>
-          <Table dataSource={filteredCustomerData} columns={columnsCustomer} />
+          {noCustomerData ? (
+            <p>Không có customers bị ban</p>
+          ) : (
+            <Table dataSource={filteredCustomerData} columns={columnsCustomer} />
+          )}
         </TabPane>
       </Tabs>
     </>

@@ -12,11 +12,17 @@ import { ICustomer } from 'src/shared/types/customer.type';
 type Props = {};
 
 const CustomerManagement = ({ }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [action, setAtion] = useState<string>('');
-  const [rowId, setRowId] = useState<number>();
 
+  const [searchText, setSearchText] = useState(''); // State to store search text
   const { data: dataCustomer, refetch } = useQuery(['listCustomer'], () => customerService.getAllCustomer());
+
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+  };
+
+  const filteredData = searchText && dataCustomer ? dataCustomer.data?.filter((customer) =>
+    customer.name.toLowerCase().includes(searchText.toLowerCase())
+  ) : dataCustomer?.data;
 
   const columns: ColumnType<ICustomer>[] = [
     {
@@ -61,25 +67,13 @@ const CustomerManagement = ({ }: Props) => {
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-between items-center gap-3'>
-                <Search className='bg-blue-300 rounded-lg' placeholder='Tìm kiếm' onSearch={() => { }} enterButton />
-                {/* <Button
-                  onClick={() => {
-                    setAtion('create');
-                    setRowId(NaN);
-                    setOpen(true);
-                  }}
-                >
-                  Tạo mới
-                </Button> */}
+
+                <Search className='bg-blue-300 rounded-lg' placeholder='Tìm kiếm' onSearch={() => { }} onChange={(e) => handleSearch(e.target.value)} />
               </div>
             </Col>
           </Row>
           <Table dataSource={dataCustomer.data} columns={columns} />
-          {/* {action === 'create' && !rowId ? (
-            // <FormCustomer refetch={refetch} open={open} setOpen={setOpen} />
-          ) : (
-            // <FormCustomer refetch={refetch} editId={rowId} open={open} setOpen={setOpen} />
-          )} */}
+
         </>
       )}
     </>

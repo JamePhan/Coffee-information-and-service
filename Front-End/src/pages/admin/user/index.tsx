@@ -86,11 +86,11 @@ const UserManagement = ({ }: Props) => {
               };
               banUserMutation.mutate(body);
             }}
-            icon={<WarningOutlined className='text-xs' />}
+            icon={<StopOutlined className='text-xs' />}
             type='primary'
             danger
           >
-            <StopOutlined /> Ban Account
+            Ban Account
           </Button>
         </Space>
       ),
