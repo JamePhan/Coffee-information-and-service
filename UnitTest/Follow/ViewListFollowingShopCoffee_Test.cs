@@ -72,12 +72,12 @@ namespace Capstone_UnitTest.Controller
         {
             var followings = new List<Following>
             {
-                new Following { FollowingId = 1, UserId = 1, CustomerId = 1 },
-                new Following { FollowingId = 2, UserId = 2, CustomerId = 2 },
-                new Following { FollowingId = 3, UserId = 1, CustomerId = 1 },
-                new Following { FollowingId = 4, UserId = 2, CustomerId = 1 },
-                new Following { FollowingId = 5, UserId = 1, CustomerId = 3 },
-                new Following { FollowingId = 5, UserId = 3, CustomerId = 3 },
+                new Following { FollowingId = 1, UserId = 1, CustomerId = 1 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
+                new Following { FollowingId = 2, UserId = 2, CustomerId = 2 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
+                new Following { FollowingId = 3, UserId = 1, CustomerId = 1 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
+                new Following { FollowingId = 4, UserId = 2, CustomerId = 1 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
+                new Following { FollowingId = 5, UserId = 1, CustomerId = 3 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
+                new Following { FollowingId = 5, UserId = 3, CustomerId = 3 , User = new User { Account = new Account { IsBanned = false }}, Customer = new Customer { Account = new Account { IsBanned = false }}},
             };
             var mockDBFollowing = new Mock<DbSet<Following>>();
             mockDBFollowing.As<IQueryable<Following>>().Setup(m => m.Provider).Returns(followings.AsQueryable().Provider);
@@ -88,12 +88,12 @@ namespace Capstone_UnitTest.Controller
 
             var followInfos = new List<FollowInfo>
             {
-                new FollowInfo { FollowingId = 1, UserId = 1, CustomerId = 1 },
-                new FollowInfo { FollowingId = 2, UserId = 2, CustomerId = 2 },
-                new FollowInfo { FollowingId = 3, UserId = 1, CustomerId = 1 },
-                new FollowInfo { FollowingId = 4, UserId = 2, CustomerId = 1 },
-                new FollowInfo { FollowingId = 5, UserId = 1, CustomerId = 3 },
-                new FollowInfo { FollowingId = 5, UserId = 3, CustomerId = 3 },
+                new FollowInfo { FollowingId = 1, },
+                new FollowInfo { FollowingId = 2, },
+                new FollowInfo { FollowingId = 3, },
+                new FollowInfo { FollowingId = 4, },
+                new FollowInfo { FollowingId = 5,},
+                new FollowInfo { FollowingId = 5,},
             };
             _mockMapper.Setup(m => m.Map<List<Following>, List<FollowInfo>>(It.IsAny<List<Following>>())).Returns(followInfos);
 

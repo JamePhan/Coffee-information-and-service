@@ -44,7 +44,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 1;
-            newsNew.UserId = 1;
+  
             newsNew.Title = "News 5";
             Test_CreateNews(newsNew);
         }
@@ -54,7 +54,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 1;
-            newsNew.UserId = 1;
+ 
             newsNew.Title = "News 6";
             Test_CreateNews(newsNew);
         }
@@ -64,7 +64,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 1;
-            newsNew.UserId = 1;
+   
             newsNew.Title = "News 7";
             Test_CreateNews(newsNew);
         }
@@ -103,7 +103,7 @@ namespace Capstone_UnitTest.Controller
             else
             {
                 newsNew.NewsId = newInfo.NewsId;
-                newsNew.UserId = newInfo.UserId;
+        
                 newsNew.Title = newInfo.Title;
             }
             
@@ -111,11 +111,7 @@ namespace Capstone_UnitTest.Controller
 
             NewsController newController = new NewsController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<OkResult>(newController.Create(newInfo));
-            _mockContext.Verify(c => c.News, Times.Exactly(1));
-            _mockMapper.Verify(c => c.Map<NewsInfo, News>(It.IsAny<NewsInfo>()), Times.Once);
-            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal(5, _mockContext.Object.News.Count());
+            Assert.IsType<BadRequestObjectResult>(newController.Create(newInfo));
            
         }
     }

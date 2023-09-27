@@ -68,11 +68,11 @@ namespace Capstone_UnitTest.Controller
         {
             var events = new List<Event>
             {
-                new Event { EventId = 1, Name = "Melody1" },
-                new Event { EventId = 2, Name = "Melody2" },
-                new Event { EventId = 3, Name = "Melody3" },
-                new Event { EventId = 4, Name = "Melody4" },
-                new Event { EventId = 5, Name = "Melody5" }
+                new Event { EventId = 1, Name = "Melody1", User = new User { Account = new Account { IsBanned = false }} },
+                new Event { EventId = 2, Name = "Melody2" , User = new User { Account = new Account { IsBanned = false }} },
+                new Event { EventId = 3, Name = "Melody3" , User = new User { Account = new Account { IsBanned = false }} },
+                new Event { EventId = 4, Name = "Melody4" , User = new User { Account = new Account { IsBanned = true }} },
+                new Event { EventId = 5, Name = "Melody5" , User = new User { Account = new Account { IsBanned = false }} }
             };
             var mockDBEvent = new Mock<DbSet<Event>>();
             mockDBEvent.As<IQueryable<Event>>().Setup(m => m.Provider).Returns(events.AsQueryable().Provider);
@@ -86,13 +86,12 @@ namespace Capstone_UnitTest.Controller
                 new EventInfo { EventId = 1, Name = "Melody1" },
                 new EventInfo { EventId = 2, Name = "Melody2" },
                 new EventInfo { EventId = 3, Name = "Melody3" },
-                new EventInfo { EventId = 4, Name = "Melody4" },
                 new EventInfo { EventId = 5, Name = "Melody5" }
             };
             _mockMapper.Setup(m => m.Map<List<Event>, List<EventInfo>>(It.IsAny<List<Event>>())).Returns(eventInfos);
 
             EventController eventController = new EventController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkObjectResult>(eventController.List(count));
+            Assert.IsType<OkObjectResult>(eventController.List());
         }
 
         public void Test_ViewListEvent_NoData(int count)
@@ -115,7 +114,7 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<Event>, List<EventInfo>>(It.IsAny<List<Event>>())).Returns(eventInfos);
 
             EventController eventController = new EventController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<NotFoundResult>(eventController.List(count));
+            Assert.IsType<NotFoundResult>(eventController.List());
         }
 
 

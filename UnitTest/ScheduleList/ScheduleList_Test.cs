@@ -80,11 +80,11 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<ScheduleInfo>
             {
-                new ScheduleInfo { ScheduleId = 1, CustomerId = 1, EventId = 1  },
-                new ScheduleInfo { ScheduleId = 2, CustomerId = 2, EventId = 2, },
-                new ScheduleInfo { ScheduleId = 3, CustomerId = 3, EventId = 3, },
-                new ScheduleInfo { ScheduleId = 4, CustomerId = 4, EventId = 4, },
-                new ScheduleInfo { ScheduleId = 5, CustomerId = 5, EventId = 5, },
+                new ScheduleInfo { ScheduleId = 1, },
+                new ScheduleInfo { ScheduleId = 2, },
+                new ScheduleInfo { ScheduleId = 3,  },
+                new ScheduleInfo { ScheduleId = 4, },
+                new ScheduleInfo { ScheduleId = 5,  },
             };
             _mockMapper.Setup(m => m.Map<List<Schedule>, List<ScheduleInfo>>(It.IsAny<List<Schedule>>())).Returns(usersInfo);
 
@@ -138,11 +138,11 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<ScheduleInfo>
             {
-                new ScheduleInfo { ScheduleId = 1, CustomerId = 1, EventId = 1  },
-                new ScheduleInfo { ScheduleId = 2, CustomerId = 2, EventId = 2, },
-                new ScheduleInfo { ScheduleId = 3, CustomerId = 3, EventId = 3, },
-                new ScheduleInfo { ScheduleId = 4, CustomerId = 4, EventId = 4, },
-                new ScheduleInfo { ScheduleId = 5, CustomerId = 5, EventId = 5, },
+                new ScheduleInfo { ScheduleId = 1,},
+                new ScheduleInfo { ScheduleId = 2,  },
+                new ScheduleInfo { ScheduleId = 3,  },
+                new ScheduleInfo { ScheduleId = 4,  },
+                new ScheduleInfo { ScheduleId = 5,  },
             };
             _mockMapper.Setup(m => m.Map<List<Schedule>, List<ScheduleInfo>>(It.IsAny<List<Schedule>>())).Returns(usersInfo);
 

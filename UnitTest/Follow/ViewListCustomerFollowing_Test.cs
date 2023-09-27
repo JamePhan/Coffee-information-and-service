@@ -88,12 +88,12 @@ namespace Capstone_UnitTest.Controller
 
             var followInfos = new List<FollowInfo>
             {
-                new FollowInfo { FollowingId = 1, UserId = 1, CustomerId = 1 },
-                new FollowInfo { FollowingId = 2, UserId = 2, CustomerId = 2 },
-                new FollowInfo { FollowingId = 3, UserId = 1, CustomerId = 1 },
-                new FollowInfo { FollowingId = 4, UserId = 2, CustomerId = 1 },
-                new FollowInfo { FollowingId = 5, UserId = 1, CustomerId = 3 },
-                new FollowInfo { FollowingId = 5, UserId = 1, CustomerId = 3 },
+                new FollowInfo { FollowingId = 1,},
+                new FollowInfo { FollowingId = 2,},
+                new FollowInfo { FollowingId = 3, },
+                new FollowInfo { FollowingId = 4, },
+                new FollowInfo { FollowingId = 5,},
+                new FollowInfo { FollowingId = 5,},
             };
             _mockMapper.Setup(m => m.Map<List<Following>, List<FollowInfo>>(It.IsAny<List<Following>>())).Returns(followInfos);
 

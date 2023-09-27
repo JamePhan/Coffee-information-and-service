@@ -59,10 +59,10 @@ namespace Capstone_UnitTest.Controller
         {
             var users = new List<User>
             {
-                new User {  UserId = 1, AccountId = 1, CoffeeShopName = "House1" },
-                new User {  UserId = 2, AccountId = 2, CoffeeShopName = "House2" },
-                new User {  UserId = 3, AccountId = 3, CoffeeShopName = "House3" },
-                new User {  UserId = 4, AccountId = 4, CoffeeShopName = "House4" },
+                new User {  UserId = 1, AccountId = 1, CoffeeShopName = "House1", Account = new Account { IsBanned = false }  },
+                new User {  UserId = 2, AccountId = 2, CoffeeShopName = "House2", Account = new Account { IsBanned = true }  },
+                new User {  UserId = 3, AccountId = 3, CoffeeShopName = "House3", Account = new Account { IsBanned = false }  },
+                new User {  UserId = 4, AccountId = 4, CoffeeShopName = "House4", Account = new Account { IsBanned = false }  },
             };
             var mockDBUser = new Mock<DbSet<User>>();
             mockDBUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(users.AsQueryable().Provider);
@@ -73,10 +73,9 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<UserInfo>
             {
-                new UserInfo {  UserId = 1, AccountId = 1, CoffeeShopName = "House1" },
-                new UserInfo {  UserId = 2, AccountId = 2, CoffeeShopName = "House2" },
-                new UserInfo {  UserId = 3, AccountId = 3, CoffeeShopName = "House3" },
-                new UserInfo {  UserId = 4, AccountId = 4, CoffeeShopName = "House4" },
+                new UserInfo {  UserId = 1,  CoffeeShopName = "House1"},
+                new UserInfo {  UserId = 3,  CoffeeShopName = "House3"},
+                new UserInfo {  UserId = 4, CoffeeShopName = "House4"},
             };
             _mockMapper.Setup(m => m.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>())).Returns(usersInfo);
 
@@ -84,10 +83,10 @@ namespace Capstone_UnitTest.Controller
 
             var cuss = new List<Customer>
             {
-                new Customer { CustomerId = 1, AccountId = 1, Name = "Linh1" },
-                new Customer { CustomerId = 2, AccountId = 2, Name = "Linh2" },
-                new Customer { CustomerId = 3, AccountId = 3, Name = "Linh3" },
-                new Customer { CustomerId = 4, AccountId = 4, Name = "Linh4" },
+                new Customer { CustomerId = 1, AccountId = 1, Name = "Linh1", Account = new Account { IsBanned = false }  },
+                new Customer { CustomerId = 2, AccountId = 2, Name = "Linh2", Account = new Account { IsBanned = true }  },
+                new Customer { CustomerId = 3, AccountId = 3, Name = "Linh3", Account = new Account { IsBanned = false }  },
+                new Customer { CustomerId = 4, AccountId = 4, Name = "Linh4", Account = new Account { IsBanned = false }  },
             };
             var mockDBCus = new Mock<DbSet<Customer>>();
             mockDBCus.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(cuss.AsQueryable().Provider);
@@ -98,10 +97,9 @@ namespace Capstone_UnitTest.Controller
 
             var cussInfo = new List<CustomerInfo>
             {
-                new CustomerInfo { CustomerId = 1, AccountId = 1, Name = "Linh1"  },
-                new CustomerInfo { CustomerId = 2, AccountId = 2, Name = "Linh2"  },
-                new CustomerInfo { CustomerId = 3, AccountId = 3, Name = "Linh3"  },
-                new CustomerInfo { CustomerId = 4, AccountId = 4, Name = "Linh4"  },
+                new CustomerInfo { CustomerId = 1,  Name = "Linh1"  },
+                new CustomerInfo { CustomerId = 3, Name = "Linh3"  },
+                new CustomerInfo { CustomerId = 4,  Name = "Linh4"  },
             };
             _mockMapper.Setup(m => m.Map<List<Customer>, List<CustomerInfo>>(It.IsAny<List<Customer>>())).Returns(cussInfo);
 

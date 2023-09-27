@@ -69,15 +69,15 @@ namespace Capstone_UnitTest.Controller
 
             var usersInfo = new List<UserInfo>
             {
-                new UserInfo {  UserId = 1, AccountId = 1, CoffeeShopName = "House1" },
-                new UserInfo {  UserId = 4, AccountId = 4, CoffeeShopName = "House4" },
-                new UserInfo {  UserId = 5, AccountId = 5, CoffeeShopName = "House5" },
-                new UserInfo {  UserId = 6, AccountId = 6, CoffeeShopName = "House6" },
+                new UserInfo {  UserId = 1,  CoffeeShopName = "House1" },
+                new UserInfo {  UserId = 4,  CoffeeShopName = "House4" },
+                new UserInfo {  UserId = 5,  CoffeeShopName = "House5" },
+                new UserInfo {  UserId = 6,  CoffeeShopName = "House6" },
             };
             _mockMapper.Setup(m => m.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>())).Returns(usersInfo);
 
             UserController userController = new UserController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<OkObjectResult>(userController.Banned(count));
+            Assert.IsType<OkObjectResult>(userController.Banned());
 
             _mockContext.Verify(c => c.Users, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>()), Times.Once);
@@ -105,7 +105,7 @@ namespace Capstone_UnitTest.Controller
             _mockMapper.Setup(m => m.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>())).Returns(usersInfo);
 
             UserController userController = new UserController(_mockContext.Object, _mockMapper.Object);
-            Assert.IsType<NotFoundResult>(userController.Banned(count));
+            Assert.IsType<NotFoundResult>(userController.Banned());
 
             _mockContext.Verify(c => c.Users, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<User>, List<UserInfo>>(It.IsAny<List<User>>()), Times.Once);

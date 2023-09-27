@@ -40,6 +40,15 @@ namespace Capstone_UnitTest.Controller
         }
 
         [Fact]
+        public void TC5_AddBanner_Test()
+        {
+            BannerInfo banner = new BannerInfo();
+            banner = null;
+            Test_AddBanner(banner);
+        }
+
+
+        [Fact]
         public void TC1_AddBanner_Test()
         {
             BannerInfo banner = new BannerInfo();
@@ -77,9 +86,9 @@ namespace Capstone_UnitTest.Controller
             Test_AddBanner(banner);
         }
 
+        
         public void Test_AddBanner(BannerInfo banner)
         {
-
             var banners = new List<Banner>();
             var mockDBBanner = new Mock<DbSet<Banner>>();
             mockDBBanner.As<IQueryable<Banner>>().Setup(m => m.Provider).Returns(banners.AsQueryable().Provider);
@@ -87,7 +96,7 @@ namespace Capstone_UnitTest.Controller
             mockDBBanner.As<IQueryable<Banner>>().Setup(m => m.ElementType).Returns(banners.AsQueryable().ElementType);
             mockDBBanner.As<IQueryable<Banner>>().Setup(m => m.GetEnumerator()).Returns(banners.AsQueryable().GetEnumerator());
             _mockContext.Setup(m => m.Banners).Returns(mockDBBanner.Object);
-
+            mockDBBanner.Setup(x => x.Add(It.IsAny<Banner>())).Callback<Banner>(banners.Add);
             Banner bannerNew = new Banner();
             if (banner == null)
             {
@@ -96,16 +105,16 @@ namespace Capstone_UnitTest.Controller
             }
             else
             {
-                bannerNew.BannerId = 1;
-                bannerNew.UserId = 1;
-                bannerNew.ImageUrl = "exampleimage.com";
+                bannerNew.BannerId = banner.BannerId;
+                bannerNew.UserId = banner.UserId;
+                bannerNew.ImageUrl = banner.ImageUrl;
                 _mockMapper.Setup(m => m.Map<BannerInfo, Banner>(It.IsAny<BannerInfo>())).Returns(bannerNew);
             }
             BannerController bannerController = new BannerController(_mockContext.Object, _mockMapper.Object);
 
                 Assert.IsType<OkResult>(bannerController.Add(banner));
                 _mockContext.Verify(c => c.Banners.Add(bannerNew), Times.Once);
-            
+            Assert.Equal(1, _mockContext.Object.Banners.Count());
 
         }
 

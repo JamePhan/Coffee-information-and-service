@@ -60,11 +60,11 @@ namespace Capstone_UnitTest.Controller
         {
             var services = new List<Service>
             {
-                new Service { ServiceId = 1, Name = "Pay1" },
-                new Service { ServiceId = 2, Name = "Pay2" },
-                new Service { ServiceId = 3, Name = "Pay4" },
-                new Service { ServiceId = 4, Name = "Pay3" },
-                new Service { ServiceId = 5, Name = "Pay5" },
+                new Service { ServiceId = 1, Name = "Pay1", User = new User { Account = new Account { IsBanned = false }} },
+                new Service { ServiceId = 2, Name = "Pay2", User = new User { Account = new Account { IsBanned = false }} },
+                new Service { ServiceId = 3, Name = "Pay4", User = new User { Account = new Account { IsBanned = false }} },
+                new Service { ServiceId = 4, Name = "Pay3", User = new User { Account = new Account { IsBanned = false }} },
+                new Service { ServiceId = 5, Name = "Pay5", User = new User { Account = new Account { IsBanned = false }} },
             };
 
             var mockDBSet = new Mock<DbSet<Service>>();
@@ -87,7 +87,7 @@ namespace Capstone_UnitTest.Controller
 
             ServiceController serviceController = new ServiceController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<OkObjectResult>(serviceController.List(count));
+            Assert.IsType<OkObjectResult>(serviceController.List());
 
             _mockContext.Verify(c => c.Services, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<Service>, List<ServiceInfo>>(It.IsAny<List<Service>>()), Times.Once);
@@ -116,7 +116,7 @@ namespace Capstone_UnitTest.Controller
 
             ServiceController serviceController = new ServiceController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<NotFoundResult>(serviceController.List(count));
+            Assert.IsType<NotFoundResult>(serviceController.List());
 
             _mockContext.Verify(c => c.Services, Times.Exactly(1));
             _mockMapper.Verify(c => c.Map<List<Service>, List<ServiceInfo>>(It.IsAny<List<Service>>()), Times.Once);

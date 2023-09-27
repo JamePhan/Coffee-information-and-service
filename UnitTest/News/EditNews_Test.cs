@@ -44,7 +44,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 1;
-            newsNew.UserId = 1;
+   
             newsNew.Title = "News 5";
             Test_EditNews(newsNew);
         }
@@ -54,7 +54,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 1;
-            newsNew.UserId = 1;
+          
             newsNew.Title = "News 3";
             Test_EditNews(newsNew);
         }
@@ -64,7 +64,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 3;
-            newsNew.UserId = 2;
+         
             newsNew.Title = "News 2";
             Test_EditNews(newsNew);
         }
@@ -74,7 +74,7 @@ namespace Capstone_UnitTest.Controller
         {
             var newsNew = new NewsInfo();
             newsNew.NewsId = 2;
-            newsNew.UserId = 1;
+ 
             newsNew.Title = "News 6";
             Test_EditNews(newsNew);
         }
@@ -105,7 +105,7 @@ namespace Capstone_UnitTest.Controller
             else
             {
                 newsNew.NewsId = newInfo.NewsId;
-                newsNew.UserId = newInfo.UserId;
+     
                 newsNew.Title = newInfo.Title;
             }
 

@@ -44,8 +44,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 1;
-            locationInfo.PlusCode = "pluscode1";
-            locationInfo.UserId = 1;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Success(locationInfo);
         }
 
@@ -54,8 +53,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 2;
-            locationInfo.PlusCode = "pluscode1";
-            locationInfo.UserId = 1;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Success(locationInfo);
         }
 
@@ -64,8 +62,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 4;
-            locationInfo.PlusCode = "pluscode2";
-            locationInfo.UserId = 3;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Success(locationInfo);
         }
 
@@ -74,8 +71,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 1;
-            locationInfo.PlusCode = "pluscode3";
-            locationInfo.UserId = 1;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Fail(locationInfo);
         }
 
@@ -84,8 +80,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 2;
-            locationInfo.PlusCode = "pluscode4";
-            locationInfo.UserId = 1;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Fail(locationInfo);
         }
 
@@ -94,8 +89,7 @@ namespace Capstone_UnitTest.Controller
         {
             LocationInfo locationInfo = new LocationInfo();
             locationInfo.LocationId = 4;
-            locationInfo.PlusCode = "pluscode3";
-            locationInfo.UserId = 3;
+            locationInfo.Address = "hanoi";
             Test_AddLocation_Fail(locationInfo);
         }
 
@@ -104,8 +98,7 @@ namespace Capstone_UnitTest.Controller
         {
             var locations = new List<Location>
             {
-                new Location { PlusCode = "pluscode1", },
-                new Location { PlusCode = "pluscode2", },
+                
             };
 
             var mockDBLocation= new Mock<DbSet<Location>>();
@@ -124,8 +117,7 @@ namespace Capstone_UnitTest.Controller
             else
             {
                 locationNew.LocationId = locationInfo.LocationId;
-                locationNew.PlusCode = locationInfo.PlusCode;
-                locationNew.UserId = locationInfo.UserId;
+                locationNew.Address = locationInfo.Address;
                 _mockMapper.Setup(m => m.Map<LocationInfo, Location>(It.IsAny<LocationInfo>())).Returns(locationNew);
             }
             LocationController locationController = new LocationController(_mockContext.Object, _mockMapper.Object);
@@ -139,8 +131,8 @@ namespace Capstone_UnitTest.Controller
         {
             var locations = new List<Location>
             {
-                new Location { PlusCode = "pluscode1", },
-                new Location { PlusCode = "pluscode2", },
+                new Location { },
+                new Location { },
             };
 
             var mockDBLocation = new Mock<DbSet<Location>>();
@@ -159,13 +151,11 @@ namespace Capstone_UnitTest.Controller
             else
             {
                 locationNew.LocationId = locationInfo.LocationId;
-                locationNew.PlusCode = locationInfo.PlusCode;
-                locationNew.UserId = locationInfo.UserId;
                 _mockMapper.Setup(m => m.Map<LocationInfo, Location>(It.IsAny<LocationInfo>())).Returns(locationNew);
             }
             LocationController locationController = new LocationController(_mockContext.Object, _mockMapper.Object);
 
-            Assert.IsType<BadRequestResult>(locationController.Add(locationInfo));
+            Assert.IsType<BadRequestObjectResult>(locationController.Add(locationInfo));
             _mockContext.Verify(c => c.Locations.Add(locationNew), Times.Never);
             _mockContext.Verify(c => c.SaveChanges(), Times.Never);
         }
