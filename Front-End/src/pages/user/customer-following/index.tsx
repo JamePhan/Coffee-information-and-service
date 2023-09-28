@@ -5,24 +5,28 @@ import Search from 'antd/lib/input/Search';
 import { ColumnType } from 'antd/lib/table';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-// import FormCustomer from './form';
 import { customerService } from 'src/shared/services/customer.service';
 import { ICustomer } from 'src/shared/types/customer.type';
 
 type Props = {};
 
 const CustomerManagement = ({ }: Props) => {
-
   const [searchText, setSearchText] = useState(''); // State to store search text
-  const { data: dataCustomer, refetch } = useQuery(['listCustomer'], () => customerService.getAllCustomer());
+  const { data: dataCustomer } = useQuery(['listCustomer'], () =>
+    customerService.getAllCustomer()
+  );
 
   const handleSearch = (text: string) => {
     setSearchText(text);
   };
 
-  const filteredData = searchText && dataCustomer ? dataCustomer.data?.filter((customer) =>
-    customer.name.toLowerCase().includes(searchText.toLowerCase())
-  ) : dataCustomer?.data;
+  // Sử dụng searchText để lọc dữ liệu trên phía client
+  const filteredData =
+    searchText && dataCustomer
+      ? dataCustomer.data?.filter((customer) =>
+        customer.name.toLowerCase().includes(searchText.toLowerCase())
+      )
+      : dataCustomer?.data;
 
   const columns: ColumnType<ICustomer>[] = [
     {
@@ -54,7 +58,6 @@ const CustomerManagement = ({ }: Props) => {
       dataIndex: 'email',
       key: 'email',
     },
-
   ];
 
   return (
@@ -63,17 +66,20 @@ const CustomerManagement = ({ }: Props) => {
         <>
           <Row className='mb-12' justify={'space-between'} align='middle' gutter={16}>
             <Col span={12}>
-              <h1 className='font-bold text-2xl  text-black'>Quản lý khách hàng</h1>
+              <h1 className='font-bold text-2xl text-black'>Quản lý khách hàng</h1>
             </Col>
             <Col span={12}>
               <div className='flex py-2 justify-between items-center gap-3'>
-
-                <Search className='bg-blue-300 rounded-lg' placeholder='Tìm kiếm' onSearch={() => { }} onChange={(e) => handleSearch(e.target.value)} />
+                <Search
+                  className='bg-blue-300 rounded-lg'
+                  placeholder='Tìm kiếm'
+                  onSearch={() => { }}
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
               </div>
             </Col>
           </Row>
-          <Table dataSource={dataCustomer.data} columns={columns} />
-
+          <Table dataSource={filteredData} columns={columns} />
         </>
       )}
     </>

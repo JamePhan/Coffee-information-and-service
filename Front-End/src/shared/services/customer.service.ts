@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { httpsNoToken } from '../config/http.config';
 import { ICustomer, ICustomerbanned } from '../types/customer.type';
 
@@ -20,6 +20,9 @@ class CustomerService {
     getBannedCustomer(): Promise<AxiosResponse<ICustomer[]>> {
         return httpsNoToken.get('/Customer/Banned/');
     }
+
+
+
 
 }
 
