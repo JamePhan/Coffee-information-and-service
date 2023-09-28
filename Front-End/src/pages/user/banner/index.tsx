@@ -28,24 +28,6 @@ const BannerManagement = ({ }: Props) => {
     }
   );
 
-
-
-  const createMutation = useMutation({
-    mutationKey: ['createBannerMutation'],
-    mutationFn: (newBannerData: IBanner) => bannerService.newBanner(newBannerData),
-    onSuccess: () => {
-      message.success('Thêm banner thành công');
-      setOpen(false);
-      refetch();
-    },
-    onError() {
-      message.error('Thêm banner không thành công');
-    },
-
-  });
-
-
-
   const deleteMutation = useMutation({
     mutationKey: ['deleteBannerMutation'],
     mutationFn: (bannerId: number) => bannerService.deleteBanner(bannerId),

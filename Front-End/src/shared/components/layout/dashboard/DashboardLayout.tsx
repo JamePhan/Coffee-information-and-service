@@ -9,7 +9,7 @@ import { APP_SAVE_KEY } from '@/utils/constants';
 import { login } from 'src/shared/stores/appSlice';
 import jwt_decode from 'jwt-decode';
 import { IInforUserStored } from 'src/shared/types/user.type';
-import { menuAdmin, menuUser } from '@/mocks/menu/dashboard';
+import { menuAdmin, menuUser, menuCustomer } from '@/mocks/menu/dashboard';
 import { useTheme } from 'next-themes';
 
 
@@ -20,12 +20,12 @@ interface Props {
 }
 
 const handleLogoClick = () => {
-  // Sử dụng router để chuyển hướng về trang chủ
   router.push('/');
 };
 const DashboardLayout = ({ children }: Props) => {
-  const { theme } = useTheme()
-  const [isAdmin, setIsAdmin] = useState(false)
+  const { theme } = useTheme();
+  const [userRole, setUserRole] = useState<string>(''); // Lưu vai trò của người dùng
+
   const router = useRouter();
   const currentPath = router.pathname;
   const dispatch = useAppDispatch();
@@ -36,14 +36,13 @@ const DashboardLayout = ({ children }: Props) => {
       router.push('/login');
     } else {
       const decodeData: IInforUserStored = jwt_decode(token as string);
-      if (decodeData.role === "Admin") {
-        setIsAdmin(true)
-      } else {
-        setIsAdmin(false)
-      }
+      const role = decodeData.role; // Lấy vai trò từ mã thông báo JWT
+
+      setUserRole(role); // Lưu vai trò vào state
       dispatch(login(decodeData));
     }
   }, []);
+
   return (
     <>
       <Layout style={{ minHeight: '100vh' }}>
@@ -65,7 +64,13 @@ const DashboardLayout = ({ children }: Props) => {
             theme={theme === 'light' ? 'light' : 'dark'}
             defaultSelectedKeys={[`${currentPath.split('/').splice(0, 3).join('/')}` || `${currentPath}`]}
             mode='inline'
-            items={isAdmin ? menuAdmin : menuUser}
+            items={
+              userRole === 'Admin'
+                ? menuAdmin
+                : userRole === 'Customer'
+                  ? menuCustomer
+                  : menuUser
+            }
           ></Menu>
         </Sider>
         <Layout>
@@ -73,11 +78,14 @@ const DashboardLayout = ({ children }: Props) => {
           <Content className='m-6 min-h-screen rounded-lg light:bg-white mobile:m-4'>
             <div className='p-2'>{children}</div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Copyright ©2023 Created by Coffee Information&Service 2023</Footer>
+          <Footer style={{ textAlign: 'center' }}>
+            Copyright ©2023 Created by Coffee Information&Service 2023
+          </Footer>
         </Layout>
       </Layout>
     </>
   );
 };
+
 
 export default DashboardLayout;

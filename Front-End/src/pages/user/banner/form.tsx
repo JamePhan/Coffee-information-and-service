@@ -25,29 +25,26 @@ const FormBanner: React.FC<Props> = ({ editId, open, setOpen, refetch, onFormSub
     mutationFn: (body: IBanner) => bannerService.newBanner(body),
     onSuccess: () => {
       message.success('Tạo thành công');
-      setActionPromise(null);
+      setOpen(false); // Đóng modal sau khi thành công
       refetch();
     },
     onError: () => {
       message.error('Tạo không thành công');
-      setActionPromise(null);
     },
   });
-
-
 
   const updateMutation = useMutation({
     mutationFn: (body: IBanner) => bannerService.updateBanner(body),
     onSuccess: () => {
       message.success('Cập nhật thành công');
-      setActionPromise(null);
+      setOpen(false); // Đóng modal sau khi thành công
       refetch();
     },
     onError: () => {
       message.error('Cập nhật không thành công');
-      setActionPromise(null);
     },
   });
+
 
   useEffect(() => {
     if (actionPromise) {
