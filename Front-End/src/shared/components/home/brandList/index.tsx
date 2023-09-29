@@ -8,6 +8,7 @@ import { useAppSelector } from '@/hooks/useRedux';
 import { IFollowingAdd } from 'src/shared/types/following.type';
 import { useRouter } from 'next/router';
 
+
 interface Props {
   brandsData: ICustomer[];
 }
@@ -124,7 +125,7 @@ const BrandList = ({ brandsData }: Props) => {
         ) : (
           Array.isArray(brandData?.data) && brandData?.data.map((brand, idx) => (
 
-            <div className='mt-5' key={idx} >
+            <div className='mt-5' key={idx} onClick={() => router.push(`/shopList/${brand.user.userId}`)}>
               <PreImage
                 src={brand.user.avatar}
                 height={200}
@@ -137,8 +138,8 @@ const BrandList = ({ brandsData }: Props) => {
               <div className='w-full pt-15 flex justify-between items-center gap-5 light:text-black' onClick={() => router.push(`/shopList/${brand.user.userId}`)}>
 
                 <div className='w-full flex flex-col justify-start items-start gap-3'>
-                  <p className='font-medium text-2xl'>
-                    Tên: {brand.user.coffeeShopName}
+                  <p className='text-2xl font-medium text-blue-500 hover:text-orange-500 hover:cursor-pointer hover:scale-105'>
+                    {brand.user.coffeeShopName}
                   </p>
                   <p className='font-thin text-sm'>
                     Địa chỉ: {brand.user.address}
@@ -151,7 +152,7 @@ const BrandList = ({ brandsData }: Props) => {
                   </p>
 
                 </div>
-              </div>
+              </div><br></br>
               <Button
                 className='dark:text-white'
                 onClick={() => handleFollowClick(brand.user.userId, brand.followed)}

@@ -68,13 +68,11 @@ const Login = () => {
                 <div>INFORMATION & SERVICE</div>
               </h1>
               <p className='mt-4 text-lg'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nostrum architecto neque. Enim voluptas
-                recusandae necessitatibus officia vero porro alias facere non atque aut, adipisci dolores sit libero
-                asperiores explicabo.
+                Coffee Information & Service is a comprehensive platform dedicated to all things coffee, providing a wealth of knowledge, updates, and top-notch service for coffee enthusiasts and professionals alike.
               </p>
             </div>
             <div className='relative z-20 mt-auto'>
-              <p className='text-lg'>Copyright &copy; Coffee Information&Service 2023</p>
+              <p className='text-lg'> &copy; Coffee Information & Service 2023</p>
             </div>
           </div>
           <div className='lg:p-8'>
@@ -111,7 +109,7 @@ const Login = () => {
                         <Checkbox>Ghi nhớ</Checkbox>
                       </Form.Item>
                     </Col>
-                    <Col className='text-right' span={12}>
+                    <Col className='text-right hover:text-orange-500 hover:cursor-pointer' span={12}>
                       <p onClick={() => router.push('/forgot-password')} className='m-0 p-0'>
                         Quên mật khẩu?
                       </p>
